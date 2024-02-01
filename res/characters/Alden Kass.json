@@ -1,0 +1,293 @@
+{
+  "name": "Alden Kass",
+  "level": 4,
+  "class": "Wizard",
+  "experience": 2968,
+  "base_armor_class": 10,
+  "initiative_bonus": 5,
+  "speed": 30,
+  "maximum_hit_points": 23,
+  "current_hit_points": 23,
+  "temporary_hit_points": 0,
+  "hit_dice_total": {
+    "sides": 6,
+    "count": 4
+  },
+  "hit_dice_used": {
+    "sides": 6,
+    "count": 0
+  },
+  "death_saves": {
+    "successes": 0,
+    "failures": 0
+  },
+  "inspiration": false,
+  "proficiency_bonus": 2,
+  "stats": {
+    "strength": {
+      "stat": "Strength",
+      "value": 8,
+      "modifier": -1,
+      "saving_throw_proficiency": false
+    },
+    "dexterity": {
+      "stat": "Dexterity",
+      "value": 14,
+      "modifier": 2,
+      "saving_throw_proficiency": false
+    },
+    "constitution": {
+      "stat": "Constitution",
+      "value": 13,
+      "modifier": 1,
+      "saving_throw_proficiency": false
+    },
+    "intelligence": {
+      "stat": "Intelligence",
+      "value": 20,
+      "modifier": 5,
+      "saving_throw_proficiency": true
+    },
+    "wisdom": {
+      "stat": "Wisdom",
+      "value": 12,
+      "modifier": 1,
+      "saving_throw_proficiency": true
+    },
+    "charisma": {
+      "stat": "Charisma",
+      "value": 12,
+      "modifier": 1,
+      "saving_throw_proficiency": false
+    }
+  },
+  "skills": {
+    "acrobatics": {
+      "base_ability": "Dexterity",
+      "skill_type": "Acrobatics",
+      "proficiency": false,
+      "expertise": false,
+      "other_bonus": 0
+    },
+    "animal_handling": {
+      "base_ability": "Wisdom",
+      "skill_type": "AnimalHandling",
+      "proficiency": false,
+      "expertise": false,
+      "other_bonus": 0
+    },
+    "arcana": {
+      "base_ability": "Intelligence",
+      "skill_type": "Arcana",
+      "proficiency": true,
+      "expertise": false,
+      "other_bonus": 0
+    },
+    "athletics": {
+      "base_ability": "Strength",
+      "skill_type": "Athletics",
+      "proficiency": false,
+      "expertise": false,
+      "other_bonus": 0
+    },
+    "deception": {
+      "base_ability": "Charisma",
+      "skill_type": "Deception",
+      "proficiency": false,
+      "expertise": false,
+      "other_bonus": 0
+    },
+    "history": {
+      "base_ability": "Intelligence",
+      "skill_type": "History",
+      "proficiency": true,
+      "expertise": false,
+      "other_bonus": 0
+    },
+    "insight": {
+      "base_ability": "Wisdom",
+      "skill_type": "Insight",
+      "proficiency": false,
+      "expertise": false,
+      "other_bonus": 0
+    },
+    "intimidation": {
+      "base_ability": "Charisma",
+      "skill_type": "Intimidation",
+      "proficiency": false,
+      "expertise": false,
+      "other_bonus": 0
+    },
+    "investigation": {
+      "base_ability": "Intelligence",
+      "skill_type": "Investigation",
+      "proficiency": true,
+      "expertise": false,
+      "other_bonus": 0
+    },
+    "medicine": {
+      "base_ability": "Wisdom",
+      "skill_type": "Medicine",
+      "proficiency": false,
+      "expertise": false,
+      "other_bonus": 0
+    },
+    "nature": {
+      "base_ability": "Intelligence",
+      "skill_type": "Nature",
+      "proficiency": false,
+      "expertise": false,
+      "other_bonus": 0
+    },
+    "perception": {
+      "base_ability": "Wisdom",
+      "skill_type": "Perception",
+      "proficiency": false,
+      "expertise": false,
+      "other_bonus": 0
+    },
+    "performance": {
+      "base_ability": "Charisma",
+      "skill_type": "Performance",
+      "proficiency": false,
+      "expertise": false,
+      "other_bonus": 0
+    },
+    "persuasion": {
+      "base_ability": "Charisma",
+      "skill_type": "Persuasion",
+      "proficiency": false,
+      "expertise": false,
+      "other_bonus": 0
+    },
+    "religion": {
+      "base_ability": "Intelligence",
+      "skill_type": "Religion",
+      "proficiency": true,
+      "expertise": false,
+      "other_bonus": 0
+    },
+    "sleight_of_hand": {
+      "base_ability": "Dexterity",
+      "skill_type": "SleightOfHand",
+      "proficiency": false,
+      "expertise": false,
+      "other_bonus": 0
+    },
+    "stealth": {
+      "base_ability": "Dexterity",
+      "skill_type": "Stealth",
+      "proficiency": false,
+      "expertise": false,
+      "other_bonus": 0
+    },
+    "survival": {
+      "base_ability": "Wisdom",
+      "skill_type": "Survival",
+      "proficiency": false,
+      "expertise": false,
+      "other_bonus": 0
+    }
+  },
+  "money": {
+    "copper": 0,
+    "silver": 0,
+    "electrum": 0,
+    "gold": 0,
+    "platinum": 0
+  },
+  "features_and_traits": "Feats:\n1. Keen Mind\n- you know which way is north\n- you know exact time\n- you remember everything from past month\n\n# Arcane Recovery (short rest, once per day)\n- spell slots = level/2 rounded up\n- can't be 6th lvl or higher\n\n2-lvl\n# Chronal Shift (reaction, twice per long rest)\n- Any creature incl. yourself in 60ft. radius can be forced to rerol a d20. New outcome must be used.\n\n# Temporal Awareness\n- Add your INT to initiative.\n\n6-lvl\n# Momentary Stasis\n- Large or smaller creature within 60ft. needs to make a CON save. On fail it is in temporary stasis with speed of 0 and incapacitated status until the end of your next turn or until the creature takes any damage\n\n10-lvl\n# Arcane Abeyance (1action, once per long rest)\n- when casting a spell of 4th lvl or lower you can encase it in a gray bead for an hour (1HP, AC 15, immune to poison and psychic dmg). \n- It can be used to cast the encased spell without a spell slot, with stats of the caster\n\n14-lvl\n#convergent Future (1 exhaustion)\nYou can decide if an attack roll, ability check or a saving throw will fail or succeed.",
+  "proficiencies_and_languages": "Languages: Common, Elven, Sylvan, Gnommish\n\nWeapons: daggers, darts, slings, quarterstaff, light crossbow\n\nArmor: -",
+  "spell_slots_max": [
+    4,
+    3,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "spell_slots_used": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "spell_serialization_data": [
+    [
+      "Control Flames",
+      true
+    ],
+    [
+      "Dancing Lights",
+      true
+    ],
+    [
+      "Fire Bolt",
+      true
+    ],
+    [
+      "Sapping Sting",
+      true
+    ],
+    [
+      "Find Familiar",
+      false
+    ],
+    [
+      "Mage Armor",
+      false
+    ],
+    [
+      "Burning Hands",
+      false
+    ],
+    [
+      "Shield",
+      false
+    ],
+    [
+      "Magic Missile",
+      false
+    ],
+    [
+      "Charm Person",
+      false
+    ],
+    [
+      "Silent Image",
+      false
+    ],
+    [
+      "Disguise Self",
+      false
+    ],
+    [
+      "Sleep",
+      false
+    ],
+    [
+      "Detect Magic",
+      false
+    ],
+    [
+      "Maximilian's Earthen Grasp",
+      false
+    ],
+    [
+      "Knock",
+      false
+    ],
+    [
+      "Flaming Sphere",
+      false
+    ]
+  ]
+}

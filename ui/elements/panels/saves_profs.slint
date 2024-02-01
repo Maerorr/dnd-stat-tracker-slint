@@ -1,0 +1,264 @@
+import { Heading, Label, SavingThrow, Skill} from "../text_widgets.slint";
+import { VerticalBox } from "std-widgets.slint";
+import {Palette} from "../palette.slint";
+import { Line } from "../drawing.slint";
+
+export component SavesProficiencies {
+    property <length> grid-width: 275px;
+    GridLayout {
+        min-width: grid-width;
+        min-height: 5px;
+        y: 5px;
+        Row {
+            Heading {
+                height: 30px;
+                width: grid-width;
+                text: "Saving Throws";
+                color: Palette.text_color;
+                vertical-alignment: center;
+                horizontal-alignment: center;
+            }
+        }
+        
+        Row {
+            SavingThrow {
+                name: "Strength";
+                modifier: "(+2)";
+                color: Palette.strength_color;
+                proficient: false;
+            }
+        }
+        Row {
+            SavingThrow {
+                name: "Dexterity";
+                modifier: "(+2)";
+                color: Palette.dexterity_color;
+                proficient: true;
+            }
+        }
+        Row {
+            SavingThrow {
+                name: "Constitution";
+                modifier: "(+1)";
+                color: Palette.constitution_color;
+                proficient: true;
+            }
+        }
+        Row {
+            SavingThrow {
+                name: "Intelligence";
+                modifier: "(0)";
+                color: Palette.intelligence_color;
+                proficient: true;
+            }
+        }
+        Row {
+            SavingThrow {
+                name: "Wisdom";
+                modifier: "(0)";
+                color: Palette.wisdom_color;
+                proficient: false;
+            }
+        }
+
+        // TODO SWAP FOR A FOR LOOP ITERATING OVER A LIST OF SKILLS
+
+        Row {
+            Heading {
+                height: 30px;
+                width: grid-width;
+                text: "Proficiencies";
+                color: Palette.text_color;
+                vertical-alignment: center;
+                horizontal-alignment: center;
+            }
+        }
+        Row {
+            Skill {
+                name: "Acrobatics";
+                modifier: "(+2)";
+                color: Palette.dexterity_color;
+                stat-short-name: "(DEX)";
+                proficient: true;
+                expertise: true;
+            }
+        }
+        Row {
+            Skill {
+                name: "Animal Handling";
+                modifier: "(0)";
+                color: Palette.wisdom_color;
+                stat-short-name: "(WIS)";
+                proficient: false;
+            }
+        }
+        Row {
+            Skill {
+                name: "Arcana";
+                modifier: "(0)";
+                color: Palette.intelligence_color;
+                stat-short-name: "(INT)";
+                proficient: false;
+            }
+        }
+        Row {
+            Skill {
+                name: "Athletics";
+                modifier: "(+2)";
+                color: Palette.strength_color;
+                stat-short-name: "(STR)";
+                proficient: true;
+            }
+        }
+        Row {
+            Skill {
+                name: "Deception";
+                modifier: "(0)";
+                color: Palette.charisma_color;
+                stat-short-name: "(CHA)";
+                proficient: false;
+            }
+        }
+        Row {
+            Skill {
+                name: "History";
+                modifier: "(0)";
+                color: Palette.intelligence_color;
+                stat-short-name: "(INT)";
+                proficient: false;
+            }
+        }
+        Row {
+            Skill {
+                name: "Insight";
+                modifier: "(0)";
+                color: Palette.wisdom_color;
+                stat-short-name: "(WIS)";
+                proficient: false;
+            }
+        }
+        Row {
+            Skill {
+                name: "Intimidation";
+                modifier: "(0)";
+                color: Palette.charisma_color;
+                stat-short-name: "(CHA)";
+                proficient: false;
+            }
+        }
+        Row {
+            Skill {
+                name: "Investigation";
+                modifier: "(0)";
+                color: Palette.intelligence_color;
+                stat-short-name: "(INT)";
+                proficient: false;
+            }
+        }
+        Row {
+            Skill {
+                name: "Medicine";
+                modifier: "(0)";
+                color: Palette.wisdom_color;
+                stat-short-name: "(WIS)";
+                proficient: false;
+            }
+        }
+        Row {
+            Skill {
+                name: "Nature";
+                modifier: "(0)";
+                color: Palette.intelligence_color;
+                stat-short-name: "(INT)";
+                proficient: false;
+            }
+        }
+        Row {
+            Skill {
+                name: "Perception";
+                modifier: "(0)";
+                color: Palette.wisdom_color;
+                stat-short-name: "(WIS)";
+                proficient: false;
+            }
+        }
+        Row {
+            Skill {
+                name: "Performance";
+                modifier: "(0)";
+                color: Palette.charisma_color;
+                stat-short-name: "(CHA)";
+                proficient: false;
+            }
+        }
+        Row {
+            Skill {
+                name: "Persuasion";
+                modifier: "(0)";
+                color: Palette.charisma_color;
+                stat-short-name: "(CHA)";
+                proficient: false;
+            }
+        }
+        Row {
+            Skill {
+                name: "Religion";
+                modifier: "(0)";
+                color: Palette.intelligence_color;
+                stat-short-name: "(INT)";
+                proficient: false;
+            }
+        }
+        Row {
+            Skill {
+                name: "Sleight of Hand";
+                modifier: "(0)";
+                color: Palette.dexterity_color;
+                stat-short-name: "(DEX)";
+                proficient: false;
+            }
+        }
+        Row {
+            Skill {
+                name: "Stealth";
+                modifier: "(0)";
+                color: Palette.dexterity_color;
+                stat-short-name: "(DEX)";
+                proficient: false;
+            }
+        }
+        Row {
+            Skill {
+                name: "Survival";
+                modifier: "(0)";
+                color: Palette.wisdom_color;
+                stat-short-name: "(WIS)";
+                proficient: false;
+            }
+        }
+        Row {
+            Line {
+                height: 12px;
+                from: {x: 0, y: 0};
+                to: {x: grid-width/1px, y: 0};
+            }
+        }
+        Row {
+            HorizontalLayout {
+                Rectangle {
+                    width: grid-width * 0.03;
+                    height: 0px;
+                    border-radius: 0px;
+                }
+                Text {
+                    width: grid-width * 0.93;
+                    height: 200px;
+                    text: "Proficiencies & Languages\nLanguages: Common, Elven, Sylvan, Gnommish\n\nWeapons: daggers, darts, slings, quarterstaff, light crossbow\n\nArmor: -";
+                    color: Palette.text_color;
+                    font-size: 14px;
+                }
+            }
+            
+        }
+    }
+}

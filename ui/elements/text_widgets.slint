@@ -1,0 +1,137 @@
+import { Palette } from "palette.slint";
+import { HorizontalBox, VerticalBox } from "std-widgets.slint";
+import { DiamondStroke, Line, DiamondFilled } from "drawing.slint";
+
+export component Label inherits Text {
+    font-size: 20px;
+    color: Palette.text_color;
+    horizontal-alignment: center;
+}
+
+export component Heading inherits Text {
+    font-size: 30px;
+    color: Palette.text_color;
+    horizontal-alignment: center;
+}
+
+export component SingleStat {
+    in property <string> name;
+    in property <string> value;
+    in property <string> modifier;
+    in property <color> color;
+    VerticalLayout {
+        width: 150px;
+        Label {
+            width: 150px;
+            text: name;
+            color: color;
+        }
+    
+        HorizontalLayout {
+            width: 75px;
+            x: 37.5px;
+            Label {
+                text: value;
+                color: Palette.text_color;
+            }
+            Label {
+                text: modifier;
+                color: Palette.text_color;
+            }
+        }
+    }
+}
+
+export component SavingThrow {
+    in property <string> name;
+    in property <string> modifier;
+    in property <color> color;
+    in property <bool> proficient;
+    width: 150px;
+    height: 25px;
+
+    HorizontalLayout {
+        x: 9px;
+        y: 0px;
+        
+        alignment: start;
+        
+        if proficient : DiamondFilled {
+            radius: 14px;
+        } 
+        if !proficient : DiamondStroke {
+            radius: 14px;
+        }
+    
+        Text {
+            width: 45px;
+            text: modifier;
+            color: Palette.text_color;
+            horizontal-alignment: center;
+            font-size: 18px;
+        }
+        Text {
+            width: 120px;
+            text: name;
+            color: color;
+            horizontal-alignment: left;
+            font-size: 18px;
+        }
+        
+    }    
+}
+
+export component Skill {
+    in property <string> name;
+    in property <string> modifier;
+    in property <string> stat-short-name;
+    in property <color> color;
+    in property <bool> proficient;
+    in property <bool> expertise;
+    width: 200px;
+    height: 25px;
+
+    HorizontalLayout {
+        x: 9px;
+        y: 0px;
+        
+        alignment: start;
+        
+        if proficient : DiamondFilled {
+            radius: 14px;
+        } 
+        if !proficient : DiamondStroke {
+            radius: 14px;
+        }
+    
+        Text {
+            width: 45px;
+            text: modifier;
+            color: Palette.text_color;
+            horizontal-alignment: center;
+            font-size: 18px;
+        }
+        Text {
+            width: 150px;
+            text: name;
+            color: Palette.text_color;
+            horizontal-alignment: left;
+            font-size: 18px;
+        }
+        Text {
+            width: 45px;
+            text: stat-short-name;
+            color: color;
+            horizontal-alignment: center;
+            font-size: 14px;
+        }
+
+        if expertise : Text {
+            width: 15px;
+            text: "e";
+            color: Palette.text_color;
+            horizontal-alignment: center;
+            font-size: 14px;
+        }
+    }
+}

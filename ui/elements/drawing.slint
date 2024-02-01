@@ -1,0 +1,77 @@
+import { Palette } from "palette.slint";
+
+export component Line inherits Path {
+    in property <{x: float, y: float}> from;
+    in property <{x: float, y: float}> to;
+    stroke: Palette.text_color;
+
+    MoveTo {
+        x: from.x;
+        y: from.y;
+    }
+
+    LineTo {
+        x: to.x;
+        y: to.y;
+    }
+}
+
+export component DiamondStroke inherits Path {
+    in property <length> radius;
+    stroke: Palette.text_color;
+    width: radius;
+    height: radius;
+    y: radius / 2.3;
+
+    MoveTo {
+        x: 0;
+        y: 0;
+    }
+    ArcTo {
+        x: 1;
+        y: -1;
+    }
+    ArcTo {
+        x: 2;
+        y: 0;
+    }
+    ArcTo {
+        x: 1;
+        y: 1;
+    }
+    ArcTo {
+        x: 0;
+        y: 0;
+    }
+    Close{}
+}
+
+export component DiamondFilled inherits Path {
+    in property <length> radius;
+    fill: Palette.text_color;
+    width: radius;
+    height: radius;
+    y: radius / 2.3;
+
+    MoveTo {
+        x: 0;
+        y: 0;
+    }
+    ArcTo {
+        x: 1;
+        y: -1;
+    }
+    ArcTo {
+        x: 2;
+        y: 0;
+    }
+    ArcTo {
+        x: 1;
+        y: 1;
+    }
+    ArcTo {
+        x: 0;
+        y: 0;
+    }
+    Close{}
+}

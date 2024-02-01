@@ -1,0 +1,95 @@
+import { Palette } from "../palette.slint";
+import { GridBox, HorizontalBox, Button } from "std-widgets.slint";
+import { Label, Heading } from "../text_widgets.slint";
+import { Line } from "../drawing.slint";
+import { TopButton } from "../button.slint";
+import { EditMode } from "../globals.slint";
+import { SlintCharacter } from "../../logic.slint";
+
+export component TopBar inherits Rectangle {
+    in-out property <SlintCharacter> in-character;
+    width: 1920px;
+    height: 100px;
+    x : 0;
+    y : 0;
+    background: Palette.dark;
+
+    Heading {
+        x: parent.width / 2 - self.width / 2;
+        y: parent.height / 2 - 40px;
+        vertical-alignment: center;
+        horizontal-alignment: center;
+        text: "D&D Stat Tracker (Slint Edition)";
+    }
+    HorizontalBox {
+        y: parent.height - 40px;
+        GridLayout {
+            width: 60%;
+            height: 24px;
+            Line {
+                from: {x: 0.0, y: 0.0};
+                to: {x: 0.0, y: 1.0};
+                stroke: Palette.main_color;
+            }
+            Label { text: "Name: " + in-character.name; }
+            Line {
+                from: {x: 0.0, y: 0.0};
+                to: {x: 0.0, y: 1.0};
+                stroke: Palette.main_color;
+            }
+            Label { text: "Level: " + in-character.level; }
+            Line {
+                from: {x: 0.0, y: 0.0};
+                to: {x: 0.0, y: 1.0};
+                stroke: Palette.main_color;
+            }
+            Label { text: "Proficiency Bonus: " + in-character.proficiency-bonus; horizontal-stretch: 0.1;}
+            Line {
+                from: {x: 0.0, y: 0.0};
+                to: {x: 0.0, y: 1.0};
+                stroke: Palette.main_color;
+            }
+            Label { text: "Class: " + in-character.class; }
+            Line {
+                from: {x: 0.0, y: 0.0};
+                to: {x: 0.0, y: 1.0};
+                stroke: Palette.main_color;
+            }
+            Label { text: "Experience: " + in-character.exp; }
+            Line {
+                from: {x: 0.0, y: 0.0};
+                to: {x: 0.0, y: 1.0};
+                stroke: Palette.main_color;
+            }
+        }
+    }
+
+    // create a horizontalbox that is aligned to the right using x and y
+    HorizontalBox {
+        x: parent.width * 0.77;
+        y: parent.height * 0.2;
+        GridLayout {
+            spacing: 10px;
+            width: 40%;
+            // display Armor Class, Initiative, Speed, Hit Points, Hit Dice
+            TopButton {
+                width: 150px;
+                height: 50px;
+                text: "Save & Switch\nto Character Select";
+            }
+            TopButton {
+                width: 100px;
+                height: 50px;
+                text: "Save";
+            }
+            TopButton {
+                width: 100px;
+                height: 50px;
+                text: "Edit";
+                clicked => {
+                    EditMode.active = !EditMode.active;
+                }
+            }
+        }
+    }
+}

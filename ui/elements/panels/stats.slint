@@ -1,0 +1,63 @@
+import { Heading, Label, SingleStat } from "../text_widgets.slint";
+import { VerticalBox } from "std-widgets.slint";
+import { Palette } from "../palette.slint";
+import { SlintCharacter, SlintStat } from "../../logic.slint";
+
+
+export component StatsPanel {
+    in-out property <SlintCharacter> in-character;
+    VerticalLayout {
+        min-width: 150px;
+        alignment: start;
+        spacing: 30px;
+        Heading {
+            width: 150px;
+            text: "Stats";
+            horizontal-alignment: center;
+        }
+
+        for stat[i] in in-character.stats : SingleStat {
+            name: stat.name;
+            value: stat.value;
+            modifier: stat.modifier;
+            color: stat.color;
+        }
+
+        // SingleStat {
+        //     name: character.stats[0].name;
+        //     value: character.stats[0].value;
+        //     modifier: character.stats[0].modifier;
+        //     color: Palette.strength_color;
+        // }
+
+        // SingleStat {
+        //     name: character.stats[1].name;
+        //     value: character.stats[1].value;
+        //     modifier: character.stats[1].modifier;
+        //     color: Palette.dexterity_color;
+        // }
+
+        // SingleStat {
+        //     name: character.stats[2].name;
+        //     value: character.stats[2].value;
+        //     modifier: character.stats[2].modifier;
+        //     color: Palette.constitution_color;
+        // }
+
+        // SingleStat {
+        //     name: character.stats[3].name;
+        //     value: character.stats[3].value;
+        //     modifier: character.stats[3].modifier;
+        //     color: Palette.intelligence_color;
+        // }
+
+        // SingleStat {
+        //     name: character.stats[4].name;
+        //     value: character.stats[4].value;
+        //     modifier: character.stats[4].modifier;
+        //     color: Palette.wisdom_color;
+        // }
+
+
+    }
+}

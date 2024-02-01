@@ -1,0 +1,40 @@
+import { Button, VerticalBox, HorizontalBox } from "std-widgets.slint";
+import { TopBar } from "elements/panels/top_bar.slint";
+import { Palette } from "elements/palette.slint";
+import { StatsPanel } from "elements/panels/stats.slint";
+import { Line } from "elements/drawing.slint";
+import { SavesProficiencies } from "elements/panels/saves_profs.slint";
+import { SlintCharacter } from "logic.slint";
+import { EditMode } from "elements/globals.slint";
+
+export component AppWindow inherits Window {
+    width: 1920px;
+    height: 1000px;
+    in-out property <SlintCharacter> character;
+
+    default-font-family: "Typey McTypeface";
+
+    background: Palette.background_color;
+    TopBar {in-character: character;}
+    HorizontalLayout {
+        x: 0;
+        y: 100px;
+        alignment: start;
+
+        StatsPanel {in-character: character;}
+
+        Line {
+            from: {x: 0, y: 0};
+            to: {x: 0, y: 100.0};
+            stroke: Palette.main_color;
+        }
+
+        SavesProficiencies {}
+        
+        Line {
+            from: {x: 0, y: 0};
+            to: {x: 0, y: 100.0};
+            stroke: Palette.main_color;
+        }
+    }
+}

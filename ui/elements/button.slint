@@ -1,0 +1,28 @@
+import {Palette} from "palette.slint";
+
+export component TopButton inherits Rectangle {
+    in-out property text <=> txt.text;
+    callback clicked <=> touch.clicked;
+    border-radius: root.height / 8;
+    border-width: 1px;
+    border-color: root.background.darker(25%);
+    background: touch.pressed ? Palette.button_pressed_color : touch.has-hover ? Palette.button_hover_color :  Palette.button_idle_color;
+    height: 50px;
+    min-width: txt.preferred-width + 20px;
+    txt := Text {
+        y: (parent.height - self.height)/2 + (touch.pressed ? 1px : 0);
+        color: touch.pressed ? #b3b3b3 : #c9c9c9;
+        font-size: 16px;
+        vertical-alignment: center;
+        horizontal-alignment: center;
+    }
+    touch := TouchArea { }
+}
+
+export component TopBadButton {
+    in property <string> text;
+    VerticalLayout {
+        alignment: start;
+        TopButton { text: text; }
+    }
+}

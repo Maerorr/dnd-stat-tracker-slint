@@ -1,0 +1,31 @@
+export struct SlintStat {
+    name: string,
+    short-name: string,
+    value: int,
+    modifier: string,
+    color: color,
+    saving-throw-proficiency: bool,
+}
+
+export struct SlintSkill {
+    base-ability: SlintStat,
+    name: string,
+    proficiency: bool,
+    expertise: bool,
+    other-bonus: int,
+}
+
+export struct SlintCharacter {
+    name: string,
+    level: int,
+    class: string,
+
+    exp: int,
+
+    proficiency-bonus: string,
+    stats: [SlintStat],
+    skills: [SlintSkill],
+
+    features-traits: string,
+}
+

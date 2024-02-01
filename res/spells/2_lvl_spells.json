@@ -1,0 +1,57 @@
+[
+  {
+    "name": "Flaming Sphere",
+    "level": 2,
+    "ritual": false,
+    "school": "Conjuration",
+    "casting_time": "1 action",
+    "target": "An unoccupied space of your choice within range",
+    "range": "60 ft.",
+    "components": "V S M (A bit of tallow, a pinch of brimstone, and a dusting of powdered iron)",
+    "duration": "Concentration, up to 1 minute",
+    "classes": [
+      "Druid",
+      "Wizard"
+    ],
+    "description": "A 5-foot-diameter sphere of fire appears in an unoccupied space of your choice within range and lasts for the duration. Any creature that ends its turn within 5 feet of the sphere must make a Dexterity saving throw. The creature takes 2d6 fire damage on a failed save, or half as much damage on a successful one. As a bonus action, you can move the sphere up to 30 feet. If you ram the sphere into a creature, that creature must make the saving throw against the sphere’s damage, and the sphere stops moving this turn. When you move the sphere, you can direct it over barriers up to 5 feet tall and jump it across pits up to 10 feet wide. The sphere ignites flammable objects not being worn or carried, and it sheds bright light in a 20-foot radius and dim light for an additional 20 feet.",
+    "higher_levels": "When you cast this spell using a spell slot of 3rd level or higher, the damage increases by 1d6 for each slot level above 2nd.",
+    "window_open": false
+  },
+  {
+    "name": "Maximillian's Earthen Grasp",
+    "level": 2,
+    "ritual": false,
+    "school": "Transmutation",
+    "casting_time": "1 action",
+    "target": "A 5-foot-square unoccupied space",
+    "range": "30 ft.",
+    "components": "V, S, M (a miniature hand sculpted from clay)",
+    "duration": "Concentration, up to 1 minute",
+    "classes": [
+      "Sorcerer",
+      "Wizard"
+    ],
+    "description": "You choose a 5-foot-square unoccupied space on the ground that you can see within range. A Medium hand made from compacted soil rises there and reaches for one creature you can see within 5 feet of it. The target must make a Strength saving throw. On a failed save, the target takes 2d6 bludgeoning damage and is restrained for the spell’s duration.\nAs an action, you can cause the hand to crush the restrained target, who must make a Strength saving throw. It takes 2d6 bludgeoning damage on a failed save, or half as much damage on a successful one.\nTo break out, the restrained target can use its action to make a Strength check against your spell save DC. On a success, the target escapes and is no longer restrained by the hand.\nAs an action, you can cause the hand to reach for a different creature or to move to a different unoccupied space within range. The hand releases a restrained target if you do either.",
+    "higher_levels": "",
+    "window_open": false
+  },
+  {
+    "name": "Knock",
+    "level": 2,
+    "ritual": false,
+    "school": "Transmutation",
+    "casting_time": "1 action",
+    "target": "An object that you can see within range",
+    "range": "60 ft.",
+    "components": "V",
+    "duration": "Instantaneous",
+    "classes": [
+      "Bard",
+      "Sorcerer",
+      "Wizard"
+    ],
+    "description": "Choose an object that you can see within range. The object can be a door, a box, a chest, a set of manacles, a padlock, or another object that contains a mundane or magical means that prevents access. A target that is held shut by a mundane lock or that is stuck or barred becomes unlocked, unstuck, or unbarred. If the object has multiple locks, only one of them is unlocked. If you choose a target that is held shut with arcane lock, that spell is suppressed for 10 minutes, during which time the target can be opened and shut normally. When you cast the spell, a loud knock, audible from as far away as 300 feet, emanates from the target object.",
+    "higher_levels": "",
+    "window_open": false
+  }
+]

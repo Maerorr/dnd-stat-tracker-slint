@@ -1,0 +1,31 @@
+[package]
+name = "dnd-stattracker-slint"
+version = "0.1.0"
+authors = ["Maerorr <7hubert7@gmail.com>"]
+edition = "2021"
+build = "build.rs"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+slint = "1.4"
+strum = "0.26"
+strum_macros = "0.26.1"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+
+[build-dependencies]
+slint-build = "1.4"
+copy_to_output = "2.2.0"
+glob = "0.3"
+
+[features]
+default = ["winit_femtovg", "winit_software"]
+skia_opengl = ["slint/renderer-skia-opengl"]
+skia_vulkan = ["slint/renderer-skia-vulkan"]
+software = ["slint/renderer-software"]
+femtovg = ["slint/renderer-femtovg"]
+winit_femtovg = ["slint/renderer-winit-femtovg"]
+winit_skia_opengl = ["slint/renderer-winit-skia-opengl"]
+winit_skia_vulkan = ["slint/renderer-winit-skia-vulkan"]
+winit_software = ["slint/renderer-winit-software"]
