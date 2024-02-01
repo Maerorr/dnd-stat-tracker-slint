@@ -1,4 +1,5 @@
 use serde::{Deserialize, Serialize};
+use crate::{Character, SlintSkill};
 
 use super::{skill_type::SkillType, stat_type::StatType};
 
@@ -11,6 +12,24 @@ pub struct Skill {
     other_bonus: i32,
 }
 
+impl Skill {
+    pub fn get_slint_skill(&self, c: &Character) -> SlintSkill {
+        let modifier = c.stats.get_stat(self.base_ability).modifier 
+            + if self.proficiency { c.proficiency_bonus } else { 0 } 
+            + if self.expertise { c.proficiency_bonus } else { 0 } + self.other_bonus;
+        let sign = if modifier >= 0 {
+            "+"
+        } else {
+            ""
+        };
+        SlintSkill {
+            name: self.skill_type.get_name().into(),
+            proficiency: self.proficiency,
+            expertise: self.expertise,
+            modifier: format!("({}{})", sign, modifier).into(),
+        }
+    }
+}
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 pub struct Skills {
@@ -255,5 +274,28 @@ impl Skills {
 
     pub fn set_skill_proficiency(&mut self, skill_type: SkillType, prof: bool) {
         self.get_skill_mut(skill_type).proficiency = prof;
+    }
+
+    pub fn get_slint_skills(&self, c: &Character) -> Vec<SlintSkill> {
+        let mut skills: Vec<SlintSkill> = Vec::with_capacity(18);
+        skills.push(self.acrobatics.get_slint_skill(c));
+        skills.push(self.animal_handling.get_slint_skill(c));
+        skills.push(self.arcana.get_slint_skill(c));
+        skills.push(self.athletics.get_slint_skill(c));
+        skills.push(self.deception.get_slint_skill(c));
+        skills.push(self.history.get_slint_skill(c));
+        skills.push(self.insight.get_slint_skill(c));
+        skills.push(self.intimidation.get_slint_skill(c));
+        skills.push(self.investigation.get_slint_skill(c));
+        skills.push(self.medicine.get_slint_skill(c));
+        skills.push(self.nature.get_slint_skill(c));
+        skills.push(self.perception.get_slint_skill(c));
+        skills.push(self.performance.get_slint_skill(c));
+        skills.push(self.persuasion.get_slint_skill(c));
+        skills.push(self.religion.get_slint_skill(c));
+        skills.push(self.sleight_of_hand.get_slint_skill(c));
+        skills.push(self.stealth.get_slint_skill(c));
+        skills.push(self.survival.get_slint_skill(c));
+        skills
     }
 }

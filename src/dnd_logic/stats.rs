@@ -2,7 +2,7 @@ use serde::{Deserialize, Serialize};
 use slint::Color;
 
 use super::{stat_type::StatType, utils::stat_to_modifier};
-use crate::SlintStat;
+use crate::{Character, SlintStat};
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
 pub struct Stat {
     pub stat: StatType,
@@ -83,7 +83,18 @@ impl Stat {
         self.set_value(self.value - 1)
     }
 
-    pub fn get_slint_stat(&self) -> SlintStat {
+    pub fn get_slint_stat(&self, character: &Character) -> SlintStat {
+        let mod_with_prof = if self.saving_throw_proficiency {
+            self.modifier + character.proficiency_bonus
+        } else {
+            self.modifier
+        };
+        let sign = if mod_with_prof >= 0 {
+            "+"
+        } else {
+            ""
+        };
+
         SlintStat {
             name: self.get_name().into(),
             short_name: self.stat.get_short_name().into(),
@@ -91,6 +102,7 @@ impl Stat {
             modifier: self.get_ui_modifier().into(),
             saving_throw_proficiency: self.get_saving_throw_proficiency(),
             color: self.stat.get_stat_color(),
+            modifier_with_proficiency: format!("({}{})", sign, mod_with_prof).into(),
         }
     }
 

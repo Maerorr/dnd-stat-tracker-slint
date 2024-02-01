@@ -5,14 +5,14 @@ export struct SlintStat {
     modifier: string,
     color: color,
     saving-throw-proficiency: bool,
+    modifier_with_proficiency: string,
 }
 
 export struct SlintSkill {
-    base-ability: SlintStat,
     name: string,
     proficiency: bool,
     expertise: bool,
-    other-bonus: int,
+    modifier: string,
 }
 
 export struct SlintCharacter {

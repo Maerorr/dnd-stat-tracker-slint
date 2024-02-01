@@ -3,6 +3,7 @@ use std::env::{self, current_exe};
 mod utils;
 mod dnd_logic;
 use crate::dnd_logic::prelude::*;
+use dnd_logic::skill;
 use slint::{Color, Model, ModelRc};
 use utils::*;
 
@@ -76,12 +77,16 @@ impl StatTracker {
     }
 
     pub fn set_stat_ui_data(&self, c: &Character, stats: &mut Vec<SlintStat>) {
-        stats[0] = c.stats.strength.get_slint_stat();
-        stats[1] = c.stats.dexterity.get_slint_stat();
-        stats[2] = c.stats.constitution.get_slint_stat();
-        stats[3] = c.stats.intelligence.get_slint_stat();
-        stats[4] = c.stats.wisdom.get_slint_stat();
-        stats[5] = c.stats.charisma.get_slint_stat();
+        stats[0] = c.stats.strength.get_slint_stat(c);
+        stats[1] = c.stats.dexterity.get_slint_stat(c);
+        stats[2] = c.stats.constitution.get_slint_stat(c);
+        stats[3] = c.stats.intelligence.get_slint_stat(c);
+        stats[4] = c.stats.wisdom.get_slint_stat(c);
+        stats[5] = c.stats.charisma.get_slint_stat(c);
+    }
+
+    pub fn set_skills_ui_data(&self, c: &Character, skills: &mut Vec<SlintSkill>) {
+        *skills = c.skills.get_slint_skills(c);
     }
 
     pub fn set_ui_character_data(&self, ui: &AppWindow) {
@@ -96,7 +101,12 @@ impl StatTracker {
         stats.resize(6, SlintStat::default());
         self.set_stat_ui_data(&c, &mut stats);
 
+        let mut skills: Vec<SlintSkill> = Vec::with_capacity(18);
+        skills.resize(18, SlintSkill::default());
+        self.set_skills_ui_data(&c, &mut skills);
+
         current_character.stats = ModelRc::from(stats.as_slice());
+        current_character.skills = ModelRc::from(skills.as_slice());
         ui.set_character(current_character.into());
     }
 }

@@ -11,9 +11,11 @@ export component StatsPanel {
         alignment: start;
         spacing: 30px;
         Heading {
+            height: 40px;
             width: 150px;
             text: "Stats";
             horizontal-alignment: center;
+            vertical-alignment: center;
         }
 
         for stat[i] in in-character.stats : SingleStat {

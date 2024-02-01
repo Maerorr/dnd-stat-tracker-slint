@@ -26,15 +26,15 @@ export component AppWindow inherits Window {
         Line {
             from: {x: 0, y: 0};
             to: {x: 0, y: 100.0};
-            stroke: Palette.main_color;
+            stroke: Palette.text_color;
         }
 
-        SavesProficiencies {}
+        SavesProficiencies {in-character: character;}
         
         Line {
             from: {x: 0, y: 0};
             to: {x: 0, y: 100.0};
-            stroke: Palette.main_color;
+            stroke: Palette.text_color;
         }
     }
 }

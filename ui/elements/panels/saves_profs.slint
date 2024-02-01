@@ -2,16 +2,17 @@ import { Heading, Label, SavingThrow, Skill} from "../text_widgets.slint";
 import { VerticalBox } from "std-widgets.slint";
 import {Palette} from "../palette.slint";
 import { Line } from "../drawing.slint";
+import { SlintCharacter } from "../../logic.slint";
 
 export component SavesProficiencies {
+    in-out property <SlintCharacter> in-character;
     property <length> grid-width: 275px;
     GridLayout {
         min-width: grid-width;
         min-height: 5px;
-        y: 5px;
         Row {
             Heading {
-                height: 30px;
+                height: 40px;
                 width: grid-width;
                 text: "Saving Throws";
                 color: Palette.text_color;
@@ -19,45 +20,45 @@ export component SavesProficiencies {
                 horizontal-alignment: center;
             }
         }
-        
+
         Row {
             SavingThrow {
                 name: "Strength";
-                modifier: "(+2)";
+                modifier: in-character.stats[0].modifier_with_proficiency;
                 color: Palette.strength_color;
-                proficient: false;
+                proficient: in-character.stats[0].saving-throw-proficiency;
             }
         }
         Row {
             SavingThrow {
                 name: "Dexterity";
-                modifier: "(+2)";
+                modifier: in-character.stats[1].modifier_with_proficiency;
                 color: Palette.dexterity_color;
-                proficient: true;
+                proficient: in-character.stats[1].saving-throw-proficiency;
             }
         }
         Row {
             SavingThrow {
                 name: "Constitution";
-                modifier: "(+1)";
+                modifier: in-character.stats[2].modifier_with_proficiency;
                 color: Palette.constitution_color;
-                proficient: true;
+                proficient: in-character.stats[2].saving-throw-proficiency;
             }
         }
         Row {
             SavingThrow {
                 name: "Intelligence";
-                modifier: "(0)";
+                modifier: in-character.stats[3].modifier_with_proficiency;
                 color: Palette.intelligence_color;
-                proficient: true;
+                proficient: in-character.stats[3].saving-throw-proficiency;
             }
         }
         Row {
             SavingThrow {
                 name: "Wisdom";
-                modifier: "(0)";
+                modifier: in-character.stats[4].modifier_with_proficiency;
                 color: Palette.wisdom_color;
-                proficient: false;
+                proficient: in-character.stats[4].saving-throw-proficiency;
             }
         }
 
@@ -65,7 +66,7 @@ export component SavesProficiencies {
 
         Row {
             Heading {
-                height: 30px;
+                height: 40px;
                 width: grid-width;
                 text: "Proficiencies";
                 color: Palette.text_color;
@@ -76,164 +77,181 @@ export component SavesProficiencies {
         Row {
             Skill {
                 name: "Acrobatics";
-                modifier: "(+2)";
+                modifier: in-character.skills[0].modifier;
                 color: Palette.dexterity_color;
                 stat-short-name: "(DEX)";
-                proficient: true;
-                expertise: true;
+                proficient: in-character.skills[0].proficiency;
+                expertise: in-character.skills[0].expertise;
             }
         }
         Row {
             Skill {
                 name: "Animal Handling";
-                modifier: "(0)";
+                modifier: in-character.skills[1].modifier;
                 color: Palette.wisdom_color;
                 stat-short-name: "(WIS)";
-                proficient: false;
+                proficient: in-character.skills[1].proficiency;
+                expertise: in-character.skills[1].expertise;
             }
         }
         Row {
             Skill {
                 name: "Arcana";
-                modifier: "(0)";
+                modifier: in-character.skills[2].modifier;
                 color: Palette.intelligence_color;
                 stat-short-name: "(INT)";
-                proficient: false;
+                proficient: in-character.skills[2].proficiency;
+                expertise: in-character.skills[2].expertise;
             }
         }
         Row {
             Skill {
                 name: "Athletics";
-                modifier: "(+2)";
+                modifier: in-character.skills[3].modifier;
                 color: Palette.strength_color;
                 stat-short-name: "(STR)";
-                proficient: true;
+                proficient: in-character.skills[3].proficiency;
+                expertise: in-character.skills[3].expertise;
             }
         }
         Row {
             Skill {
                 name: "Deception";
-                modifier: "(0)";
+                modifier: in-character.skills[4].modifier;
                 color: Palette.charisma_color;
                 stat-short-name: "(CHA)";
-                proficient: false;
+                proficient: in-character.skills[4].proficiency;
+                expertise: in-character.skills[4].expertise;
             }
         }
         Row {
             Skill {
                 name: "History";
-                modifier: "(0)";
+                modifier: in-character.skills[5].modifier;
                 color: Palette.intelligence_color;
                 stat-short-name: "(INT)";
-                proficient: false;
+                proficient: in-character.skills[5].proficiency;
+                expertise: in-character.skills[5].expertise;
             }
         }
         Row {
             Skill {
                 name: "Insight";
-                modifier: "(0)";
+                modifier: in-character.skills[6].modifier;
                 color: Palette.wisdom_color;
                 stat-short-name: "(WIS)";
-                proficient: false;
+                proficient: in-character.skills[6].proficiency;
+                expertise: in-character.skills[6].expertise;
             }
         }
         Row {
             Skill {
                 name: "Intimidation";
-                modifier: "(0)";
+                modifier: in-character.skills[7].modifier;
                 color: Palette.charisma_color;
                 stat-short-name: "(CHA)";
-                proficient: false;
+                proficient: in-character.skills[7].proficiency;
+                expertise: in-character.skills[7].expertise;
             }
         }
         Row {
             Skill {
                 name: "Investigation";
-                modifier: "(0)";
+                modifier: in-character.skills[8].modifier;
                 color: Palette.intelligence_color;
                 stat-short-name: "(INT)";
-                proficient: false;
+                proficient: in-character.skills[8].proficiency;
+                expertise: in-character.skills[8].expertise;
             }
         }
         Row {
             Skill {
                 name: "Medicine";
-                modifier: "(0)";
+                modifier: in-character.skills[9].modifier;
                 color: Palette.wisdom_color;
                 stat-short-name: "(WIS)";
-                proficient: false;
+                proficient: in-character.skills[9].proficiency;
+                expertise: in-character.skills[9].expertise;
             }
         }
         Row {
             Skill {
                 name: "Nature";
-                modifier: "(0)";
+                modifier: in-character.skills[10].modifier;
                 color: Palette.intelligence_color;
                 stat-short-name: "(INT)";
-                proficient: false;
+                proficient: in-character.skills[10].proficiency;
+                expertise: in-character.skills[10].expertise;
             }
         }
         Row {
             Skill {
                 name: "Perception";
-                modifier: "(0)";
+                modifier: in-character.skills[11].modifier;
                 color: Palette.wisdom_color;
                 stat-short-name: "(WIS)";
-                proficient: false;
+                proficient: in-character.skills[11].proficiency;
+                expertise: in-character.skills[11].expertise;
             }
         }
         Row {
             Skill {
                 name: "Performance";
-                modifier: "(0)";
+                modifier: in-character.skills[12].modifier;
                 color: Palette.charisma_color;
                 stat-short-name: "(CHA)";
-                proficient: false;
+                proficient: in-character.skills[12].proficiency;
+                expertise: in-character.skills[12].expertise;
             }
         }
         Row {
             Skill {
                 name: "Persuasion";
-                modifier: "(0)";
+                modifier: in-character.skills[13].modifier;
                 color: Palette.charisma_color;
                 stat-short-name: "(CHA)";
-                proficient: false;
+                proficient: in-character.skills[13].proficiency;
+                expertise: in-character.skills[13].expertise;
             }
         }
         Row {
             Skill {
                 name: "Religion";
-                modifier: "(0)";
+                modifier: in-character.skills[14].modifier;
                 color: Palette.intelligence_color;
                 stat-short-name: "(INT)";
-                proficient: false;
+                proficient: in-character.skills[14].proficiency;
+                expertise: in-character.skills[14].expertise;
             }
         }
         Row {
             Skill {
                 name: "Sleight of Hand";
-                modifier: "(0)";
+                modifier: in-character.skills[15].modifier;
                 color: Palette.dexterity_color;
                 stat-short-name: "(DEX)";
-                proficient: false;
+                proficient: in-character.skills[15].proficiency;
+                expertise: in-character.skills[15].expertise;
             }
         }
         Row {
             Skill {
                 name: "Stealth";
-                modifier: "(0)";
+                modifier: in-character.skills[16].modifier;
                 color: Palette.dexterity_color;
                 stat-short-name: "(DEX)";
-                proficient: false;
+                proficient: in-character.skills[16].proficiency;
+                expertise: in-character.skills[16].expertise;
             }
         }
         Row {
             Skill {
                 name: "Survival";
-                modifier: "(0)";
+                modifier: in-character.skills[17].modifier;
                 color: Palette.wisdom_color;
                 stat-short-name: "(WIS)";
-                proficient: false;
+                proficient: in-character.skills[17].proficiency;
+                expertise: in-character.skills[17].expertise;
             }
         }
         Row {
@@ -255,7 +273,7 @@ export component SavesProficiencies {
                     height: 200px;
                     text: "Proficiencies & Languages\nLanguages: Common, Elven, Sylvan, Gnommish\n\nWeapons: daggers, darts, slings, quarterstaff, light crossbow\n\nArmor: -";
                     color: Palette.text_color;
-                    font-size: 14px;
+                    font-size: 16px;
                 }
             }
             
