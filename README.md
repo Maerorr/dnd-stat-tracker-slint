@@ -12,9 +12,11 @@ TODO:
 - [X] - money, including a converter
 - [ ] - equipement as text
 - [ ] - weapons and hit/dmg modifiers
-- [X] - spell list + spell slots
+- [] - spell list + spell slots
 - [X] - more spells as json files
-- [X] - local character saves
+- [] - local character saves
+
+WIP screenshot: ![image](images/stattrackerslint.png)
 
 All spells are from [here](https://github.com/jcquinlan/dnd-spells), reformatted for my own use.
 
