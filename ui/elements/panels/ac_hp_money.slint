@@ -8,6 +8,11 @@ import { DamageButton, HealButton, TempHpButton } from "../button.slint";
 export component AcHpMoneyPanel {
     in-out property <SlintCharacter> in-character;
     property <length> grid-width: 475px;
+
+    // (name, value-as-string)
+    callback add-money(string, string);
+    callback subtract-money(string, string);
+
     GridLayout {
         min-width: grid-width;
         spacing: 10px;
@@ -229,30 +234,60 @@ export component AcHpMoneyPanel {
                     widget-width: grid-width / 5;
                     text-color: Palette.copper_color;
                     // todo, money add/sub callbacks
+                    add-clicked(val) => {
+                        add_money("cp", val);
+                    }
+                    sub-clicked(val) => {
+                        subtract_money("cp", val);
+                    }
                 }
                 MoneyWidget {
                     name: "SP";
                     amount: in-character.money.sp;
                     widget-width: grid-width / 5;
                     text-color: Palette.silver_color;
+                    add-clicked(val) => {
+                        add_money("sp", val);
+                    }
+                    sub-clicked(val) => {
+                        subtract_money("sp", val);
+                    }
                 }
                 MoneyWidget {
                     name: "EP";
                     amount: in-character.money.ep;
                     widget-width: grid-width / 5;
                     text-color: Palette.electrum_color;
+                    add-clicked(val) => {
+                        add_money("ep", val);
+                    }
+                    sub-clicked(val) => {
+                        subtract_money("ep", val);
+                    }
                 }
                 MoneyWidget {
                     name: "GP";
                     amount: in-character.money.gp;
                     widget-width: grid-width / 5;
                     text-color: Palette.gold_color;
+                    add-clicked(val) => {
+                        add_money("gp", val);
+                    }
+                    sub-clicked(val) => {
+                        subtract_money("gp", val);
+                    }
                 }
                 MoneyWidget {
                     name: "PP";
                     amount: in-character.money.pp;
                     widget-width: grid-width / 5;
                     text-color: Palette.platinum_color;
+                    add-clicked(val) => {
+                        add-money("pp", val);
+                    }
+                    sub-clicked(val) => {
+                        subtract-money("pp", val);
+                    }
                 }
             }
         }

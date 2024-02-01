@@ -407,4 +407,52 @@ impl Character {
     pub fn get_ui_hit_dice_left(&self) -> String {
         format!("{}d{}", self.hit_dice_total.count - self.hit_dice_used.count, self.hit_dice_total.sides)
     }
+
+    pub fn add_money(&mut self, name: &str, value: i32) {
+        match name {
+            "cp" => self.money.copper += value,
+            "sp" => self.money.silver += value,
+            "ep" => self.money.electrum += value,
+            "gp" => self.money.gold += value,
+            "pp" => self.money.platinum += value,
+            _ => {}
+        }
+    }
+
+    pub fn subtract_money(&mut self, name: &str, value: i32) {
+        // check if subtracting value is greater than current value
+        match name {
+            "cp" => {
+                if self.money.copper < value {
+                    self.money.copper = 0;
+                    return;
+                }
+            }
+            "sp" => {
+                if self.money.silver < value {
+                    self.money.silver = 0;
+                    return;
+                }
+            }
+            "ep" => {
+                if self.money.electrum < value {
+                    self.money.electrum = 0;
+                    return;
+                }
+            }
+            "gp" => {
+                if self.money.gold < value {
+                    self.money.gold = 0;
+                    return;
+                }
+            }
+            "pp" => {
+                if self.money.platinum < value {
+                    self.money.platinum = 0;
+                    return;
+                }
+            }
+            _ => {}
+        }
+    }
 }

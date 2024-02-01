@@ -313,6 +313,12 @@ export component DeathSaves {
 export component LineInput inherits Rectangle {
     background: Palette.dark;
     callback text-changed(string);
+    callback clear();
+
+    clear => {
+        text.text = "";
+    }
+
     VerticalLayout {
         alignment: center;
         HorizontalLayout {
@@ -342,6 +348,7 @@ export component MoneyWidget {
     callback add-clicked(string);
     callback sub-clicked(string);
     
+    
 
     VerticalLayout {
         Label {
@@ -359,7 +366,7 @@ export component MoneyWidget {
             alignment: center;
             HorizontalLayout {
                 alignment: center;
-                LineInput {
+                line-in := LineInput {
                     width: widget-width * 0.8;
                     height: 20px;
                     text-changed(value) => {
@@ -380,6 +387,7 @@ export component MoneyWidget {
                     height: 18px;
                     clicked => {
                         add-clicked(entered-value);
+                        line-in.clear();
                     }
                 }
             }
@@ -395,6 +403,7 @@ export component MoneyWidget {
                     height: 18px;
                     clicked => {
                         sub-clicked(entered-value);
+                        line-in.clear();
                     }
                 }
             }

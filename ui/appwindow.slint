@@ -8,12 +8,18 @@ import { SlintCharacter } from "logic.slint";
 import { EditMode } from "elements/globals.slint";
 import { AcHpMoneyPanel } from "elements/panels/ac_hp_money.slint";
 
+import "fonts/typey.otf";
+
 export component AppWindow inherits Window {
     width: 1920px;
     height: 1000px;
     in-out property <SlintCharacter> character;
 
     default-font-family: "Typey McTypeface";
+
+    // callbacks
+    callback add-money(string, string);
+    callback subtract-money(string, string);
 
     background: Palette.background_color;
     TopBar {in-character: character;}
@@ -38,7 +44,15 @@ export component AppWindow inherits Window {
             stroke: Palette.text_color;
         }
 
-        AcHpMoneyPanel {in-character: character;}
+        AcHpMoneyPanel {
+            in-character: character;
+            add-money(string, int) => {
+                add-money(string, int);
+            }
+            subtract-money(string, int) => {
+                subtract-money(string, int);
+            }
+        }
 
         Line {
             from: {x: 0, y: 0};
