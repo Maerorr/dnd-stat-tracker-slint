@@ -1,4 +1,4 @@
-use std::env::{self, current_exe};
+use std::{env::{self, current_exe}, thread::current};
 
 mod utils;
 mod dnd_logic;
@@ -107,6 +107,23 @@ impl StatTracker {
 
         current_character.stats = ModelRc::from(stats.as_slice());
         current_character.skills = ModelRc::from(skills.as_slice());
+
+        current_character.armor_class = c.get_total_armor_class();
+        current_character.initiative = c.get_ui_total_initiative().into();
+        current_character.speed = c.speed;
+
+        current_character.current_hp = c.get_hit_points_current();
+        current_character.max_hp = c.get_hit_points_max();
+        current_character.temp_hp = c.get_hit_points_temp();
+
+        current_character.hit_dice_total = c.get_ui_hit_dice_total().into();
+        current_character.hit_dice_left = c.get_ui_hit_dice_left().into();
+
+        current_character.money = c.money.to_slint_money();
+
+        current_character.death_saves_successes = c.death_saves.successes;
+        current_character.death_saves_failures = c.death_saves.failures;
+
         ui.set_character(current_character.into());
     }
 }

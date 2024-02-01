@@ -6,6 +6,7 @@ import { Line } from "elements/drawing.slint";
 import { SavesProficiencies } from "elements/panels/saves_profs.slint";
 import { SlintCharacter } from "logic.slint";
 import { EditMode } from "elements/globals.slint";
+import { AcHpMoneyPanel } from "elements/panels/ac_hp_money.slint";
 
 export component AppWindow inherits Window {
     width: 1920px;
@@ -31,6 +32,14 @@ export component AppWindow inherits Window {
 
         SavesProficiencies {in-character: character;}
         
+        Line {
+            from: {x: 0, y: 0};
+            to: {x: 0, y: 100.0};
+            stroke: Palette.text_color;
+        }
+
+        AcHpMoneyPanel {in-character: character;}
+
         Line {
             from: {x: 0, y: 0};
             to: {x: 0, y: 100.0};

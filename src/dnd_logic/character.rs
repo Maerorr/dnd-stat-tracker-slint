@@ -149,6 +149,21 @@ impl Character {
         self.base_armor_class += 1;
     }
 
+    pub fn get_total_armor_class(&self) -> i32 {
+        self.base_armor_class + self.stats.get_stat_modifier(StatType::Dexterity)
+    }
+
+    pub fn get_ui_total_initiative(&self) -> String {
+        let inititative_bonus = self.initiative_bonus + self.stats.get_stat_modifier(StatType::Dexterity);
+        let sign = if inititative_bonus > 0 {
+            "+"
+        } else {
+            ""
+        };
+
+        format!("{}{}", sign, inititative_bonus)
+    }
+
     pub fn subtract_one_ac(&mut self) {
         if self.base_armor_class <= 0 {
             return;
@@ -383,5 +398,13 @@ impl Character {
             return 0;
         }
         self.spell_slots_used[lvl as usize - 1]
+    }
+
+    pub fn get_ui_hit_dice_total(&self) -> String {
+        format!("{}d{}", self.hit_dice_total.count, self.hit_dice_total.sides)
+    }
+
+    pub fn get_ui_hit_dice_left(&self) -> String {
+        format!("{}d{}", self.hit_dice_total.count - self.hit_dice_used.count, self.hit_dice_total.sides)
     }
 }

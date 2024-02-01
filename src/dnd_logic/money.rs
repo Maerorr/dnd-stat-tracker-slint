@@ -1,5 +1,6 @@
 use serde::{Deserialize, Serialize};
 use strum_macros::EnumIter;
+use crate::SlintMoney;
 
 
 #[derive(Debug, EnumIter, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
@@ -180,5 +181,15 @@ impl Money {
         let new_amount = from.convert_to(to, amount);
         
         new_amount
+    }
+
+    pub fn to_slint_money(&self) -> SlintMoney {
+        SlintMoney {
+            cp: self.copper,
+            sp: self.silver,
+            ep: self.electrum,
+            gp: self.gold,
+            pp: self.platinum,
+        }
     }
 }

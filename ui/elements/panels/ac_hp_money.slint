@@ -1,0 +1,267 @@
+import { Heading, Label, SavingThrow, Skill, HitDice, DeathSaves, MoneyWidget} from "../text_widgets.slint";
+import { VerticalBox, GridBox, Button } from "std-widgets.slint";
+import { Palette } from "../palette.slint";
+import { Line } from "../drawing.slint";
+import { SlintCharacter } from "../../logic.slint";
+import { DamageButton, HealButton, TempHpButton } from "../button.slint";
+
+export component AcHpMoneyPanel {
+    in-out property <SlintCharacter> in-character;
+    property <length> grid-width: 475px;
+    GridLayout {
+        min-width: grid-width;
+        spacing: 10px;
+        padding-top: 10px;
+        Row {
+            // AC INITIATIVE SPEED
+            HorizontalLayout {
+                VerticalLayout {
+                    width: grid-width / 3;
+                    height: 50px;
+                    Label {
+                        text: in-character.armor-class;
+                        font-size: 20px;
+                    }
+                    Label {
+                        text: "Armor Class";
+                        font-size: 16px;
+                    }
+                }
+                VerticalLayout {
+                    width: grid-width / 3;
+                    height: 50px;
+                    Label {
+                        text: in-character.initiative;
+                        font-size: 20px;
+                    }
+                    Label {
+                        text: "Initiative";
+                        font-size: 16px;
+                    }
+                }
+                VerticalLayout {
+                    width: grid-width / 3;
+                    height: 50px;
+                    Label {
+                        text: in-character.speed + "ft.";
+                        font-size: 20px;
+                    }
+                    Label {
+                        text: "Speed";
+                        font-size: 16px;
+                    }
+                }
+            }
+        }
+        Row {
+            Line {
+                height: 6px;
+                from: {x: 0, y: 0};
+                to: {x: 1, y: 0};
+            }
+        }
+        Row {
+            // HP
+            GridLayout {
+                width: grid-width;
+                Row {
+                    Rectangle {
+                        width: 10px;
+                        height: 0px;
+                        border-radius: 0px;
+                    }
+                    Text {
+                        width: grid-width / 3;
+                        text: "HP Max";
+                        font-size: 16px;
+                        vertical-alignment: center;
+                        horizontal-alignment: left;
+                        color: Palette.text_color;
+                    }
+                    Text {
+                        width: grid-width / 8;
+                        text: in-character.max-hp;
+                        font-size: 16px;
+                        vertical-alignment: center;
+                        horizontal-alignment: left;
+                        color: Palette.text_color;
+                    }
+                }
+                Row {
+                    Rectangle {
+                        width: 10px;
+                        height: 0px;
+                        border-radius: 0px;
+                    }
+                    Text {
+                        width: grid-width / 3;
+                        text: "HP Current";
+                        font-size: 20px;
+                        vertical-alignment: center;
+                        horizontal-alignment: left;
+                        color: Palette.current_hp_color;
+                    }
+                    Text {
+                        width: grid-width / 8;
+                        text: in-character.current-hp;
+                        font-size: 20px;
+                        vertical-alignment: center;
+                        horizontal-alignment: left;
+                        color: Palette.text_color;
+                    }
+                    
+                    VerticalLayout {
+                        alignment: center;
+                        HorizontalLayout {
+                            alignment: center;
+                            DamageButton {
+                                width: grid-width / 5;
+                                text: "Damage";
+                            }
+                        }
+                    }
+                    VerticalLayout {
+                        alignment: center;
+                        HorizontalLayout {
+                            alignment: center;
+                            HealButton {
+                                width: grid-width / 5;
+                                text: "Heal";
+                            }
+                        }
+                    }
+                }
+                Row {
+                    Rectangle {
+                        width: 10px;
+                        height: 0px;
+                        border-radius: 0px;
+                    }
+                    Text {
+                        width: grid-width / 3;
+                        text: "HP Temp";
+                        font-size: 20px;
+                        vertical-alignment: center;
+                        horizontal-alignment: left;
+                        color: Palette.temp_hp_color;
+                    }
+                    Text {
+                        width: grid-width / 8;
+                        text: in-character.temp-hp;
+                        font-size: 20px;
+                        vertical-alignment: center;
+                        horizontal-alignment: left;
+                        color: Palette.text_color;
+                    }
+                    
+                    VerticalLayout {
+                        alignment: center;
+                        HorizontalLayout {
+                            alignment: center;
+                            TempHpButton {
+                                width: grid-width / 5;
+                                text: "Add";
+                            }
+                        }
+                    }
+                    VerticalLayout {
+                        alignment: center;
+                        HorizontalLayout {
+                            alignment: center;
+                            TempHpButton {
+                                width: grid-width / 5;
+                                text: "Subtract";
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        Row {
+            Line {
+                height: 6px;
+                from: {x: 0, y: 0};
+                to: {x: 1, y: 0};
+            }
+        }
+        Row {
+            HorizontalLayout {
+                min-height: 25px;
+                width: grid-width;
+                Rectangle {
+                    width: 10px;
+                    height: 0px;
+                    border-radius: 0px;
+                }
+                HitDice {
+                    widget-width: grid-width / 3;
+                    hit-dice-total: in-character.hit-dice-total;
+                    hit-dice-left: in-character.hit-dice-left;
+                }
+                Line {
+                    width: 18px;
+                    from: {x: 0, y: 0};
+                    to: {x: 0, y: 1};
+                }
+                DeathSaves {
+                    failures: in-character.death-saves-failures;
+                    successes: in-character.death-saves-successes;
+                    widget-width: grid-width / 2;
+                    height: 50px;
+                }
+            }
+        }
+        Row {
+            Line {
+                height: 6px;
+                from: {x: 0, y: 0};
+                to: {x: 1, y: 0};
+            }
+        }
+        Row {
+            HorizontalLayout {
+                width: grid-width;
+                height: 120px;
+                alignment: stretch;
+                MoneyWidget {
+                    name: "CP";
+                    amount: in-character.money.cp;
+                    widget-width: grid-width / 5;
+                    text-color: Palette.copper_color;
+                    // todo, money add/sub callbacks
+                }
+                MoneyWidget {
+                    name: "SP";
+                    amount: in-character.money.sp;
+                    widget-width: grid-width / 5;
+                    text-color: Palette.silver_color;
+                }
+                MoneyWidget {
+                    name: "EP";
+                    amount: in-character.money.ep;
+                    widget-width: grid-width / 5;
+                    text-color: Palette.electrum_color;
+                }
+                MoneyWidget {
+                    name: "GP";
+                    amount: in-character.money.gp;
+                    widget-width: grid-width / 5;
+                    text-color: Palette.gold_color;
+                }
+                MoneyWidget {
+                    name: "PP";
+                    amount: in-character.money.pp;
+                    widget-width: grid-width / 5;
+                    text-color: Palette.platinum_color;
+                }
+            }
+        }
+        Row {
+            Line {
+                height: 6px;
+                from: {x: 0, y: 0};
+                to: {x: 1, y: 0};
+            }
+        }
+    }
+}

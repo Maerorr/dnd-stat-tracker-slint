@@ -1,6 +1,7 @@
 import { Palette } from "palette.slint";
-import { HorizontalBox, VerticalBox } from "std-widgets.slint";
-import { DiamondStroke, Line, DiamondFilled } from "drawing.slint";
+import { HorizontalBox, VerticalBox, LineEdit } from "std-widgets.slint";
+import { DiamondStroke, Line, DiamondFilled, Diamond } from "drawing.slint";
+import { TopBadButton, NormalButton } from "button.slint";
 
 export component Label inherits Text {
     font-size: 20px;
@@ -57,10 +58,10 @@ export component SavingThrow {
         alignment: start;
         
         if proficient : DiamondFilled {
-            radius: 14px;
+            radius: 7px;
         } 
         if !proficient : DiamondStroke {
-            radius: 14px;
+            radius: 7px;
         }
     
         Text {
@@ -98,10 +99,10 @@ export component Skill {
         alignment: start;
         
         if proficient : DiamondFilled {
-            radius: 14px;
+            radius: 7px;
         } 
         if !proficient : DiamondStroke {
-            radius: 14px;
+            radius: 7px;
         }
     
         Text {
@@ -133,5 +134,271 @@ export component Skill {
             horizontal-alignment: center;
             font-size: 14px;
         }
+    }
+}
+
+export component HitDice {
+    in property <string> hit-dice-total;
+    in property <string> hit-dice-left;
+    in property <length> widget-width;
+
+    VerticalLayout {
+        width: widget-width;
+        Text {
+            text: "Hit Dice";
+            font-size: 18px;
+            color: Palette.text_color;
+            horizontal-alignment: center;
+            vertical-alignment: center;
+        }
+        HorizontalLayout {
+            width: widget-width;
+            height: 20px;
+            Text {
+                width: widget-width / 3;
+                text: "Total";
+                font-size: 16px;
+                color: Palette.text_color;
+                horizontal-alignment: left;
+                vertical-alignment: center;
+            }
+            Text {
+                width: widget-width / 3;
+                text: hit-dice-total;
+                font-size: 16px;
+                color: Palette.text_color;
+                horizontal-alignment: center;
+                vertical-alignment: center;
+            }
+        }
+
+        HorizontalLayout {
+            width: widget-width;
+            height: 20px;
+            Text {
+                width: widget-width / 3;
+                text: "Left";
+                font-size: 16px;
+                color: Palette.text_color;
+                horizontal-alignment: left;
+            }
+            Text {
+                width: widget-width / 3;
+                text: hit-dice-left;
+                font-size: 16px;
+                color: Palette.text_color;
+                horizontal-alignment: center;
+            }
+            VerticalLayout {
+                alignment: center;
+                HorizontalLayout {
+                    alignment: center;
+                    NormalButton {
+                        text: "Use";
+                        width: widget-width / 3;
+                        height: 20px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+export component DeathSaves {
+    in property <int> successes;
+    in property <int> failures;
+    in property <length> widget-width;
+    VerticalLayout {
+        GridLayout {
+            Row {
+                Text {
+                    width: widget-width / 2.5;
+                    text: "Successes:";
+                    font-size: 16px;
+                    color: Palette.text_color;
+                    horizontal-alignment: left;
+                    vertical-alignment: center;
+                    wrap: no-wrap;
+                    horizontal-stretch: 1;
+                    height: 18px;
+                }
+    
+                Rectangle {
+                    width: 6px;
+                    height: 0px;
+                    border-radius: 0px;
+                }
+            
+                HorizontalLayout {
+                    width: widget-width / 3;
+                    for success[index] in [successes, successes - 1, successes - 2] : Diamond {
+                        radius: 7px;
+                        filled: success;
+                    }
+                }
+    
+                Rectangle {
+                    width: 6px;
+                    height: 0px;
+                    border-radius: 0px;
+                }
+    
+                NormalButton {
+                    text: "Add";
+                    width: widget-width / 3;
+                    height: 20px;
+                }
+            }
+        }
+        GridLayout {
+            Row {
+                Text {
+                    width: widget-width / 2.5;
+                    text: "Failures:";
+                    font-size: 16px;
+                    color: Palette.text_color;
+                    horizontal-alignment: left;
+                    vertical-alignment: center;
+                    wrap: no-wrap;
+                    horizontal-stretch: 1;
+                    height: 18px;
+                }
+                Rectangle {
+                    width: 6px;
+                    height: 0px;
+                    border-radius: 0px;
+                } 
+                HorizontalLayout {
+                    width: widget-width / 3;
+                    for death[index] in [failures, failures - 1, failures - 2] : Diamond {
+                        radius: 7px;
+                        filled: death;
+                    }
+                }
+                Rectangle {
+                    width: 6px;
+                    height: 0px;
+                    border-radius: 0px;
+                }
+    
+                NormalButton {
+                    text: "Add";
+                    width: widget-width / 3;
+                    height: 20px;
+                }
+            }
+        }
+        GridLayout {
+            width: widget-width;
+            
+            Row {
+                VerticalLayout {
+                    padding-left: widget-width * 0.06666;
+                    padding-top: 5px;
+                    alignment: center;
+                    HorizontalLayout {
+                        alignment: center;
+                        NormalButton {
+                            text: "Reset Death Saves";
+                            width: widget-width;
+                            height: 18px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+export component LineInput inherits Rectangle {
+    background: Palette.dark;
+    callback text-changed(string);
+    VerticalLayout {
+        alignment: center;
+        HorizontalLayout {
+            alignment: center;
+            text := TextInput {
+                width: 100%;
+                height: 100%;
+                font-size: 18px;
+                color: Palette.text_color;
+                horizontal-alignment: center;
+                vertical-alignment: center;
+                edited => {
+                    text-changed(text.text);
+                }
+            }
+        }
+    }
+}
+
+export component MoneyWidget {
+    in property <int> amount;
+    in property <string> name;
+    in property <color> text-color;
+    in property <length> widget-width;
+    out property <string> entered-value;
+
+    callback add-clicked(string);
+    callback sub-clicked(string);
+    
+
+    VerticalLayout {
+        Label {
+            width: widget-width;
+            text: amount;
+            font-size: 18px;
+            horizontal-alignment: center;
+        }
+        Label {
+            text: name;
+            font-size: 18px;
+            color: text-color;
+        }
+        VerticalLayout {
+            alignment: center;
+            HorizontalLayout {
+                alignment: center;
+                LineInput {
+                    width: widget-width * 0.8;
+                    height: 20px;
+                    text-changed(value) => {
+                        entered-value = value;
+                    }
+                }
+            }
+        }
+        
+        VerticalLayout {
+            alignment: center;
+            height: 20px;
+            HorizontalLayout {
+                alignment: center;
+                add := NormalButton {
+                    text: "Add";
+                    width: widget-width / 2;
+                    height: 18px;
+                    clicked => {
+                        add-clicked(entered-value);
+                    }
+                }
+            }
+        }
+        VerticalLayout {
+            alignment: center;
+            height: 20px;
+            HorizontalLayout {
+                alignment: center;
+                sub := NormalButton {
+                    text: "Sub";
+                    width: widget-width / 2;
+                    height: 18px;
+                    clicked => {
+                        sub-clicked(entered-value);
+                    }
+                }
+            }
+        }
+        
     }
 }

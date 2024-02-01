@@ -15,12 +15,35 @@ export struct SlintSkill {
     modifier: string,
 }
 
+export struct SlintMoney {
+    cp: int,
+    sp: int,
+    ep: int,
+    gp: int,
+    pp: int,
+}
+
 export struct SlintCharacter {
     name: string,
     level: int,
     class: string,
 
     exp: int,
+    armor-class: int,
+    initiative: string,
+    speed: int,
+
+    max-hp: int,
+    current-hp: int,
+    temp-hp: int,
+
+    hit-dice-total: string,
+    hit-dice-left: string,
+
+    money: SlintMoney,
+    
+    death-saves-successes: int,
+    death-saves-failures: int,
 
     proficiency-bonus: string,
     stats: [SlintStat],

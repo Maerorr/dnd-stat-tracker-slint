@@ -19,8 +19,8 @@ export component Line inherits Path {
 export component DiamondStroke inherits Path {
     in property <length> radius;
     stroke: Palette.text_color;
-    width: radius;
-    height: radius;
+    width: radius * 2;
+    height: radius * 2;
     y: radius / 2.3;
 
     MoveTo {
@@ -49,8 +49,8 @@ export component DiamondStroke inherits Path {
 export component DiamondFilled inherits Path {
     in property <length> radius;
     fill: Palette.text_color;
-    width: radius;
-    height: radius;
+    width: radius * 2;
+    height: radius * 2;
     y: radius / 2.3;
 
     MoveTo {
@@ -74,4 +74,16 @@ export component DiamondFilled inherits Path {
         y: 0;
     }
     Close{}
+}
+
+export component Diamond {
+    in property <int> filled;
+    in property <length> radius;
+    if filled > 0: DiamondFilled {
+        radius: radius;
+    } 
+
+    if filled <= 0 : DiamondStroke {
+        radius: radius;
+    }
 }
