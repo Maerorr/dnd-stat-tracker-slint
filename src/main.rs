@@ -122,7 +122,12 @@ fn main() -> Result<(), slint::PlatformError> {
         let ui_handle = ui.as_weak();
         move |name, value| {
             let ui = ui_handle.unwrap();
-            let value = value.parse::<i32>().unwrap();
+            print!("value: {}", value);
+            let value = value.trim().parse::<i32>();
+            if value.is_err() {
+                return;
+            }
+            let value = value.unwrap();
             let mut c = c.borrow_mut();
             c.get_current_character().add_money(&name, value);
             set_ui_character_data(&c.get_current_character(), &ui);
@@ -134,7 +139,12 @@ fn main() -> Result<(), slint::PlatformError> {
         let ui_handle = ui.as_weak();
         move |name, value| {
             let ui = ui_handle.unwrap();
-            let value = value.parse::<i32>().unwrap();
+            let value = value.trim().parse::<i32>();
+            if value.is_err() {
+                return;
+            }
+            let value = value.unwrap();
+
             let mut c = app_data_handle.borrow_mut();
             c.get_current_character().subtract_money(&name, value);
             set_ui_character_data(&c.get_current_character(), &ui);
@@ -147,7 +157,11 @@ fn main() -> Result<(), slint::PlatformError> {
         move |damage| {
             let ui = ui_handle.unwrap();
             let mut c = app_data_handle.borrow_mut();
-            let val = damage.parse::<i32>().unwrap();
+            let val = damage.trim().parse::<i32>();
+            if val.is_err() {
+                return;
+            }
+            let val = val.unwrap();
             c.get_current_character().take_damage(val);
             set_ui_character_data(&c.get_current_character(), &ui);
         }
@@ -159,7 +173,11 @@ fn main() -> Result<(), slint::PlatformError> {
         move |heal| {
             let ui = ui_handle.unwrap();
             let mut c = app_data_handle.borrow_mut();
-            let val = heal.parse::<i32>().unwrap();
+            let val = heal.trim().parse::<i32>();
+            if val.is_err() {
+                return;
+            }
+            let val = val.unwrap();
             println!("from Heal: max hp: {}", c.get_current_character().maximum_hit_points);
             c.get_current_character().heal_damage(val);
             println!("from Heal: max hp: {}", c.get_current_character().maximum_hit_points);
@@ -188,6 +206,69 @@ fn main() -> Result<(), slint::PlatformError> {
             let mut c = app_data_handle.borrow_mut();
             let val = temp_hp.parse::<i32>().unwrap();
             c.get_current_character().subtract_temporary_hit_points(val);
+            set_ui_character_data(&c.get_current_character(), &ui);
+        }
+    });
+
+    let app_data_handle = app_data.clone();
+    ui.on_use_hit_dice({
+        let ui_handle = ui.as_weak();
+        move || {
+            let ui = ui_handle.unwrap();
+            let mut c = app_data_handle.borrow_mut();
+            c.get_current_character().use_hit_dice();
+            set_ui_character_data(&c.get_current_character(), &ui);
+        }
+    });
+
+    let app_data_handle = app_data.clone();
+    ui.on_add_death_save_success({
+        let ui_handle = ui.as_weak();
+        move || {
+            let ui = ui_handle.unwrap();
+            let mut c = app_data_handle.borrow_mut();
+            c.get_current_character().add_success_death_save();
+            set_ui_character_data(&c.get_current_character(), &ui);
+        }
+    });
+
+    let app_data_handle = app_data.clone();
+    ui.on_add_death_save_failure({
+        let ui_handle = ui.as_weak();
+        move || {
+            let ui = ui_handle.unwrap();
+            let mut c = app_data_handle.borrow_mut();
+            c.get_current_character().add_fail_death_save();
+            set_ui_character_data(&c.get_current_character(), &ui);
+        }
+    });
+
+    let app_data_handle = app_data.clone();
+    ui.on_reset_death_saves({
+        let ui_handle = ui.as_weak();
+        move || {
+            let ui = ui_handle.unwrap();
+            let mut c = app_data_handle.borrow_mut();
+            c.get_current_character().reset_death_saves();
+            set_ui_character_data(&c.get_current_character(), &ui);
+        }
+    });
+
+    let app_data_handle = app_data.clone();
+    ui.on_convert_money({
+        let ui_handle = ui.as_weak();
+        move |from, to, amount| {
+            println!("from: {}, to: {}, amount: {}", from, to, amount);
+            let ui = ui_handle.unwrap();
+            let mut c = app_data_handle.borrow_mut();
+            let from = String::from(from);
+            let to = String::from(to);
+            let amount = amount.parse::<i32>();
+            if amount.is_err() {
+                return;
+            }
+            let amount = amount.unwrap();
+            c.get_current_character().convert_money(&from, &to, amount);
             set_ui_character_data(&c.get_current_character(), &ui);
         }
     });

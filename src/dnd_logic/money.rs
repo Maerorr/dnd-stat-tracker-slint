@@ -23,6 +23,17 @@ impl Currency {
         }
     }
 
+    pub fn from_string(s: &str) -> Option<Self> {
+        match s {
+            "Copper" => Some(Currency::Copper),
+            "Silver" => Some(Currency::Silver),
+            "Electrum" => Some(Currency::Electrum),
+            "Gold" => Some(Currency::Gold),
+            "Platinum" => Some(Currency::Platinum),
+            _ => None,
+        }
+    }
+
     pub fn to_multiplier(&self) -> i32 {
         match self {
             Currency::Copper => 1,
@@ -178,6 +189,11 @@ impl Money {
     }
 
     pub fn convert_money(&mut self, amount: i32, from: &Currency, to: &Currency) -> Option<i32> {
+        // check if there is enough money to convert
+        let from_amount = *self.get_currency_mut(from);
+        if from_amount < amount {
+            return None;
+        }
         let new_amount = from.convert_to(to, amount);
         
         new_amount

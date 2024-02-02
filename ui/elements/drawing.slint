@@ -87,3 +87,27 @@ export component Diamond {
         radius: radius;
     }
 }
+
+export component Arrow inherits Path {
+    stroke: Palette.text_color;
+    MoveTo {
+        x: 0;
+        y: 0.5;
+    }
+    LineTo {
+        x: 1;
+        y: 0.5;
+    }
+    LineTo {
+        x: 0.75;
+        y: 0.25;
+    }
+    MoveTo {
+        x: 1;
+        y: 0.5;
+    }
+    LineTo {
+        x: 0.75;
+        y: 0.75;
+    }
+}

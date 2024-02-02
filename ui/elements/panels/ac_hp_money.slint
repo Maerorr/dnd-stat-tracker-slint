@@ -1,9 +1,9 @@
 import { Heading, Label, SavingThrow, Skill, HitDice, DeathSaves, MoneyWidget, LineInput} from "../text_widgets.slint";
-import { VerticalBox, GridBox, Button } from "std-widgets.slint";
+import { VerticalBox, GridBox, Button, ComboBox } from "std-widgets.slint";
 import { Palette } from "../palette.slint";
-import { Line } from "../drawing.slint";
+import { Line, Arrow } from "../drawing.slint";
 import { SlintCharacter } from "../../logic.slint";
-import { DamageButton, HealButton, TempHpButton } from "../button.slint";
+import { DamageButton, HealButton, TempHpButton, NormalButton } from "../button.slint";
 
 export component AcHpMoneyPanel {
     in-out property <SlintCharacter> in-character;
@@ -14,13 +14,24 @@ export component AcHpMoneyPanel {
     callback subtract-money(string, string);
 
     // HP RELATED PROPERTIES AND CALLBACKS
-    property <string> hp-input-string;
+    //property <string> hp-input-string;
     callback take-damage(string);
     callback heal(string);
     callback add-temp-hp(string);
     callback subtract-temp-hp(string);
 
+    callback use-hit-dice();
+
     callback clear-hp-input();
+
+    callback add-success();
+    callback add-failure();
+    callback reset-death-saves();
+
+    // (from, to, amount-as-string)
+    property <string> convert-from-string;
+    property <string> convert-to-string;
+    callback convert-money(string, string, string);
 
     clear-hp-input => {
         hp-input.clear();
@@ -112,9 +123,9 @@ export component AcHpMoneyPanel {
                             hp-input := LineInput {
                                 width: grid-width / 3;
                                 height: 20px;
-                                text-changed(value) => {
-                                    hp-input-string = value;
-                                }
+                                // text-changed(value) => {
+                                //     hp-input-string = value;
+                                // }
                             }
                         }
                     }
@@ -155,7 +166,7 @@ export component AcHpMoneyPanel {
                                 width: grid-width / 5;
                                 text: "Damage";
                                 clicked => {
-                                    take_damage(hp-input-string);
+                                    take_damage(hp-input.input-value);
                                     clear_hp_input();
                                 }
                             }
@@ -169,7 +180,7 @@ export component AcHpMoneyPanel {
                                 width: grid-width / 5;
                                 text: "Heal";
                                 clicked => {
-                                    heal(hp-input-string);
+                                    heal(hp-input.input-value);
                                     clear_hp_input();
                                 }
                             }
@@ -207,7 +218,7 @@ export component AcHpMoneyPanel {
                                 width: grid-width / 5;
                                 text: "Add";
                                 clicked => {
-                                    add_temp_hp(hp-input-string);
+                                    add_temp_hp(hp-input.input-value);
                                     clear_hp_input();
                                 }
                             }
@@ -221,7 +232,7 @@ export component AcHpMoneyPanel {
                                 width: grid-width / 5;
                                 text: "Subtract";
                                 clicked => {
-                                    subtract_temp_hp(hp-input-string);
+                                    subtract_temp_hp(hp-input.input-value);
                                     clear_hp_input();
                                 }
                             }
@@ -250,6 +261,9 @@ export component AcHpMoneyPanel {
                     widget-width: grid-width / 3;
                     hit-dice-total: in-character.hit-dice-total;
                     hit-dice-left: in-character.hit-dice-left;
+                    use-dice => {
+                        use-hit-dice();
+                    }
                 }
                 Line {
                     width: 18px;
@@ -261,6 +275,15 @@ export component AcHpMoneyPanel {
                     successes: in-character.death-saves-successes;
                     widget-width: grid-width / 2;
                     height: 50px;
+                    add-success => {
+                        add-success();
+                    }
+                    add-failure => {
+                        add-failure();
+                    }
+                    reset-saves => {
+                        reset-death-saves();
+                    }
                 }
             }
         }
@@ -335,6 +358,79 @@ export component AcHpMoneyPanel {
                     }
                     sub-clicked(val) => {
                         subtract-money("pp", val);
+                    }
+                }
+            }
+        }
+        Row {
+            Line {
+                height: 6px;
+                from: {x: 0, y: 0};
+                to: {x: 1, y: 0};
+            }
+        }
+        Row {
+            VerticalLayout {
+                width: grid-width;
+                height: 90px;
+                spacing: 5px;
+                Text {
+                    height: 30px;
+                    text: "Convert Money";
+                    font-size: 20px;
+                    color: Palette.text_color;
+                    horizontal-alignment: center;
+                    vertical-alignment: top;
+                }
+                HorizontalLayout {
+                    width: grid-width;
+                    height: 30px;
+                    alignment: center;
+                    spacing: 10px;
+                    convert-amount := LineInput {
+                        width: grid-width / 6;
+                        height: 30px;
+                    }
+                    convert-from := ComboBox {
+                        model: ["Copper", "Silver", "Electrum", "Gold", "Platinum"];
+                        width: grid-width / 4;
+                        height: 30px;
+                        current-value: "Copper";
+                        selected(val) => {
+                            convert-from-string = val;
+                        }
+                        init => {
+                            convert-from-string = self.current-value;
+                        }
+                    }
+                    Arrow {
+                        width: 75px;
+                        height: 30px;
+                    }
+                    convert-to := ComboBox {
+                        model: ["Copper", "Silver", "Electrum", "Gold", "Platinum"];
+                        width: grid-width / 4;
+                        height: 30px;
+                        current-value: "Silver";
+                        selected(val) => {
+                            convert-to-string = val;
+                        }
+                        init => {
+                            convert-to-string = self.current-value;   
+                        }
+                    }
+                }
+                VerticalLayout {
+                    alignment: center;
+                    HorizontalLayout {
+                        alignment: center;
+                        NormalButton {
+                            width: grid-width / 5;
+                            text: "Convert";
+                            clicked => {
+                                convert-money(convert-from-string, convert-to-string, convert-amount.input-value);
+                            }
+                        }
                     }
                 }
             }

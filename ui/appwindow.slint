@@ -26,6 +26,15 @@ export component AppWindow inherits Window {
     callback add-temp-hp(string);
     callback subtract-temp-hp(string);
 
+    callback use-hit-dice();
+
+    callback add-death-save-success();
+    callback add-death-save-failure();
+    callback reset-death-saves();
+
+    // (from, to, amount-as-string)
+    callback convert-money(string, string, string);
+
     background: Palette.background_color;
     TopBar {in-character: character;}
     HorizontalLayout {
@@ -68,6 +77,21 @@ export component AppWindow inherits Window {
             }
             subtract-temp-hp(string) => {
                 subtract-temp-hp(string);
+            }
+            use-hit-dice => {
+                use-hit-dice();
+            }
+            add-failure => {
+                add-death-save-failure();
+            }
+            add-success => {
+                add-death-save-success();
+            }
+            reset-death-saves => {
+                reset-death-saves();
+            }
+            convert-money(from, to, amount) => {
+                convert-money(from, to, amount);
             }
         }
 

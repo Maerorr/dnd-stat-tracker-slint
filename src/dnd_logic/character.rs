@@ -467,4 +467,28 @@ impl Character {
             _ => {}
         }
     }
+
+    pub fn use_hit_dice(&mut self) {
+        if self.hit_dice_used.count >= self.level {
+            return;
+        }
+        self.hit_dice_used.count += 1;
+    }
+    pub fn convert_money(&mut self, from: &String, to: &String, value: i32) {
+        let from = Currency::from_string(from);
+        let to = Currency::from_string(to);
+        if from.is_none() || to.is_none() {
+            return;
+        }
+
+        let from = from.unwrap();
+        let to = to.unwrap();
+        let new_amount = self.money.convert_money(value, &from, &to);
+        if new_amount.is_none() {
+            return;
+        }
+        let new_amount = new_amount.unwrap();
+        self.money.add_money(&to, new_amount);
+        self.money.subtract_money(&from, value);
+    }
 }
