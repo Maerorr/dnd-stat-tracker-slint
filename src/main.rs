@@ -106,6 +106,8 @@ pub fn set_ui_character_data(c: &Character, ui: &AppWindow) {
     current_character.death_saves_successes = c.death_saves.successes;
     current_character.death_saves_failures = c.death_saves.failures;
 
+    current_character.features_traits = c.features_and_traits.clone().into();
+
     ui.set_character(current_character.into());
 }
 

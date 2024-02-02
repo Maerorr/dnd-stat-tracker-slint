@@ -1,0 +1,24 @@
+import { Heading, Label, SingleStat } from "../text_widgets.slint";
+import { VerticalBox } from "std-widgets.slint";
+import { Palette } from "../palette.slint";
+import { SlintCharacter, SlintStat } from "../../logic.slint";
+
+export component FeaturesAndTraits {
+    in property <SlintCharacter> in-character;
+    VerticalLayout {
+        padding: 6px;
+        Text {
+            text: "Features & Traits";
+            font-size: 18px;
+            color: Palette.text_color;
+            horizontal-alignment: center;
+            height: self.preferred-height;
+        }
+        Text {
+            width: 300px;
+            text: in-character.features-traits;
+            font-size: 14px;
+            color: Palette.text_color;
+        }
+    }
+}

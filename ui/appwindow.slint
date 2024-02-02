@@ -9,6 +9,7 @@ import { EditMode } from "elements/globals.slint";
 import { AcHpMoneyPanel } from "elements/panels/ac_hp_money.slint";
 
 import "fonts/typey.otf";
+import { FeaturesAndTraits } from "elements/panels/features_traits.slint";
 
 export component AppWindow inherits Window {
     width: 1920px;
@@ -93,6 +94,16 @@ export component AppWindow inherits Window {
             convert-money(from, to, amount) => {
                 convert-money(from, to, amount);
             }
+        }
+
+        Line {
+            from: {x: 0, y: 0};
+            to: {x: 0, y: 100.0};
+            stroke: Palette.text_color;
+        }
+
+        FeaturesAndTraits {
+            in-character: character;
         }
 
         Line {
