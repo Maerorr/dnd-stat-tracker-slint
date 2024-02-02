@@ -96,6 +96,8 @@ pub fn set_ui_character_data(c: &Character, ui: &AppWindow) {
     current_character.max_hp = c.get_hit_points_max();
     current_character.temp_hp = c.get_hit_points_temp();
 
+    //println!("max hp: {}", current_character.max_hp);
+
     current_character.hit_dice_total = c.get_ui_hit_dice_total().into();
     current_character.hit_dice_left = c.get_ui_hit_dice_left().into();
 
@@ -135,6 +137,57 @@ fn main() -> Result<(), slint::PlatformError> {
             let value = value.parse::<i32>().unwrap();
             let mut c = app_data_handle.borrow_mut();
             c.get_current_character().subtract_money(&name, value);
+            set_ui_character_data(&c.get_current_character(), &ui);
+        }
+    });
+
+    let app_data_handle = app_data.clone();
+    ui.on_take_damage({
+        let ui_handle = ui.as_weak();
+        move |damage| {
+            let ui = ui_handle.unwrap();
+            let mut c = app_data_handle.borrow_mut();
+            let val = damage.parse::<i32>().unwrap();
+            c.get_current_character().take_damage(val);
+            set_ui_character_data(&c.get_current_character(), &ui);
+        }
+    });
+
+    let app_data_handle = app_data.clone();
+    ui.on_heal({
+        let ui_handle = ui.as_weak();
+        move |heal| {
+            let ui = ui_handle.unwrap();
+            let mut c = app_data_handle.borrow_mut();
+            let val = heal.parse::<i32>().unwrap();
+            println!("from Heal: max hp: {}", c.get_current_character().maximum_hit_points);
+            c.get_current_character().heal_damage(val);
+            println!("from Heal: max hp: {}", c.get_current_character().maximum_hit_points);
+            
+            set_ui_character_data(&c.get_current_character(), &ui);
+        }
+    });
+
+    let app_data_handle = app_data.clone();
+    ui.on_add_temp_hp({
+        let ui_handle = ui.as_weak();
+        move |temp_hp| {
+            let ui = ui_handle.unwrap();
+            let mut c = app_data_handle.borrow_mut();
+            let val = temp_hp.parse::<i32>().unwrap();
+            c.get_current_character().add_temporary_hit_points(val);
+            set_ui_character_data(&c.get_current_character(), &ui);
+        }
+    });
+
+    let app_data_handle = app_data.clone();
+    ui.on_subtract_temp_hp({
+        let ui_handle = ui.as_weak();
+        move |temp_hp| {
+            let ui = ui_handle.unwrap();
+            let mut c = app_data_handle.borrow_mut();
+            let val = temp_hp.parse::<i32>().unwrap();
+            c.get_current_character().subtract_temporary_hit_points(val);
             set_ui_character_data(&c.get_current_character(), &ui);
         }
     });

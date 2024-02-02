@@ -93,28 +93,8 @@ impl Character {
         character
     }
 
-    pub fn add_level(&mut self) {
-        if self.level >= 20 {
-            return;
-        }
-        self.level += 1;
-        self.proficiency_bonus = proficiency_bonus(self.level);
-        self.experience = exp_needed_to_lvl(self.level);
-        self.hit_dice_total.count = self.level;
-    }
-
-    pub fn subtract_level(&mut self) {
-        if self.level <= 1 {
-            return;
-        }
-        self.level -= 1;
-        self.proficiency_bonus = proficiency_bonus(self.level);
-        self.experience = exp_needed_to_lvl(self.level);
-        self.hit_dice_total.count = self.level;
-    }
-
-    pub fn get_class(&mut self) -> &Class {
-        &mut self.class
+    pub fn get_class(&self) -> &Class {
+        &self.class
     }
 
     pub fn get_class_mut(&mut self) -> &mut Class {
@@ -123,6 +103,59 @@ impl Character {
 
     pub fn get_ui_proficiency_bonus(&self) -> String {
         format!("+{}", self.proficiency_bonus)
+    }
+
+    pub fn get_total_armor_class(&self) -> i32 {
+        self.base_armor_class + self.stats.get_stat_modifier(StatType::Dexterity)
+    }
+
+    pub fn get_ui_total_initiative(&self) -> String {
+        let inititative_bonus = self.initiative_bonus + self.stats.get_stat_modifier(StatType::Dexterity);
+        let sign = if inititative_bonus > 0 {
+            "+"
+        } else {
+            ""
+        };
+
+        format!("{}{}", sign, inititative_bonus)
+    }
+
+    pub fn get_hit_points_max(&self) -> i32 {
+        self.maximum_hit_points
+    }
+
+    pub fn get_hit_points_current(&self) -> i32 {
+        self.current_hit_points
+    }
+
+    pub fn get_hit_points_temp(&self) -> i32 {
+        self.temporary_hit_points
+    }
+
+    pub fn get_spell_list(&mut self) -> &mut SpellList {
+        &mut self.spell_list
+    }
+
+    pub fn get_spell_slots_max(&self, lvl: i32) -> i32 {
+        if lvl < 1 || lvl > 9 {
+            return 0;
+        }
+        self.spell_slots_max[lvl as usize - 1]
+    }
+
+    pub fn get_spell_slots_used(&self, lvl: i32) -> i32 {
+        if lvl < 1 || lvl > 9 {
+            return 0;
+        }
+        self.spell_slots_used[lvl as usize - 1]
+    }
+
+    pub fn get_ui_hit_dice_total(&self) -> String {
+        format!("{}d{}", self.hit_dice_total.count, self.hit_dice_total.sides)
+    }
+
+    pub fn get_ui_hit_dice_left(&self) -> String {
+        format!("{}d{}", self.hit_dice_total.count - self.hit_dice_used.count, self.hit_dice_total.sides)
     }
 
     pub fn set_experience(&mut self, exp: i32) {
@@ -145,23 +178,63 @@ impl Character {
         self.proficiency_bonus = proficiency_bonus(self.level);
     }
 
+    pub fn set_class(&mut self, class: Class) {
+        self.class = class;
+        self.hit_dice_total = class.get_hit_dice();
+        self.hit_dice_total.count = self.level;
+        self.hit_dice_used = Dice::new(class.get_hit_dice().sides, 0);
+    }
+
+    pub fn set_maximum_hit_points(&mut self, max: i32) {
+        if max < 0 {
+            self.maximum_hit_points = 0;
+            return;
+        }
+        self.maximum_hit_points = max;
+    }
+
+    pub fn set_current_hit_points(&mut self, current: i32) {
+        if current < 0 {
+            self.current_hit_points = 0;
+            return;
+        }
+        if current > self.maximum_hit_points {
+            self.current_hit_points = self.maximum_hit_points;
+            return;
+        }
+        self.current_hit_points = current;
+    }
+
+    pub fn set_temporary_hit_points(&mut self, temp: i32) {
+        if temp < 0 {
+            self.temporary_hit_points = 0;
+            return;
+        }
+        self.temporary_hit_points = temp;
+    }
+
+    pub fn add_level(&mut self) {
+        if self.level >= 20 {
+            return;
+        }
+        self.level += 1;
+        self.proficiency_bonus = proficiency_bonus(self.level);
+        self.experience = exp_needed_to_lvl(self.level);
+        self.hit_dice_total.count = self.level;
+    }
+
+    pub fn subtract_level(&mut self) {
+        if self.level <= 1 {
+            return;
+        }
+        self.level -= 1;
+        self.proficiency_bonus = proficiency_bonus(self.level);
+        self.experience = exp_needed_to_lvl(self.level);
+        self.hit_dice_total.count = self.level;
+    }
+  
     pub fn add_one_ac(&mut self) {
         self.base_armor_class += 1;
-    }
-
-    pub fn get_total_armor_class(&self) -> i32 {
-        self.base_armor_class + self.stats.get_stat_modifier(StatType::Dexterity)
-    }
-
-    pub fn get_ui_total_initiative(&self) -> String {
-        let inititative_bonus = self.initiative_bonus + self.stats.get_stat_modifier(StatType::Dexterity);
-        let sign = if inititative_bonus > 0 {
-            "+"
-        } else {
-            ""
-        };
-
-        format!("{}{}", sign, inititative_bonus)
     }
 
     pub fn subtract_one_ac(&mut self) {
@@ -191,25 +264,6 @@ impl Character {
         self.speed -= 5;
     }
 
-    pub fn set_class(&mut self, class: Class) {
-        self.class = class;
-        self.hit_dice_total = class.get_hit_dice();
-        self.hit_dice_total.count = self.level;
-        self.hit_dice_used = Dice::new(class.get_hit_dice().sides, 0);
-    }
-
-    pub fn get_hit_points_max(&self) -> i32 {
-        self.hit_dice_total.max_roll() + self.stats.get_stat_modifier(StatType::Constitution) * self.level
-    }
-
-    pub fn get_hit_points_current(&self) -> i32 {
-        self.current_hit_points
-    }
-
-    pub fn get_hit_points_temp(&self) -> i32 {
-        self.temporary_hit_points
-    }
-
     pub fn take_damage(&mut self, damage: i32) {
         if damage < 0 {
             return;
@@ -223,7 +277,9 @@ impl Character {
             return;
         }
         let mut exceed = 0;
-        if self.current_hit_points < damage {
+        if self.current_hit_points >= damage {
+            self.current_hit_points -= damage;
+        } else {
             self.current_hit_points = 0;
             exceed = damage - self.current_hit_points;
         }
@@ -240,29 +296,10 @@ impl Character {
             return;
         }
         self.current_hit_points += heal;
+
         if self.current_hit_points > self.maximum_hit_points {
             self.current_hit_points = self.maximum_hit_points;
         }
-    }
-
-    pub fn set_maximum_hit_points(&mut self, max: i32) {
-        if max < 0 {
-            self.maximum_hit_points = 0;
-            return;
-        }
-        self.maximum_hit_points = max;
-    }
-
-    pub fn set_current_hit_points(&mut self, current: i32) {
-        if current < 0 {
-            self.current_hit_points = 0;
-            return;
-        }
-        if current > self.maximum_hit_points {
-            self.current_hit_points = self.maximum_hit_points;
-            return;
-        }
-        self.current_hit_points = current;
     }
 
     pub fn add_temporary_hit_points(&mut self, temp: i32) {
@@ -280,14 +317,6 @@ impl Character {
         if self.temporary_hit_points < 0 {
             self.temporary_hit_points = 0;
         }
-    }
-
-    pub fn set_temporary_hit_points(&mut self, temp: i32) {
-        if temp < 0 {
-            self.temporary_hit_points = 0;
-            return;
-        }
-        self.temporary_hit_points = temp;
     }
 
     pub fn add_success_death_save(&mut self) {
@@ -308,9 +337,7 @@ impl Character {
         self.death_saves = DeathSaves::default();
     }
 
-    pub fn get_spell_list(&mut self) -> &mut SpellList {
-        &mut self.spell_list
-    }
+    
 
     pub fn add_spell(&mut self, spell:&Spell) {
         self.spell_list.add_spell(&spell, false);
@@ -386,27 +413,7 @@ impl Character {
         self.spell_slots_used[level as usize - 1] -= 1;
     }
 
-    pub fn get_spell_slots_max(&self, lvl: i32) -> i32 {
-        if lvl < 1 || lvl > 9 {
-            return 0;
-        }
-        self.spell_slots_max[lvl as usize - 1]
-    }
-
-    pub fn get_spell_slots_used(&self, lvl: i32) -> i32 {
-        if lvl < 1 || lvl > 9 {
-            return 0;
-        }
-        self.spell_slots_used[lvl as usize - 1]
-    }
-
-    pub fn get_ui_hit_dice_total(&self) -> String {
-        format!("{}d{}", self.hit_dice_total.count, self.hit_dice_total.sides)
-    }
-
-    pub fn get_ui_hit_dice_left(&self) -> String {
-        format!("{}d{}", self.hit_dice_total.count - self.hit_dice_used.count, self.hit_dice_total.sides)
-    }
+    
 
     pub fn add_money(&mut self, name: &str, value: i32) {
         match name {
@@ -427,30 +434,35 @@ impl Character {
                     self.money.copper = 0;
                     return;
                 }
+                self.money.copper -= value;
             }
             "sp" => {
                 if self.money.silver < value {
                     self.money.silver = 0;
                     return;
                 }
+                self.money.silver -= value;
             }
             "ep" => {
                 if self.money.electrum < value {
                     self.money.electrum = 0;
                     return;
                 }
+                self.money.electrum -= value;
             }
             "gp" => {
                 if self.money.gold < value {
                     self.money.gold = 0;
                     return;
                 }
+                self.money.gold -= value;
             }
             "pp" => {
                 if self.money.platinum < value {
                     self.money.platinum = 0;
                     return;
                 }
+                self.money.platinum -= value;
             }
             _ => {}
         }

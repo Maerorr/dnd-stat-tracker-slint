@@ -1,4 +1,4 @@
-import { Heading, Label, SavingThrow, Skill, HitDice, DeathSaves, MoneyWidget} from "../text_widgets.slint";
+import { Heading, Label, SavingThrow, Skill, HitDice, DeathSaves, MoneyWidget, LineInput} from "../text_widgets.slint";
 import { VerticalBox, GridBox, Button } from "std-widgets.slint";
 import { Palette } from "../palette.slint";
 import { Line } from "../drawing.slint";
@@ -12,6 +12,19 @@ export component AcHpMoneyPanel {
     // (name, value-as-string)
     callback add-money(string, string);
     callback subtract-money(string, string);
+
+    // HP RELATED PROPERTIES AND CALLBACKS
+    property <string> hp-input-string;
+    callback take-damage(string);
+    callback heal(string);
+    callback add-temp-hp(string);
+    callback subtract-temp-hp(string);
+
+    callback clear-hp-input();
+
+    clear-hp-input => {
+        hp-input.clear();
+    }
 
     GridLayout {
         min-width: grid-width;
@@ -91,7 +104,26 @@ export component AcHpMoneyPanel {
                         horizontal-alignment: left;
                         color: Palette.text_color;
                     }
+                    VerticalLayout {
+                        alignment: center;
+                        height: 20px;
+                        HorizontalLayout {
+                            alignment: center;
+                            hp-input := LineInput {
+                                width: grid-width / 3;
+                                height: 20px;
+                                text-changed(value) => {
+                                    hp-input-string = value;
+                                }
+                            }
+                        }
+                    }
+                    
                 }
+            }
+        }
+        Row {
+            GridLayout {
                 Row {
                     Rectangle {
                         width: 10px;
@@ -122,6 +154,10 @@ export component AcHpMoneyPanel {
                             DamageButton {
                                 width: grid-width / 5;
                                 text: "Damage";
+                                clicked => {
+                                    take_damage(hp-input-string);
+                                    clear_hp_input();
+                                }
                             }
                         }
                     }
@@ -132,6 +168,10 @@ export component AcHpMoneyPanel {
                             HealButton {
                                 width: grid-width / 5;
                                 text: "Heal";
+                                clicked => {
+                                    heal(hp-input-string);
+                                    clear_hp_input();
+                                }
                             }
                         }
                     }
@@ -166,6 +206,10 @@ export component AcHpMoneyPanel {
                             TempHpButton {
                                 width: grid-width / 5;
                                 text: "Add";
+                                clicked => {
+                                    add_temp_hp(hp-input-string);
+                                    clear_hp_input();
+                                }
                             }
                         }
                     }
@@ -176,6 +220,10 @@ export component AcHpMoneyPanel {
                             TempHpButton {
                                 width: grid-width / 5;
                                 text: "Subtract";
+                                clicked => {
+                                    subtract_temp_hp(hp-input-string);
+                                    clear_hp_input();
+                                }
                             }
                         }
                     }

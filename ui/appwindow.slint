@@ -21,6 +21,11 @@ export component AppWindow inherits Window {
     callback add-money(string, string);
     callback subtract-money(string, string);
 
+    callback take-damage(string);
+    callback heal(string);
+    callback add-temp-hp(string);
+    callback subtract-temp-hp(string);
+
     background: Palette.background_color;
     TopBar {in-character: character;}
     HorizontalLayout {
@@ -51,6 +56,18 @@ export component AppWindow inherits Window {
             }
             subtract-money(string, int) => {
                 subtract-money(string, int);
+            }
+            take-damage(string) => {
+                take-damage(string);
+            }
+            heal(string) => {
+                heal(string);
+            }
+            add-temp-hp(string) => {
+                add-temp-hp(string);
+            }
+            subtract-temp-hp(string) => {
+                subtract-temp-hp(string);
             }
         }
 
