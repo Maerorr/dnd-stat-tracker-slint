@@ -8,7 +8,7 @@
     "target": "A creature of your choice that you can see within range",
     "range": "500 feet",
     "components": "V, S",
-    "duration": "Up to 10 minutes",
+    "duration": "(Concentration) Up to 10 minutes ",
     "classes": [
       "Sorcerer",
       "Warlock",
@@ -27,7 +27,7 @@
     "target": "A creature of your choice that you can see within range",
     "range": "90 feet",
     "components": "V, S",
-    "duration": "Up to 10 minutes",
+    "duration": "(Concentration) Up to 10 minutes ",
     "classes": [
       "Cleric"
     ],
@@ -98,7 +98,7 @@
     "target": "A creature of your choice that you can see within range",
     "range": "90 feet",
     "components": "V, S",
-    "duration": "Up to 1 hour",
+    "duration": "(Concentration) Up to 1 hour ",
     "classes": [
       "Druid",
       "Warlock"
@@ -187,7 +187,7 @@
     "target": "A creature of your choice that you can see within range",
     "range": "Self",
     "components": "V, S",
-    "duration": "Up to 1 minute",
+    "duration": "(Concentration) Up to 1 minute ",
     "classes": [
       "Bard",
       "Sorcerer",
@@ -207,7 +207,7 @@
     "target": "A creature of your choice that you can see within range",
     "range": "Self",
     "components": "V, S, M",
-    "duration": "Up to 24 hours",
+    "duration": "(Concentration) Up to 24 hours ",
     "classes": [
       "Bard",
       "Cleric",
@@ -226,7 +226,7 @@
     "target": "A creature of your choice that you can see within range",
     "range": "60 feet",
     "components": "V, S, M",
-    "duration": "Up to 1 minute",
+    "duration": "(Concentration) Up to 1 minute ",
     "classes": [
       "Warlock",
       "Wizard"
@@ -261,7 +261,7 @@
     "target": "A creature of your choice that you can see within range",
     "range": "Self",
     "components": "V, S, M",
-    "duration": "Up to 1 minute",
+    "duration": "(Concentration) Up to 1 minute ",
     "classes": [
       "Sorcerer",
       "Wizard"
@@ -350,7 +350,7 @@
     "target": "A creature of your choice that you can see within range",
     "range": "Self",
     "components": "V, S",
-    "duration": "Up to 10 minutes",
+    "duration": "(Concentration) Up to 10 minutes ",
     "classes": [
       "Druid",
       "Sorcerer",
@@ -370,7 +370,7 @@
     "target": "A creature of your choice that you can see within range",
     "range": "Self",
     "components": "V, S",
-    "duration": "Up to 10 minutes",
+    "duration": "(Concentration) Up to 10 minutes ",
     "classes": [
       "Druid",
       "Sorcerer",
@@ -390,7 +390,7 @@
     "target": "A creature of your choice that you can see within range",
     "range": "Self",
     "components": "V, S",
-    "duration": "Up to 10 minutes",
+    "duration": "(Concentration) Up to 10 minutes ",
     "classes": [
       "Druid",
       "Sorcerer",
@@ -410,7 +410,7 @@
     "target": "A creature of your choice that you can see within range",
     "range": "Self",
     "components": "V, S",
-    "duration": "Up to 10 minutes",
+    "duration": "(Concentration) Up to 10 minutes ",
     "classes": [
       "Druid",
       "Sorcerer",
@@ -467,7 +467,7 @@
     "target": "A creature of your choice that you can see within range",
     "range": "120 feet",
     "components": "V, S, M",
-    "duration": "Up to 2 hours",
+    "duration": "(Concentration) Up to 2 hours ",
     "classes": [
       "Druid",
       "Sorcerer",
@@ -503,7 +503,7 @@
     "target": "A creature of your choice that you can see within range",
     "range": "30 feet",
     "components": "V",
-    "duration": "Up to 1 minute",
+    "duration": "(Concentration) Up to 1 minute ",
     "classes": [
       "Bard",
       "Wizard"
@@ -558,7 +558,7 @@
     "target": "A creature of your choice that you can see within range",
     "range": "Self",
     "components": "V, S",
-    "duration": "Up to 1 minute",
+    "duration": "(Concentration) Up to 1 minute ",
     "classes": [
       "Druid"
     ],
@@ -593,7 +593,7 @@
     "target": "A creature of your choice that you can see within range",
     "range": "Self",
     "components": "V, S, M",
-    "duration": "Up to 1 minute",
+    "duration": "(Concentration) Up to 1 minute ",
     "classes": [
       "Druid",
       "Sorcerer",
@@ -650,7 +650,7 @@
     "target": "A creature of your choice that you can see within range",
     "range": "120 feet",
     "components": "V, S, M",
-    "duration": "Up to 10 minutes",
+    "duration": "(Concentration) Up to 10 minutes ",
     "classes": [
       "Wizard"
     ],
@@ -667,7 +667,7 @@
     "target": "A creature of your choice that you can see within range",
     "range": "120 feet",
     "components": "V, S, M",
-    "duration": "Up to 10 minutes",
+    "duration": "(Concentration) Up to 10 minutes ",
     "classes": [
       "Druid"
     ],

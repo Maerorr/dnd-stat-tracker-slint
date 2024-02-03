@@ -474,6 +474,7 @@ impl Character {
         }
         self.hit_dice_used.count += 1;
     }
+
     pub fn convert_money(&mut self, from: &String, to: &String, value: i32) {
         let from = Currency::from_string(from);
         let to = Currency::from_string(to);
@@ -490,5 +491,15 @@ impl Character {
         let new_amount = new_amount.unwrap();
         self.money.add_money(&to, new_amount);
         self.money.subtract_money(&from, value);
+    }
+
+    pub fn get_ui_spell_slots(&self) -> Vec<slint::SharedString> {
+        let mut slots = Vec::new();
+        for i in 0..9 {
+            let max = self.spell_slots_max[i];
+            let used = self.spell_slots_used[i];
+            slots.push(format!("{}/{}", used, max).into());
+        }
+        slots
     }
 }

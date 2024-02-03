@@ -2,8 +2,9 @@ use core::panic;
 use std::ops::Index;
 
 use serde::{Deserialize, Serialize};
+use crate::SlintShortSpellEntry;
 
-use super::{class::Class, spell::Spell};
+use super::{class::{self, Class}, spell::Spell};
 
 #[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 /// all spells are held in Vec<(Spell, bool)> where the bool is whether or not the spell is prepared
@@ -102,5 +103,74 @@ impl SpellList {
             }
         }
         None
+    }
+
+    pub fn get_ui_spell_entries(&self) -> Vec<Vec<SlintShortSpellEntry>> {
+        // name: string,
+        // level: int,
+        // school: string,
+        // casting-time: string,
+        // range: string,
+        // components: string,
+        // duration: string,
+        // description: string,
+        // higher-levels: string,
+        // ritual: bool,
+        // concentration: bool,
+        // classes: [string],
+        // prepared: bool,
+        let mut entries: Vec<Vec<SlintShortSpellEntry>> = Vec::new();
+        let mut cantrips: Vec<SlintShortSpellEntry> = Vec::new();
+        for spell in &self.cantrips {
+            let mut classes_string: Vec<slint::SharedString> = Vec::new();
+            for class in &spell.0.classes {
+                classes_string.push(class.get_name().into());
+            }
+
+            let cantrip = SlintShortSpellEntry {
+                name: spell.0.name.clone().into(),
+                level: 0,
+                school: spell.0.school.to_string().clone().into(),
+                casting_time: spell.0.casting_time.clone().into(),
+                range: spell.0.range.clone().into(),
+                components: spell.0.components.clone().into(),
+                duration: spell.0.duration.clone().into(),
+                description: spell.0.description.clone().into(),
+                higher_levels: spell.0.higher_levels.clone().into(),
+                ritual: spell.0.ritual,
+                classes: classes_string.as_slice().into(),
+                prepared: spell.1,
+            };
+            cantrips.push(cantrip);
+        }
+        entries.push(cantrips);
+        for (i, spell_level) in self.spells.iter().enumerate() {
+            let mut spells: Vec<SlintShortSpellEntry> = Vec::new();
+            for spell in spell_level {
+                let mut classes_string: Vec<slint::SharedString> = Vec::new();
+                for class in &spell.0.classes {
+                    classes_string.push(class.get_name().into());
+                }
+
+                let spell = SlintShortSpellEntry {
+                    name: spell.0.name.clone().into(),
+                    level: i as i32 + 1,
+                    school: spell.0.school.to_string().clone().into(),
+                    casting_time: spell.0.casting_time.clone().into(),
+                    range: spell.0.range.clone().into(),
+                    components: spell.0.components.clone().into(),
+                    duration: spell.0.duration.clone().into(),
+                    description: spell.0.description.clone().into(),
+                    higher_levels: spell.0.higher_levels.clone().into(),
+                    ritual: spell.0.ritual,
+                    classes: classes_string.as_slice().into(),
+                    prepared: spell.1,
+                };
+                spells.push(spell);
+            }
+            entries.push(spells);
+        }
+
+        entries
     }
 }

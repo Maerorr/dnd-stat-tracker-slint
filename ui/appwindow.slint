@@ -10,6 +10,7 @@ import { AcHpMoneyPanel } from "elements/panels/ac_hp_money.slint";
 
 import "fonts/typey.otf";
 import { FeaturesAndTraits } from "elements/panels/features_traits.slint";
+import { SpellList } from "elements/panels/spelllist.slint";
 
 export component AppWindow inherits Window {
     width: 1920px;
@@ -35,6 +36,9 @@ export component AppWindow inherits Window {
 
     // (from, to, amount-as-string)
     callback convert-money(string, string, string);
+
+    callback use-spell-slot(string);
+    callback add-spell-slot(string);
 
     background: Palette.background_color;
     TopBar {in-character: character;}
@@ -104,6 +108,23 @@ export component AppWindow inherits Window {
 
         FeaturesAndTraits {
             in-character: character;
+        }
+
+        Line {
+            from: {x: 0, y: 0};
+            to: {x: 0, y: 100.0};
+            stroke: Palette.text_color;
+        }
+
+        SpellList {
+            in-character: character;
+            widget-width: 750px;
+            use-spell-slot(string) => {
+                use-spell-slot(string);
+            }
+            add-spell-slot(string) => {
+                add-spell-slot(string);
+            }
         }
 
         Line {

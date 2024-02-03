@@ -23,6 +23,20 @@ export struct SlintMoney {
     pp: int,
 }
 
+export struct SlintShortSpellEntry {
+    name: string,
+    level: int,
+    school: string,
+    casting-time: string,
+    range: string,
+    components: string,
+    duration: string,
+    description: string,
+    higher-levels: string,
+    ritual: bool,
+    classes: [string],
+    prepared: bool,
+}
 export struct SlintCharacter {
     name: string,
     level: int,
@@ -48,6 +62,19 @@ export struct SlintCharacter {
     proficiency-bonus: string,
     stats: [SlintStat],
     skills: [SlintSkill],
+
+    cantrips: [SlintShortSpellEntry],
+    spells1: [SlintShortSpellEntry],
+    spells2: [SlintShortSpellEntry],
+    spells3: [SlintShortSpellEntry],
+    spells4: [SlintShortSpellEntry],
+    spells5: [SlintShortSpellEntry],
+    spells6: [SlintShortSpellEntry],
+    spells7: [SlintShortSpellEntry],
+    spells8: [SlintShortSpellEntry],
+    spells9: [SlintShortSpellEntry],
+
+    spell-slots: [string],
 
     features-traits: string,
 }

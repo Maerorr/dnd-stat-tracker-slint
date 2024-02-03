@@ -85,8 +85,8 @@ pub fn set_ui_character_data(c: &Character, ui: &AppWindow) {
     skills.resize(18, SlintSkill::default());
     set_skills_ui_data(&c, &mut skills);
 
-    current_character.stats = ModelRc::from(stats.as_slice());
-    current_character.skills = ModelRc::from(skills.as_slice());
+    current_character.stats = stats.as_slice().into();//ModelRc::from(stats.as_slice());
+    current_character.skills = skills.as_slice().into();//ModelRc::from(skills.as_slice());
 
     current_character.armor_class = c.get_total_armor_class();
     current_character.initiative = c.get_ui_total_initiative().into();
@@ -107,6 +107,20 @@ pub fn set_ui_character_data(c: &Character, ui: &AppWindow) {
     current_character.death_saves_failures = c.death_saves.failures;
 
     current_character.features_traits = c.features_and_traits.clone().into();
+
+    let spells = c.spell_list.get_ui_spell_entries();
+    current_character.cantrips = spells[0].as_slice().into();
+    current_character.spells1 = spells[1].as_slice().into();
+    current_character.spells2 = spells[2].as_slice().into();
+    current_character.spells3 = spells[3].as_slice().into();
+    current_character.spells4 = spells[4].as_slice().into();
+    current_character.spells5 = spells[5].as_slice().into();
+    current_character.spells6 = spells[6].as_slice().into();
+    current_character.spells7 = spells[7].as_slice().into();
+    current_character.spells8 = spells[8].as_slice().into();
+    current_character.spells9 = spells[9].as_slice().into();
+
+    current_character.spell_slots = c.get_ui_spell_slots().as_slice().into();
 
     ui.set_character(current_character.into());
 }
@@ -180,9 +194,7 @@ fn main() -> Result<(), slint::PlatformError> {
                 return;
             }
             let val = val.unwrap();
-            println!("from Heal: max hp: {}", c.get_current_character().maximum_hit_points);
             c.get_current_character().heal_damage(val);
-            println!("from Heal: max hp: {}", c.get_current_character().maximum_hit_points);
             
             set_ui_character_data(&c.get_current_character(), &ui);
         }
@@ -260,7 +272,6 @@ fn main() -> Result<(), slint::PlatformError> {
     ui.on_convert_money({
         let ui_handle = ui.as_weak();
         move |from, to, amount| {
-            println!("from: {}, to: {}, amount: {}", from, to, amount);
             let ui = ui_handle.unwrap();
             let mut c = app_data_handle.borrow_mut();
             let from = String::from(from);
@@ -271,6 +282,30 @@ fn main() -> Result<(), slint::PlatformError> {
             }
             let amount = amount.unwrap();
             c.get_current_character().convert_money(&from, &to, amount);
+            set_ui_character_data(&c.get_current_character(), &ui);
+        }
+    });
+
+    let app_data_handle = app_data.clone();
+    ui.on_use_spell_slot({
+        let ui_handle = ui.as_weak();
+        move |level| {
+            let ui = ui_handle.unwrap();
+            let mut c = app_data_handle.borrow_mut();
+            let level = level.trim().parse::<i32>().unwrap();
+            c.get_current_character().add_one_spell_slot_used(level);
+            set_ui_character_data(&c.get_current_character(), &ui);
+        }
+    });
+
+    let app_data_handle = app_data.clone();
+    ui.on_add_spell_slot({
+        let ui_handle = ui.as_weak();
+        move |level| {
+            let ui = ui_handle.unwrap();
+            let mut c = app_data_handle.borrow_mut();
+            let level = level.trim().parse::<i32>().unwrap();
+            c.get_current_character().subtract_one_spell_slot_used(level);
             set_ui_character_data(&c.get_current_character(), &ui);
         }
     });
