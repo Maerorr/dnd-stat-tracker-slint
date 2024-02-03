@@ -127,11 +127,17 @@ impl SpellList {
                 classes_string.push(class.get_name().into());
             }
 
+            let cast_time = if spell.0.ritual {
+                format!("{} (ritual)", spell.0.casting_time)
+            } else {
+                spell.0.casting_time.clone()
+            };
+            
             let cantrip = SlintShortSpellEntry {
                 name: spell.0.name.clone().into(),
                 level: 0,
                 school: spell.0.school.to_string().clone().into(),
-                casting_time: spell.0.casting_time.clone().into(),
+                casting_time: cast_time.into(),
                 range: spell.0.range.clone().into(),
                 components: spell.0.components.clone().into(),
                 duration: spell.0.duration.clone().into(),

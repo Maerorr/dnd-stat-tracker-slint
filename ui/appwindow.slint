@@ -10,7 +10,7 @@ import { AcHpMoneyPanel } from "elements/panels/ac_hp_money.slint";
 
 import "fonts/typey.otf";
 import { FeaturesAndTraits } from "elements/panels/features_traits.slint";
-import { SpellList } from "elements/panels/spelllist.slint";
+import { SpellListEq } from "elements/panels/spelllist_eq.slint";
 
 export component AppWindow inherits Window {
     width: 1920px;
@@ -116,9 +116,9 @@ export component AppWindow inherits Window {
             stroke: Palette.text_color;
         }
 
-        SpellList {
+        SpellListEq {
             in-character: character;
-            widget-width: 750px;
+            widget-width: 800px;
             use-spell-slot(string) => {
                 use-spell-slot(string);
             }

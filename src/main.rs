@@ -122,6 +122,19 @@ pub fn set_ui_character_data(c: &Character, ui: &AppWindow) {
 
     current_character.spell_slots = c.get_ui_spell_slots().as_slice().into();
 
+    current_character.is_spellcaster = if c.class.get_spellcasting_ability().is_none() {
+        false
+    } else {
+        true
+    };  
+    current_character.spellcasting_ability = if c.class.get_spellcasting_ability().is_none() {
+        String::from("None").into()
+    } else {
+        c.class.get_spellcasting_ability().unwrap().get_short_name().into()
+    };
+    current_character.spell_save_dc = c.get_ui_spell_save_dc().into();
+    current_character.spell_attack_bonus = c.get_ui_spell_attack_bonus().into();
+
     ui.set_character(current_character.into());
 }
 

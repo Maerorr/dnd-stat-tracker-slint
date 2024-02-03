@@ -14,7 +14,7 @@
       "Wizard"
     ],
     "description": "A line of roaring flame 30 feet long and 5 feet wide emanates from you in a direction you choose. Each creature in the line must make a Dexterity saving throw. A creature takes 3d8 fire damage on a failed save, or half as much damage on a successful one.\n",
-    "higher_levels": "",
+    "higher_levels": "When you cast this spell using a spell slot of 3nd level or higher, the damage increases by 1d8 for each slot level above 2st.\n",
     "window_open": false
   },
   {
@@ -32,7 +32,7 @@
       "Paladin"
     ],
     "description": "Your spell bolsters your allies with toughness and resolve. Choose up to three creatures within range. Each target's hit point maximum and current hit points increase by 5 for the duration.\n",
-    "higher_levels": "",
+    "higher_levels": "When you cast this spell using a spell slot of 3rd level or higher, a target's hit points increase by an additional 5 for each slot level above 2nd.\n",
     "window_open": false
   },
   {
@@ -69,7 +69,7 @@
       "Ranger"
     ],
     "description": "By means of this spell, you use an animal to deliver a message. Choose a Tiny beast you can see within range, such as a squirrel, a blue jay, or a bat. You specify a location, which you must have visited, and a recipient who matches a general description, such as \u00e2\u20ac\u015ba man or woman dressed in the uniform of the town guard\u00e2\u20ac\u0165 or \u00e2\u20ac\u015ba red-haired dwarf wearing a pointed hat.\u00e2\u20ac\u0165 You also speak a message of up to twenty-five words. The target beast travels for the duration of the spell toward the specified location, covering about 50 miles per 24 hours for a flying messenger, or 25 miles for other animals.\nWhen the messenger arrives, it delivers your message to the creature that you described, replicating the sound of your voice. The messenger speaks only to a creature matching the description you gave. If the messenger doesn't reach its destination before the spell ends, the message is lost, and the beast makes its way back to where you cast this spell.\n",
-    "higher_levels": "",
+    "higher_levels": "If you cast this spell using a spell slot of 3nd level or higher, the duration of the spell increases by 48 hours for each slot level above 2nd.\n",
     "window_open": false
   },
   {
@@ -161,7 +161,7 @@
       "Wizard"
     ],
     "description": "You can blind or deafen a foe. Choose one creature that you can see within range to make a constitution saving throw. If it fails, the target is either blinded or deafened (your choice) for the duration. At the end of each of its turns, the target can make a constitution saving throw. On a success, the spell ends.\n",
-    "higher_levels": "",
+    "higher_levels": "When you cast this spell using a spell slot of 3rd level or higher, you can target one additional creature for each slot level above 2nd.\n",
     "window_open": false
   },
   {
@@ -197,7 +197,7 @@
       "Paladin"
     ],
     "description": "The next time you hit a creature with a weapon attack before this spell ends, the weapon gleams with astral radiance as you strike. The attack deals an extra 2d6 radiant damage to the target, which becomes visible if it's invisible, and the target sheds dim light in a 5-foot radius and can't become invisible until the spell ends.\n",
-    "higher_levels": "",
+    "higher_levels": "When you cast this spell using a spell slot of 3rd level or higher, the extra damage increases by 1d6 for each slot level above 2nd.\n",
     "window_open": false
   },
   {
@@ -236,7 +236,7 @@
       "Wizard"
     ],
     "description": "You fill the air with spinning daggers in a cube 5 feet on each side, centered on a point you choose within range. A creature takes 4d4 slashing damage when it enters the spell's area for the first time on a turn or starts its turn there.\n",
-    "higher_levels": "",
+    "higher_levels": "When you cast this spell using a spell slot of 3rd level or higher, the damage increases by 2d4 for each slot level above 2nd.\n",
     "window_open": false
   },
   {
@@ -271,7 +271,7 @@
       "Ranger"
     ],
     "description": "You plant four pieces of nonmagical ammunition\u00e2\u20ac\u201darrows or crossbow bolts\u00e2\u20ac\u201din the ground within range and lay magic upon them to protect an area. Until the spell ends, whenever a creature other than you comes within 30 feet of the ammunition for the first time on a turn or ends its turn there, one piece of ammunition flies up to strike it. The creature must succeed on a dexterity saving throw or take 1d6 piercing damage. The piece of ammunition is then destroyed. The spell ends when no ammunition remains.\nWhen you cast this spell, you can designate any creatures you choose, and the spell ignores them.\n",
-    "higher_levels": "",
+    "higher_levels": "When you cast this spell using a spell slot of 3rd level or higher, the amount of ammunition that can be affected increases by two for each slot level above 2nd.\n",
     "window_open": false
   },
   {
@@ -370,7 +370,7 @@
       "Wizard"
     ],
     "description": "Choose an unoccupied 5-foot cube of air that you can see within range. An elemental force that resembles a dust devil appears in the cube and lasts for the spell's duration.\nAny creature that ends its turn within 5 feet of the dust devil must make a Strength saving throw. On a failed save, the creature takes 1d8 bludgeoning damage and is pushed 10 feet away. On a successful save, the creature takes half as much damage and isn't pushed.\nAs a bonus action, you can move the dust devil up to 30 feet in any direction. If the dust devil moves over sand, dust, loose dirt, or small gravel, it sucks up the material and forms a 10-foot-radius cloud of debris around itself that lasts until the start of your next turn. The cloud heavily obscures its area.\n",
-    "higher_levels": "",
+    "higher_levels": "When you cast this spell using a spell slot of 3rd level or higher, the damage increases by 1d8 for each slot level above 2nd.\n",
     "window_open": false
   },
   {
@@ -410,7 +410,7 @@
       "Sorcerer"
     ],
     "description": "You touch a creature and bestow upon it a magical enhancement. Choose one of the following effects; the target gains that effect until the spell ends.\n<b>Bear's Endurance.</b> The target has advantage on constitution checks. It also gains 2d6 temporary hit points, which are lost when the spell ends. \n<b>Bull's Strength.</b> The target has advantage on strength checks, and his or her carrying capacity doubles.\n<b>Cat's Grace.</b> The target has advantage on dexterity checks. It also doesn't take damage from falling 20 feet or less if it isn't incapacitated.\n<b>Eagle's Splendor.</b> The target has advantage on Charisma checks.\n<b>Fox's Cunning.</b> The target has advantage on intelligence checks.\n<b>Owl's Wisdom.</b> The target has advantage on wisdom checks.\n",
-    "higher_levels": "",
+    "higher_levels": "When you cast this spell using a spell slot of 3rd level or higher, you can target one additional creature for each slot level above 2nd.\n",
     "window_open": false
   },
   {
@@ -499,7 +499,7 @@
       "Druid"
     ],
     "description": "You evoke a fiery blade in your free hand. The blade is similar in size and shape to a scimitar, and it lasts for the duration. If you let go of the blade, it disappears, but you can evoke the blade again as a bonus action.\nYou can use your action to make a melee spell attack with the fiery blade. On a hit, the target takes 3d6 fire damage.\nThe flaming blade sheds bright light in a 10-foot radius and dim light for an additional 10 feet.\n",
-    "higher_levels": "",
+    "higher_levels": "When you cast this spell using a spell slot of 4th level or higher, the damage increases by 1d6 for every two slot levels above 2nd.\n",
     "window_open": false
   },
   {
@@ -518,7 +518,7 @@
       "Wizard"
     ],
     "description": "A 5-foot-diameter sphere of fire appears in an unoccupied space of your choice within range and lasts for the duration. Any creature that ends its turn within 5 feet of the sphere must make a dexterity saving throw. The creature takes 2d6 fire damage on a failed save, or half as much damage on a successful one.\nAs a bonus action, you can move the sphere up to 30 feet. If you ram the sphere into a creature, that creature must make the saving throw against the sphere's damage, and the sphere stops moving this turn.\nWhen you move the sphere, you can direct it over barriers up to 5 feet tall and jump it across pits up to 10 feet wide. The sphere ignites flammable objects not being worn or carried, and it sheds bright light in a 20-foot radius and dim light for an additional 20 feet.\n",
-    "higher_levels": "",
+    "higher_levels": "When you cast this spell using a spell slot of 3rd level or higher, the damage increases by 1d6 for each slot level above 2nd.\n",
     "window_open": false
   },
   {
@@ -574,7 +574,7 @@
       "Druid"
     ],
     "description": "Choose a manufactured metal object, such as a metal weapon or a suit of heavy or medium metal armor, that you can see within range. You cause the object to glow red-hot. Any creature in physical contact with the object takes 2d8 fire damage when you cast the spell. Until the spell ends, you can use a bonus action on each of your subsequent turns to cause this damage again.\nIf a creature is holding or wearing the object and takes the damage from it, the creature must succeed on a constitution saving throw or drop the object if it can. If it doesn't drop the object, it has disadvantage on attack rolls and ability checks until the start of your next turn.\n",
-    "higher_levels": "",
+    "higher_levels": "When you cast this spell using a spell slot of 3rd level or higher, the damage increases by 1d8 for each slot level above 2nd.\n",
     "window_open": false
   },
   {
@@ -597,7 +597,7 @@
       "Wizard"
     ],
     "description": "Choose a humanoid that you can see within range. The target must succeed on a wisdom saving throw or be paralyzed for the duration. At the end of each of its turns, the target can make another wisdom saving throw. On a success, the spell ends on the target.\n",
-    "higher_levels": "",
+    "higher_levels": "When you cast this spell using a spell slot of 3rd level or higher, you can target one additional humanoid for each slot level above 2nd. The humanoids must be within 30 feet of each other when you target them.\n",
     "window_open": false
   },
   {
@@ -618,7 +618,7 @@
       "Wizard"
     ],
     "description": "A creature you touch becomes invisible until the spell ends. Anything the target is wearing or carrying is invisible as long as it is on the target's person. The spell ends for a target that attacks or casts a spell.\n",
-    "higher_levels": "",
+    "higher_levels": "When you cast this spell using a spell slot of 3rd level or higher, you can target one additional creature for each slot level above 2nd.\n",
     "window_open": false
   },
   {
@@ -754,7 +754,7 @@
       "Wizard"
     ],
     "description": "You touch a nonmagical weapon. Until the spell ends, that weapon becomes a magic weapon with a +1 bonus to attack rolls and damage rolls.\n",
-    "higher_levels": "",
+    "higher_levels": "When you cast this spell using a spell slot of 4th level or higher, the bonus increases to +2. When you use a spell slot of 6th level or higher, the bonus increases to +3.\n",
     "window_open": false
   },
   {
@@ -790,7 +790,7 @@
       "Wizard"
     ],
     "description": "A shimmering green arrow streaks toward a target within range and bursts in a spray of acid. Make a ranged spell attack against the target. On a hit, the target takes 4d4 acid damage immediately and 2d4 acid damage at the end of its next turn. On a miss, the arrow splashes the target with acid for half as much of the initial damage and no damage at the end of its next turn.\n",
-    "higher_levels": "",
+    "higher_levels": "When you cast this spell using a spell slot of 3rd level or higher, the damage (both initial and later) increases by 1d4 for each slot level above 2nd.\n",
     "window_open": false
   },
   {
@@ -850,7 +850,7 @@
       "Paladin"
     ],
     "description": "A silvery beam of pale light shines down in a 5-footradius, 40-foot-high cylinder centered on a point within range. Until the spell ends, dim light fills the cylinder.\nWhen a creature enters the spell's area for the first time on a turn or starts its turn there, it is engulfed in ghostly flames that cause searing pain, and it must make a constitution saving throw. It takes 2d10 radiant damage on a failed save, or half as much damage on a successful one.\nA shapechanger makes its saving throw with disadvantage. If it fails, it also instantly reverts to its original form and can't assume a different form until it leaves the spell's light.\nOn each of your turns after you cast this spell, you can use an action to move the beam 60 feet in any direction.\n",
-    "higher_levels": "",
+    "higher_levels": "When you cast this spell using a spell slot of 3rd level or higher, the damage increases by 1dlO for each slot level above 2nd.\n",
     "window_open": false
   },
   {
@@ -923,7 +923,7 @@
       "Cleric"
     ],
     "description": "Up to six creatures of your choice that you can see within range each regain hit points equal to 2d8 + your spellcasting ability modifier. This spell has no effect on undead or constructs.\n",
-    "higher_levels": "",
+    "higher_levels": "When you cast this spell using a spell slot of 3rd level or higher, the healing increases by 1d8 for each slot level above 2nd.\n",
     "window_open": false
   },
   {
@@ -1017,7 +1017,7 @@
       "Wizard"
     ],
     "description": "You generate three rays of fire and will throw to targets in the range of the spell. You can project them on one or more targets.\nPerform a remote attack spell for each department. If it hits, the target takes 2d6 fire damage.\n",
-    "higher_levels": "",
+    "higher_levels": "When you cast this spell using a 3 or higher level spell slot, you generate an additional radius for each level of higher spell slot 2.\n",
     "window_open": false
   },
   {
@@ -1057,7 +1057,7 @@
       "Wizard"
     ],
     "description": "A strong resonant sound painfully intense sounds of a desired point in the range of the spell. Each creature has a sphere with a 10-foot-radius sphere centered on that point must make a constitution saving throw or it suffers 3d8 thunder damage. If successful, the damage is halved. A creature made of inorganic materials such as stone, crystal or metal, makes its saving throw with a disadvantage.\nA non-magical item that is not worn or carried also suffers damage if it is in the area of \u00e2\u20ac\u2039\u00e2\u20ac\u2039the spell.\n",
-    "higher_levels": "",
+    "higher_levels": "When you cast this spell using a 3 or higher level spell slot, the damage of the spell increases by 1d8 for each level of higher spell slot 2.\n",
     "window_open": false
   },
   {
@@ -1114,7 +1114,7 @@
       "Wizard"
     ],
     "description": "A flurry of magic snowballs erupts from a point you choose within range. Each creature in a 5-foot-radius sphere centered on that point must make a Dexterity saving throw. A creature takes 3d6 cold damage on a failed save, or half as much damage on a successful one.\n",
-    "higher_levels": "",
+    "higher_levels": "When you cast this spell using a spell slot of 3rd level or higher, the damage increases by 1d6 for each slot level above 2nd.\n",
     "window_open": false
   },
   {
@@ -1170,7 +1170,7 @@
       "Cleric"
     ],
     "description": "You create a floating, spectral weapon within range that lasts for the duration or until you cast this spell again. When you cast the spell, you can make a melee spell attack against a creature within 5 feet of the weapon. On a hit, the target takes force damage equal to 1d8 + your spellcasting ability modifier.\nAs a bonus action on your turn, you can move the weapon up to 20 feet and repeat the attack against a creature within 5 feet of it.\nThe weapon can take whatever form you choose. Clerics of deities who are associated with a particular weapon (as St. Cuthbert is known for his mace and Thor for his hammer) make this spell's effect resemble that weapon.\n",
-    "higher_levels": "",
+    "higher_levels": "When you cast this spell using a spell slot of 3rd level or higher, the damage increases by 1d8 for every two slot levels above the 2nd.\n",
     "window_open": false
   },
   {

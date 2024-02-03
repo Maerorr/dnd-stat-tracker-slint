@@ -158,6 +158,35 @@ impl Character {
         format!("{}d{}", self.hit_dice_total.count - self.hit_dice_used.count, self.hit_dice_total.sides)
     }
 
+    pub fn get_ui_spell_slots(&self) -> Vec<slint::SharedString> {
+        let mut slots = Vec::new();
+        for i in 0..9 {
+            let max = self.spell_slots_max[i];
+            let used = self.spell_slots_used[i];
+            slots.push(format!("{}/{}", used, max).into());
+        }
+        slots
+    }
+
+    pub fn get_ui_spell_save_dc(&self) -> String {
+        let spellcasting_ability = self.class.get_spellcasting_ability();
+        if spellcasting_ability.is_none() {
+            return String::from("None");
+        }
+        let dc = 8 + self.proficiency_bonus + self.stats.get_stat_modifier(spellcasting_ability.unwrap());
+
+        format!("{}", dc)
+    }
+
+    pub fn get_ui_spell_attack_bonus(&self) -> String {
+        let spellcasting_ability = self.class.get_spellcasting_ability();
+        if spellcasting_ability.is_none() {
+            return String::from("None");
+        }
+        let bonus = self.proficiency_bonus + self.stats.get_stat_modifier(spellcasting_ability.unwrap());
+        format!("{}", bonus)
+    }
+
     pub fn set_experience(&mut self, exp: i32) {
         if exp < 0 {
             self.experience = 0;
@@ -493,13 +522,5 @@ impl Character {
         self.money.subtract_money(&from, value);
     }
 
-    pub fn get_ui_spell_slots(&self) -> Vec<slint::SharedString> {
-        let mut slots = Vec::new();
-        for i in 0..9 {
-            let max = self.spell_slots_max[i];
-            let used = self.spell_slots_used[i];
-            slots.push(format!("{}/{}", used, max).into());
-        }
-        slots
-    }
+    
 }

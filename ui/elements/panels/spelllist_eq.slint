@@ -1,0 +1,252 @@
+import { Heading, Label, SingleStat, LevelHeader, SpellEntry } from "../text_widgets.slint";
+import { VerticalBox, ScrollView, TabWidget } from "std-widgets.slint";
+import { Palette } from "../palette.slint";
+import { SlintCharacter, SlintStat } from "../../logic.slint";
+import { Line } from "../drawing.slint";
+
+export component SpellListEq {
+    in property <SlintCharacter> in-character;
+    in property <length> widget-width;
+
+    callback use-spell-slot(string);
+    callback add-spell-slot(string);
+    TabWidget {
+        width: widget-width;
+        height: 100%;
+        Tab {
+            title: "Spells";
+            VerticalLayout {
+                width: widget-width;
+                spacing: 2px;
+                Text {
+                    text: "Spellcasting Ability: " + in-character.spellcasting_ability + " | Spell Save DC: " + in-character.spell-save-dc + " | Spell Attack Bonus: " + in-character.spell-attack-bonus;
+                    height: 26px;
+                    width: widget-width;
+                    font-size: 20px;
+                    color: Palette.text_color;
+                    vertical-alignment: center;
+                    horizontal-alignment: center;
+                }
+        
+                HorizontalLayout {
+                    width: widget-width;
+                    VerticalLayout {
+                        LevelHeader {
+                            width: widget-width / 3;
+                            level: "0";
+                        }
+                        Line {
+                            height: 2px;
+                            from: {x: 0, y: 0};
+                            to: {x: 1, y: 0.0};
+                            stroke: Palette.text_color;
+                        }
+                        for spell[i] in in-character.cantrips : SpellEntry {
+                            spell: spell;
+                        }
+        
+                        LevelHeader {
+                            width: widget-width / 3;
+                            level: "1";
+                            spell-slots: in-character.spell_slots[0];
+                            use-slot => {
+                                use-spell-slot("1");
+                            }
+                            add-slot => {
+                                add-spell-slot("1");
+                            }
+                        }
+                        Line {
+                            height: 2px;
+                            from: {x: 0, y: 0};
+                            to: {x: 1, y: 0.0};
+                            stroke: Palette.text_color;
+                        }
+                        for spell[i] in in-character.spells1 : SpellEntry {
+                            spell: spell;
+                        }
+        
+                        LevelHeader {
+                            width: widget-width / 3;
+                            level: "2";
+                            spell-slots: in-character.spell_slots[1];
+                            use-slot => {
+                                use-spell-slot("2");
+                            }
+                            add-slot => {
+                                add-spell-slot("2");
+                            }
+                        }
+                        Line {
+                            height: 2px;
+                            from: {x: 0, y: 0};
+                            to: {x: 1, y: 0.0};
+                            stroke: Palette.text_color;
+                        }
+                        for spell[i] in in-character.spells2 : SpellEntry {
+                            spell: spell;
+                        }
+        
+                    }
+                    Line {
+                        from: {x: 0, y: 0};
+                        to: {x: 0, y: 1.0};
+                        stroke: Palette.text_color;
+                    }
+                    VerticalLayout {
+                        LevelHeader {
+                            width: widget-width / 3;
+                            level: "3";
+                            spell-slots: in-character.spell_slots[2];
+                            use-slot => {
+                                use-spell-slot("3");
+                            }
+                            add-slot => {
+                                add-spell-slot("3");
+                            }
+                        }
+                        for spell[i] in in-character.spells3 : SpellEntry {
+                            spell: spell;
+                        }
+                        Line {
+                            height: 2px;
+                            from: {x: 0, y: 0};
+                            to: {x: 1, y: 0.0};
+                            stroke: Palette.text_color;
+                        }
+                        LevelHeader {
+                            width: widget-width / 3;
+                            level: "4";
+                            spell-slots: in-character.spell_slots[3];
+                            use-slot => {
+                                use-spell-slot("4");
+                            }
+                            add-slot => {
+                                add-spell-slot("4");
+                            }
+                        }
+                        for spell[i] in in-character.spells4 : SpellEntry {
+                            spell: spell;
+                        }
+                        Line {
+                            height: 2px;
+                            from: {x: 0, y: 0};
+                            to: {x: 1, y: 0.0};
+                            stroke: Palette.text_color;
+                        }
+                        LevelHeader {
+                            width: widget-width / 3;
+                            level: "5";
+                            spell-slots: in-character.spell_slots[4];
+                            use-slot => {
+                                use-spell-slot("5");
+                            }
+                            add-slot => {
+                                add-spell-slot("5");
+                            }
+                        }
+                        for spell[i] in in-character.spells5 : SpellEntry {
+                            spell: spell;
+                        }
+                        Line {
+                            height: 2px;
+                            from: {x: 0, y: 0};
+                            to: {x: 1, y: 0.0};
+                            stroke: Palette.text_color;
+                        }
+                    }
+                    Line {
+                        from: {x: 0, y: 0};
+                        to: {x: 0, y: 1.0};
+                        stroke: Palette.text_color;
+                    }
+                    VerticalLayout {
+                        LevelHeader {
+                            width: widget-width / 3;
+                            level: "6";
+                            spell-slots: in-character.spell_slots[5];
+                            use-slot => {
+                                use-spell-slot("6");
+                            }
+                            add-slot => {
+                                add-spell-slot("6");
+                            }
+                        }
+                        for spell[i] in in-character.spells6 : SpellEntry {
+                            spell: spell;
+                        }
+                        Line {
+                            height: 2px;
+                            from: {x: 0, y: 0};
+                            to: {x: 1, y: 0.0};
+                            stroke: Palette.text_color;
+                        }
+                        LevelHeader {
+                            width: widget-width / 3;
+                            level: "7";
+                            spell-slots: in-character.spell_slots[6];
+                            use-slot => {
+                                use-spell-slot("7");
+                            }
+                            add-slot => {
+                                add-spell-slot("7");
+                            }
+                        }
+                        for spell[i] in in-character.spells7 : SpellEntry {
+                            spell: spell;
+                        }
+                        Line {
+                            height: 2px;
+                            from: {x: 0, y: 0};
+                            to: {x: 1, y: 0.0};
+                            stroke: Palette.text_color;
+                        }
+                        LevelHeader {
+                            width: widget-width / 3;
+                            level: "8";
+                            spell-slots: in-character.spell_slots[7];
+                            use-slot => {
+                                use-spell-slot("8");
+                            }
+                            add-slot => {
+                                add-spell-slot("8");
+                            }
+                        }
+                        for spell[i] in in-character.spells8 : SpellEntry {
+                            spell: spell;
+                        }
+                        Line {
+                            height: 2px;
+                            from: {x: 0, y: 0};
+                            to: {x: 1, y: 0.0};
+                            stroke: Palette.text_color;
+                        }
+                        LevelHeader {
+                            width: widget-width / 3;
+                            level: "9";
+                            spell-slots: in-character.spell_slots[8];
+                            use-slot => {
+                                use-spell-slot("9");
+                            }
+                            add-slot => {
+                                add-spell-slot("9");
+                            }
+                        }
+                        for spell[i] in in-character.spells9 : SpellEntry {
+                            spell: spell;
+                        }
+                        Line {
+                            height: 2px;
+                            from: {x: 0, y: 0};
+                            to: {x: 1, y: 0.0};
+                            stroke: Palette.text_color;
+                        }
+                    }
+                }
+            }
+        }
+        Tab {
+            title: "Equipment";
+        }
+    }
+}
