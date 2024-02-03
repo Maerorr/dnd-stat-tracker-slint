@@ -14,6 +14,9 @@ export component TopBar inherits Rectangle {
     y : 0;
     background: Palette.dark;
 
+    callback save();
+    callback save-character-select();
+
     Heading {
         x: parent.width / 2 - self.width / 2;
         y: parent.height / 2 - 40px;
@@ -76,11 +79,17 @@ export component TopBar inherits Rectangle {
                 width: 150px;
                 height: 50px;
                 text: "Save & Switch\nto Character Select";
+                clicked => {
+                    save-character-select();
+                }
             }
             TopButton {
                 width: 100px;
                 height: 50px;
                 text: "Save";
+                clicked => {
+                    save();
+                }
             }
             TopButton {
                 width: 100px;

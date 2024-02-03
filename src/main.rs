@@ -323,5 +323,39 @@ fn main() -> Result<(), slint::PlatformError> {
         }
     });
 
+    let app_data_handle = app_data.clone();
+    ui.on_edit_stat({
+        let ui_handle = ui.as_weak();
+        move |stat, value| {
+            let ui = ui_handle.unwrap();
+            let mut c = app_data_handle.borrow_mut();
+            if value == "+" {
+                c.get_current_character().stats.get_stat_mut(StatType::from_string(&stat).unwrap()).add_one();
+            } else {
+                c.get_current_character().stats.get_stat_mut(StatType::from_string(&stat).unwrap()).subtract_one();
+            }
+            set_ui_character_data(&c.get_current_character(), &ui);
+        }
+    });
+
+    let app_data_handle = app_data.clone();
+    ui.on_save({
+        let ui_handle = ui.as_weak();
+        move || {
+            let ui = ui_handle.unwrap();
+            let mut c = app_data_handle.borrow_mut();
+            let character = c.get_current_character();
+            character.save_to_file();
+        }
+    });
+
+    let app_data_handle = app_data.clone();
+    ui.on_save_character_select({
+        let ui_handle = ui.as_weak();
+        move || {
+            // TODO: character select 
+        }
+    });
+
     ui.run()
 }

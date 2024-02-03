@@ -40,14 +40,31 @@ export component AppWindow inherits Window {
     callback use-spell-slot(string);
     callback add-spell-slot(string);
 
+    callback edit-stat(string, string);
+    callback save();
+    callback save-character-select();
+
     background: Palette.background_color;
-    TopBar {in-character: character;}
+    TopBar {
+        in-character: character;
+        save => {
+            save();
+        }
+        save-character-select => {
+            save-character-select();
+        }
+    }
     HorizontalLayout {
         x: 0;
         y: 100px;
         alignment: start;
 
-        StatsPanel {in-character: character;}
+        StatsPanel {
+            in-character: character;
+            edit-stat(val, sign) => {
+                edit-stat(val, sign);
+            }
+        }
 
         Line {
             from: {x: 0, y: 0};

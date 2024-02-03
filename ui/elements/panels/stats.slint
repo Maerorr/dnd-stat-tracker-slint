@@ -6,6 +6,9 @@ import { SlintCharacter, SlintStat } from "../../logic.slint";
 
 export component StatsPanel {
     in-out property <SlintCharacter> in-character;
+
+    callback edit-stat(string, string);
+
     VerticalLayout {
         min-width: 125px;
         alignment: start;
@@ -23,6 +26,9 @@ export component StatsPanel {
             value: stat.value;
             modifier: stat.modifier;
             color: stat.color;
+            edit-stat(name, sign) => {
+                edit-stat(name, sign);
+            }
         }
     }
 }

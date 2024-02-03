@@ -47,4 +47,17 @@ impl StatType {
             StatType::Charisma => CHARISMA_COLOR,
         }
     }
+
+    pub fn from_string(s: &str) -> Option<StatType> {
+        let s = s.to_ascii_lowercase();
+        match s.as_str() {
+            "strength" => Some(StatType::Strength),
+            "dexterity" => Some(StatType::Dexterity),
+            "constitution" => Some(StatType::Constitution),
+            "intelligence" => Some(StatType::Intelligence),
+            "wisdom" => Some(StatType::Wisdom),
+            "charisma" => Some(StatType::Charisma),
+            _ => None,
+        }
+    }
 }

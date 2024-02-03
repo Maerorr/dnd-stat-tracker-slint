@@ -3,7 +3,8 @@ import { HorizontalBox, VerticalBox, LineEdit, TabWidget } from "std-widgets.sli
 import { DiamondStroke, Line, DiamondFilled, Diamond } from "drawing.slint";
 import { TopBadButton, NormalButton } from "button.slint";
 import { SlintShortSpellEntry } from "../logic.slint";
-
+import { EditMode } from "globals.slint";
+ 
 export component Label inherits Text {
     font-size: 20px;
     color: Palette.text_color;
@@ -21,24 +22,65 @@ export component SingleStat {
     in property <string> value;
     in property <string> modifier;
     in property <color> color;
+
+    property <length> widget-width: 130px;
+
+    // (name, "-" or "+")
+    callback edit-stat(string, string);
+
     VerticalLayout {
-        width: 125px;
+        width: widget-width;
         Label {
-            width: 125px;
+            width: widget-width;
             text: name;
             color: color;
         }
-    
-        HorizontalLayout {
-            x: 25px;
+
+        if EditMode.active : HorizontalLayout {
+            alignment: center;
+            VerticalLayout {
+                sub-button := NormalButton {
+                    text: "-";
+                    width: 20px;
+                    height: 20px;
+                    clicked => {
+                        edit-stat(name, "-");
+                    }
+                }
+            }
             Label {
-                width: 35px;
+                width: widget-width / 3.5;
                 text: value;
                 color: Palette.text_color;
                 horizontal-alignment: center;
             }
             Label {
-                width: 35px;
+                width: widget-width / 3.5;
+                text: modifier;
+                color: Palette.text_color;
+                horizontal-alignment: center;
+            }
+            VerticalLayout {
+                add-button := NormalButton {
+                    text: "+";
+                    width: 20px;
+                    height: 20px;
+                    clicked => {
+                        edit-stat(name, "+")
+                    }
+                }
+            }
+        }
+        if !EditMode.active : HorizontalLayout {
+            alignment: center;
+            Label {
+                width: widget-width / 3.5;
+                text: value;
+                color: Palette.text_color;
+                horizontal-alignment: center;
+            }
+            Label {
+                width: widget-width / 3.5;
                 text: modifier;
                 color: Palette.text_color;
                 horizontal-alignment: center;
