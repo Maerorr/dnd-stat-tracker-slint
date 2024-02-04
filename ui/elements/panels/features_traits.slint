@@ -1,10 +1,13 @@
 import { Heading, Label, SingleStat } from "../text_widgets.slint";
-import { VerticalBox } from "std-widgets.slint";
+import { VerticalBox, TextEdit } from "std-widgets.slint";
 import { Palette } from "../palette.slint";
 import { SlintCharacter, SlintStat } from "../../logic.slint";
+import { EditMode } from "../globals.slint";
 
 export component FeaturesAndTraits {
     in property <SlintCharacter> in-character;
+    callback set-features-traits(string);
+
     VerticalLayout {
         padding: 6px;
         Text {
@@ -14,11 +17,17 @@ export component FeaturesAndTraits {
             horizontal-alignment: center;
             height: self.preferred-height;
         }
-        Text {
+        if !EditMode.active : Text {
             width: 300px;
             text: in-character.features-traits;
             font-size: 14px;
             color: Palette.text_color;
+        }
+        if EditMode.active : TextEdit {
+            text: in-character.features-traits;
+            width: 300px;
+            height: 900px;
+            font-size: 13px;
         }
     }
 }
