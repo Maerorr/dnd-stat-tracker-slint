@@ -90,6 +90,7 @@ pub fn set_ui_character_data(c: &Character, ui: &AppWindow) {
 
     current_character.armor_class = c.get_total_armor_class();
     current_character.initiative = c.get_ui_total_initiative().into();
+    current_character.initiative_no_dex =c.get_ui_initiative_no_dex().into();
     current_character.speed = c.speed;
 
     current_character.current_hp = c.get_hit_points_current();
@@ -134,6 +135,8 @@ pub fn set_ui_character_data(c: &Character, ui: &AppWindow) {
     };
     current_character.spell_save_dc = c.get_ui_spell_save_dc().into();
     current_character.spell_attack_bonus = c.get_ui_spell_attack_bonus().into();
+
+    current_character.languages_proficiencies = c.proficiencies_and_languages.clone().into();
 
     ui.set_character(current_character.into());
 }
@@ -389,6 +392,83 @@ fn main() -> Result<(), slint::PlatformError> {
             let mut c = app_data_handle.borrow_mut();
             let stat = StatType::from_string(&stat).unwrap();
             c.get_current_character().stats.set_save_proficiency(stat, prof);
+            set_ui_character_data(&c.get_current_character(), &ui);
+        }
+    });
+
+    let app_data_handle = app_data.clone();
+    ui.on_set_languages_proficiencies({
+        let ui_handle = ui.as_weak();
+        move |lang_prof| {
+            let ui = ui_handle.unwrap();
+            let mut c = app_data_handle.borrow_mut();
+            c.get_current_character().proficiencies_and_languages = lang_prof.into();
+            set_ui_character_data(&c.get_current_character(), &ui);
+        }
+    });
+
+    let app_data_handle = app_data.clone();
+    ui.on_add_ac({
+        let ui_handle = ui.as_weak();
+        move || {
+            let ui = ui_handle.unwrap();
+            let mut c = app_data_handle.borrow_mut();
+            c.get_current_character().add_one_ac();
+            set_ui_character_data(&c.get_current_character(), &ui);
+        }
+    });
+
+    let app_data_handle = app_data.clone();
+    ui.on_subtract_ac({
+        let ui_handle = ui.as_weak();
+        move || {
+            let ui = ui_handle.unwrap();
+            let mut c = app_data_handle.borrow_mut();
+            c.get_current_character().subtract_one_ac();
+            set_ui_character_data(&c.get_current_character(), &ui);
+        }
+    });
+
+    let app_data_handle = app_data.clone();
+    ui.on_add_initiative({
+        let ui_handle = ui.as_weak();
+        move || {
+            let ui = ui_handle.unwrap();
+            let mut c = app_data_handle.borrow_mut();
+            c.get_current_character().add_one_initiative();
+            set_ui_character_data(&c.get_current_character(), &ui);
+        }
+    });
+
+    let app_data_handle = app_data.clone();
+    ui.on_subtract_initiative({
+        let ui_handle = ui.as_weak();
+        move || {
+            let ui = ui_handle.unwrap();
+            let mut c = app_data_handle.borrow_mut();
+            c.get_current_character().subtract_one_initiative();
+            set_ui_character_data(&c.get_current_character(), &ui);
+        }
+    });
+
+    let app_data_handle = app_data.clone();
+    ui.on_add_speed({
+        let ui_handle = ui.as_weak();
+        move || {
+            let ui = ui_handle.unwrap();
+            let mut c = app_data_handle.borrow_mut();
+            c.get_current_character().add_5_speed();
+            set_ui_character_data(&c.get_current_character(), &ui);
+        }
+    });
+
+    let app_data_handle = app_data.clone();
+    ui.on_subtract_speed({
+        let ui_handle = ui.as_weak();
+        move || {
+            let ui = ui_handle.unwrap();
+            let mut c = app_data_handle.borrow_mut();
+            c.get_current_character().subtract_5_speed();
             set_ui_character_data(&c.get_current_character(), &ui);
         }
     });

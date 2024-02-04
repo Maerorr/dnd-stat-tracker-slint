@@ -1,7 +1,7 @@
 import { Palette } from "palette.slint";
 import { HorizontalBox, VerticalBox, LineEdit, TabWidget, CheckBox } from "std-widgets.slint";
 import { DiamondStroke, Line, DiamondFilled, Diamond } from "drawing.slint";
-import { TopBadButton, NormalButton } from "button.slint";
+import { TopBadButton, NormalButton, SizedButton } from "button.slint";
 import { SlintShortSpellEntry } from "../logic.slint";
 import { EditMode } from "globals.slint";
 import { Checkbox } from "checkbox.slint";
@@ -39,36 +39,40 @@ export component SingleStat {
 
         if EditMode.active : HorizontalLayout {
             alignment: center;
-            VerticalLayout {
-                sub-button := NormalButton {
-                    text: "-";
-                    width: 20px;
-                    height: 20px;
-                    clicked => {
-                        edit-stat(name, "-");
-                    }
+            SizedButton {
+                area-height: 22px;
+                area-width: 22px;
+                button-width: 16px;
+                button-height: 16px;
+                text: "-";
+                clicked => {
+                    edit-stat(name, "-")
                 }
             }
             Label {
                 width: widget-width / 3.5;
+                height: 22px;
                 text: value;
                 color: Palette.text_color;
                 horizontal-alignment: center;
+                vertical-alignment: center;
             }
             Label {
                 width: widget-width / 3.5;
+                height: 22px;
                 text: modifier;
                 color: Palette.text_color;
                 horizontal-alignment: center;
+                vertical-alignment: center;
             }
-            VerticalLayout {
-                add-button := NormalButton {
-                    text: "+";
-                    width: 20px;
-                    height: 20px;
-                    clicked => {
-                        edit-stat(name, "+")
-                    }
+            SizedButton {
+                area-height: 22px;
+                area-width: 22px;
+                button-width: 16px;
+                button-height: 16px;
+                text: "+";
+                clicked => {
+                    edit-stat(name, "+")
                 }
             }
         }
@@ -76,15 +80,19 @@ export component SingleStat {
             alignment: center;
             Label {
                 width: widget-width / 3.5;
+                height: 22px;
                 text: value;
                 color: Palette.text_color;
                 horizontal-alignment: center;
+                vertical-alignment: center;
             }
             Label {
                 width: widget-width / 3.5;
+                height: 22px;
                 text: modifier;
                 color: Palette.text_color;
                 horizontal-alignment: center;
+                vertical-alignment: center;
             }
         }
     }

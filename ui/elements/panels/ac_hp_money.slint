@@ -3,7 +3,8 @@ import { VerticalBox, GridBox, Button, ComboBox } from "std-widgets.slint";
 import { Palette } from "../palette.slint";
 import { Line, Arrow } from "../drawing.slint";
 import { SlintCharacter } from "../../logic.slint";
-import { DamageButton, HealButton, TempHpButton, NormalButton } from "../button.slint";
+import { DamageButton, HealButton, TempHpButton, NormalButton, SizedButton } from "../button.slint";
+import { EditMode } from "../globals.slint";
 
 export component AcHpMoneyPanel {
     in-out property <SlintCharacter> in-character;
@@ -33,6 +34,13 @@ export component AcHpMoneyPanel {
     property <string> convert-to-string;
     callback convert-money(string, string, string);
 
+    callback add-ac();
+    callback sub-ac();
+    callback add-initiative();
+    callback sub-initiative();
+    callback add-speed();
+    callback sub-speed();
+
     clear-hp-input => {
         hp-input.clear();
     }
@@ -47,20 +55,83 @@ export component AcHpMoneyPanel {
                 VerticalLayout {
                     width: grid-width / 3;
                     height: 50px;
-                    Label {
+                    if EditMode.active : HorizontalLayout {
+                        alignment: center;
+                        
+                        SizedButton {
+                            area-width: 25px;
+                            area-height: 25px;
+                            button-height: 16px;
+                            button-width: 16px;
+                            text: "-";
+                            clicked => {
+                                sub-ac();
+                            }
+                        }
+                        Label {
+                            width: 50px;
+                            height: 25px;
+                            text: in-character.armor-class;
+                            horizontal-alignment: center;
+                            font-size: 20px;
+                        }
+                        SizedButton {
+                            area-width: 25px;
+                            area-height: 25px;
+                            button-height: 16px;
+                            button-width: 16px;
+                            text: "+";
+                            clicked => {
+                                add-ac();
+                            }
+                        }
+                    }
+                    if !EditMode.active : Label {
                         text: in-character.armor-class;
                         font-size: 20px;
                     }
                     Label {
                         text: "Armor Class";
+                        height: 25px;
                         font-size: 16px;
+                        vertical-alignment: center;
                     }
                 }
                 VerticalLayout {
                     width: grid-width / 3;
                     height: 50px;
-                    Label {
+                    if EditMode.active : HorizontalLayout {
+                        alignment: center;
+                        
+                        SizedButton {
+                            area-width: 25px;
+                            area-height: 25px;
+                            button-height: 16px;
+                            button-width: 16px;
+                            text: "-";
+                            clicked => {
+                                sub-initiative();
+                            }
+                        }
+                        Label {
+                            text: in-character.initiative-no-dex;
+                            font-size: 20px;
+                            height: 25px;
+                        }
+                        SizedButton {
+                            area-width: 25px;
+                            area-height: 25px;
+                            button-height: 16px;
+                            button-width: 16px;
+                            text: "+";
+                            clicked => {
+                                add-initiative();
+                            }
+                        }
+                    }
+                    if !EditMode.active : Label {
                         text: in-character.initiative;
+                        height: 25px;
                         font-size: 20px;
                     }
                     Label {
@@ -71,8 +142,38 @@ export component AcHpMoneyPanel {
                 VerticalLayout {
                     width: grid-width / 3;
                     height: 50px;
-                    Label {
+                    if EditMode.active : HorizontalLayout {
+                        alignment: center;
+                        
+                        SizedButton {
+                            area-width: 25px;
+                            area-height: 25px;
+                            button-height: 16px;
+                            button-width: 16px;
+                            text: "-";
+                            clicked => {
+                                sub-speed();
+                            }
+                        }
+                        Label {
+                            text: in-character.speed + "ft.";
+                            height: 25px;
+                            font-size: 20px;
+                        }
+                        SizedButton {
+                            area-width: 25px;
+                            area-height: 25px;
+                            button-height: 16px;
+                            button-width: 16px;
+                            text: "+";
+                            clicked => {
+                                add-speed();
+                            }
+                        }
+                    }
+                    if !EditMode.active : Label {
                         text: in-character.speed + "ft.";
+                        height: 25px;
                         font-size: 20px;
                     }
                     Label {

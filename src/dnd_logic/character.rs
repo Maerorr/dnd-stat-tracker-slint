@@ -120,6 +120,16 @@ impl Character {
         format!("{}{}", sign, inititative_bonus)
     }
 
+    pub fn get_ui_initiative_no_dex(&self) -> String {
+        let sign = if self.initiative_bonus > 0 {
+            "+"
+        } else {
+            ""
+        };
+
+        format!("{}{}", sign, self.initiative_bonus)
+    }
+
     pub fn get_hit_points_max(&self) -> i32 {
         self.maximum_hit_points
     }

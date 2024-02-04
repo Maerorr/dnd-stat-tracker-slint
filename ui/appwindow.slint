@@ -48,6 +48,15 @@ export component AppWindow inherits Window {
     callback set-skill-expertise(string, bool);
     callback set-save-proficiency(string, bool);
 
+    callback set-languages-proficiencies(string);
+
+    callback add-ac();
+    callback subtract-ac();
+    callback add-initiative();
+    callback subtract-initiative();
+    callback add-speed();
+    callback subtract-speed();
+
     background: Palette.background_color;
     TopBar {
         in-character: character;
@@ -86,6 +95,9 @@ export component AppWindow inherits Window {
             }
             set-save-proficiency(string, bool) => {
                 set-save-proficiency(string, bool);
+            }
+            set-languages-proficiencies(text) => {
+                set-languages-proficiencies(text);
             }
         }
         
@@ -129,6 +141,24 @@ export component AppWindow inherits Window {
             }
             convert-money(from, to, amount) => {
                 convert-money(from, to, amount);
+            }
+            add-ac => {
+                add-ac();
+            }
+            sub-ac => {
+                subtract-ac();
+            }
+            add-initiative => {
+                add-initiative();
+            }
+            sub-initiative => {
+                subtract-initiative();
+            }
+            add-speed => {
+                add-speed();
+            }
+            sub-speed => {
+                subtract-speed();
             }
         }
 

@@ -1,8 +1,9 @@
 import { Heading, Label, SavingThrow, Skill} from "../text_widgets.slint";
-import { VerticalBox } from "std-widgets.slint";
+import { VerticalBox, TextEdit } from "std-widgets.slint";
 import { Palette } from "../palette.slint";
 import { Line } from "../drawing.slint";
 import { SlintCharacter } from "../../logic.slint";
+import { EditMode } from "../globals.slint";
 
 export component SavesProficiencies {
     in-out property <SlintCharacter> in-character;
@@ -11,6 +12,7 @@ export component SavesProficiencies {
     callback set-skill-proficiency(string, bool);
     callback set-skill-expertise(string, bool);
     callback set-save-proficiency(string, bool);
+    callback set-languages-proficiencies(string);
 
     VerticalLayout {
         Heading {
@@ -62,15 +64,26 @@ export component SavesProficiencies {
         }
 
         HorizontalLayout {
-            Rectangle {
+            
+            if EditMode.active : TextEdit {
+                width: grid-width;
+                height: 225px;
+                text: in-character.languages-proficiencies;
+                font-size: 16px;
+
+                edited(text) => {
+                    set-languages-proficiencies(text);
+                }
+            }
+            if !EditMode.active : Rectangle {
                 width: grid-width * 0.03;
                 height: 0px;
                 border-radius: 0px;
             }
-            Text {
+            if !EditMode.active : Text {
                 width: grid-width * 0.93;
-                height: 200px;
-                text: "Proficiencies & Languages\nLanguages: Common, Elven, Sylvan, Gnommish\n\nWeapons: daggers, darts, slings, quarterstaff, light crossbow\n\nArmor: -";
+                height: 225px;
+                text: in-character.languages-proficiencies;
                 color: Palette.text_color;
                 font-size: 16px;
             }
