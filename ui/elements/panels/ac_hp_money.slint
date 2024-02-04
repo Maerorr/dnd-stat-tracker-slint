@@ -21,6 +21,13 @@ export component AcHpMoneyPanel {
     callback add-temp-hp(string);
     callback subtract-temp-hp(string);
 
+    callback add-max-hp(string);
+    callback add-hit-dice();
+    callback sub-hit-dice();
+
+    callback add-hit-dice-left();
+    callback sub-hit-dice-left();
+
     callback use-hit-dice();
 
     callback clear-hp-input();
@@ -203,7 +210,7 @@ export component AcHpMoneyPanel {
                     Text {
                         width: grid-width / 3;
                         text: "HP Max";
-                        font-size: 16px;
+                        font-size: 20px;
                         vertical-alignment: center;
                         horizontal-alignment: left;
                         color: Palette.text_color;
@@ -211,7 +218,7 @@ export component AcHpMoneyPanel {
                     Text {
                         width: grid-width / 8;
                         text: in-character.max-hp;
-                        font-size: 16px;
+                        font-size: 20px;
                         vertical-alignment: center;
                         horizontal-alignment: left;
                         color: Palette.text_color;
@@ -224,18 +231,11 @@ export component AcHpMoneyPanel {
                             hp-input := LineInput {
                                 width: grid-width / 3;
                                 height: 20px;
-                                // text-changed(value) => {
-                                //     hp-input-string = value;
-                                // }
                             }
                         }
                     }
                     
                 }
-            }
-        }
-        Row {
-            GridLayout {
                 Row {
                     Rectangle {
                         width: 10px;
@@ -258,32 +258,39 @@ export component AcHpMoneyPanel {
                         horizontal-alignment: left;
                         color: Palette.text_color;
                     }
-                    
-                    VerticalLayout {
-                        alignment: center;
-                        HorizontalLayout {
-                            alignment: center;
-                            DamageButton {
-                                width: grid-width / 5;
-                                text: "Damage";
-                                clicked => {
-                                    take_damage(hp-input.input-value);
-                                    clear_hp_input();
-                                }
+                    HorizontalLayout {
+                        width: grid-width / 2;
+                        if EditMode.active : DamageButton {
+                            area-width: grid-width / 2;
+                            area-height: 22px;
+                            button-height: 22px;
+                            button-width: grid-width / 3;
+                            text: "Add Max HP";
+                            clicked => {
+                                add-max-hp(hp-input.input-value);
+                                clear-hp-input();
                             }
                         }
-                    }
-                    VerticalLayout {
-                        alignment: center;
-                        HorizontalLayout {
-                            alignment: center;
-                            HealButton {
-                                width: grid-width / 5;
-                                text: "Heal";
-                                clicked => {
-                                    heal(hp-input.input-value);
-                                    clear_hp_input();
-                                }
+                        if !EditMode.active : DamageButton {
+                            area-width: grid-width / 4;
+                            area-height: 22px;
+                            button-height: 22px;
+                            button-width: grid-width / 5;
+                            text: "Damage";
+                            clicked => {
+                                take-damage(hp-input.input-value);
+                                clear-hp-input();
+                            }
+                        }
+                        if !EditMode.active : HealButton {
+                            area-width: grid-width / 4;
+                            area-height: 22px;
+                            button-height: 22px;
+                            button-width: grid-width / 5;
+                            text: "Heal";
+                            clicked => {
+                                heal(hp-input.input-value);
+                                clear-hp-input();
                             }
                         }
                     }
@@ -310,32 +317,29 @@ export component AcHpMoneyPanel {
                         horizontal-alignment: left;
                         color: Palette.text_color;
                     }
-                    
-                    VerticalLayout {
-                        alignment: center;
-                        HorizontalLayout {
-                            alignment: center;
-                            TempHpButton {
-                                width: grid-width / 5;
-                                text: "Add";
-                                clicked => {
-                                    add_temp_hp(hp-input.input-value);
-                                    clear_hp_input();
-                                }
+
+                    HorizontalLayout {
+                        width: grid-width / 2;
+                        if !EditMode.active : TempHpButton {
+                            area-width: grid-width / 4;
+                            area-height: 22px;
+                            button-height: 22px;
+                            button-width: grid-width / 5;
+                            text: "Add";
+                            clicked => {
+                                add_temp_hp(hp-input.input-value);
+                                clear_hp_input();
                             }
                         }
-                    }
-                    VerticalLayout {
-                        alignment: center;
-                        HorizontalLayout {
-                            alignment: center;
-                            TempHpButton {
-                                width: grid-width / 5;
-                                text: "Subtract";
-                                clicked => {
-                                    subtract_temp_hp(hp-input.input-value);
-                                    clear_hp_input();
-                                }
+                        if !EditMode.active : TempHpButton {
+                            area-width: grid-width / 4;
+                            area-height: 22px;
+                            button-height: 22px;
+                            button-width: grid-width / 5;
+                            text: "Subtract";
+                            clicked => {
+                                subtract_temp_hp(hp-input.input-value);
+                                clear_hp_input();
                             }
                         }
                     }
@@ -364,6 +368,18 @@ export component AcHpMoneyPanel {
                     hit-dice-left: in-character.hit-dice-left;
                     use-dice => {
                         use-hit-dice();
+                    }
+                    add-hit-dice => {
+                        add-hit-dice();
+                    }
+                    sub-hit-dice => {
+                        sub-hit-dice();
+                    }
+                    add-hit-dice-left => {
+                        add-hit-dice-left();
+                    }
+                    sub-hit-dice-left => {
+                        sub-hit-dice-left();
                     }
                 }
                 Line {

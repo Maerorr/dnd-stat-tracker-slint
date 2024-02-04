@@ -473,5 +473,61 @@ fn main() -> Result<(), slint::PlatformError> {
         }
     });
 
+    let app_data_handle = app_data.clone();
+    ui.on_add_max_hp({
+        let ui_handle = ui.as_weak();
+        move |hp| {
+            let ui = ui_handle.unwrap();
+            let mut c = app_data_handle.borrow_mut();
+            let hp = hp.trim().parse::<i32>().unwrap();
+            c.get_current_character().add_max_hp(hp);
+            set_ui_character_data(&c.get_current_character(), &ui);
+        }
+    });
+    
+    let app_data_handle = app_data.clone();
+    ui.on_add_hit_dice({
+        let ui_handle = ui.as_weak();
+        move || {
+            let ui = ui_handle.unwrap();
+            let mut c = app_data_handle.borrow_mut();
+            c.get_current_character().add_hit_dice();
+            set_ui_character_data(&c.get_current_character(), &ui);
+        }
+    });
+
+    let app_data_handle = app_data.clone();
+    ui.on_subtract_hit_dice({
+        let ui_handle = ui.as_weak();
+        move || {
+            let ui = ui_handle.unwrap();
+            let mut c = app_data_handle.borrow_mut();
+            c.get_current_character().sub_hit_dice();
+            set_ui_character_data(&c.get_current_character(), &ui);
+        }
+    });
+
+    let app_data_handle = app_data.clone();
+    ui.on_add_hit_dice_left({
+        let ui_handle = ui.as_weak();
+        move || {
+            let ui = ui_handle.unwrap();
+            let mut c = app_data_handle.borrow_mut();
+            c.get_current_character().restore_one_hit_dice();
+            set_ui_character_data(&c.get_current_character(), &ui);
+        }
+    });
+
+    let app_data_handle = app_data.clone();
+    ui.on_subtract_hit_dice_left({
+        let ui_handle = ui.as_weak();
+        move || {
+            let ui = ui_handle.unwrap();
+            let mut c = app_data_handle.borrow_mut();
+            c.get_current_character().use_hit_dice();
+            set_ui_character_data(&c.get_current_character(), &ui);
+        }
+    });
+
     ui.run()
 }

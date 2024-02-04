@@ -250,6 +250,12 @@ export component HitDice {
 
     callback use-dice();
 
+    callback add-hit-dice();
+    callback sub-hit-dice();
+
+    callback add-hit-dice-left();
+    callback sub-hit-dice-left();
+
     VerticalLayout {
         width: widget-width;
         Text {
@@ -278,6 +284,26 @@ export component HitDice {
                 horizontal-alignment: center;
                 vertical-alignment: center;
             }
+            if EditMode.active : SizedButton {
+                text: "-";
+                area-width: widget-width / 6;
+                area-height: 20px;
+                button-width: 18px;
+                button-height: 18px;
+                clicked => {
+                    sub-hit-dice();
+                }
+            }
+            if EditMode.active : SizedButton {
+                text: "+";
+                area-width: widget-width / 6;
+                area-height: 20px;
+                button-width: 18px;
+                button-height: 18px;
+                clicked => {
+                    add-hit-dice();
+                }
+            }
         }
 
         HorizontalLayout {
@@ -297,7 +323,7 @@ export component HitDice {
                 color: Palette.text_color;
                 horizontal-alignment: center;
             }
-            VerticalLayout {
+            if !EditMode.active : VerticalLayout {
                 alignment: center;
                 HorizontalLayout {
                     alignment: center;
@@ -309,6 +335,26 @@ export component HitDice {
                             use-dice();
                         }
                     }
+                }
+            }
+            if EditMode.active : SizedButton {
+                text: "-";
+                area-width: widget-width / 6;
+                area-height: 20px;
+                button-width: 18px;
+                button-height: 18px;
+                clicked => {
+                    sub-hit-dice-left();
+                }
+            }
+            if EditMode.active : SizedButton {
+                text: "+";
+                area-width: widget-width / 6;
+                area-height: 20px;
+                button-width: 18px;
+                button-height: 18px;
+                clicked => {
+                    add-hit-dice-left();
                 }
             }
         }
