@@ -12,9 +12,10 @@ TODO:
 - [X] - money, including a converter
 - [ ] - equipement as text
 - [ ] - weapons and hit/dmg modifiers
-- [] - spell list + spell slots
+- [X] - spell list + spell slots
 - [X] - more spells as json files
-- [] - local character saves
+- [ ] - local character saves
+- [ ] - refactor how callbacks are handled into pure callbacks from weird chains on callbacks upstream
 
 WIP screenshot: ![image](images/stattrackerslint.png)
 
