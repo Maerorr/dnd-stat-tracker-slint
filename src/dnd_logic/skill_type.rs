@@ -71,4 +71,29 @@ impl SkillType {
             SkillType::Survival => StatType::Wisdom,
         }
     }
+
+    pub fn from_string(skill: &str) -> Option<SkillType> {
+        let skill = skill.to_lowercase();
+        match skill.as_str() {
+            "acrobatics" => Some(SkillType::Acrobatics),
+            "animal handling" => Some(SkillType::AnimalHandling),
+            "arcana" => Some(SkillType::Arcana),
+            "athletics" => Some(SkillType::Athletics),
+            "deception" => Some(SkillType::Deception),
+            "history" => Some(SkillType::History),
+            "insight" => Some(SkillType::Insight),
+            "intimidation" => Some(SkillType::Intimidation),
+            "investigation" => Some(SkillType::Investigation),
+            "medicine" => Some(SkillType::Medicine),
+            "nature" => Some(SkillType::Nature),
+            "perception" => Some(SkillType::Perception),
+            "performance" => Some(SkillType::Performance),
+            "persuasion" => Some(SkillType::Persuasion),
+            "religion" => Some(SkillType::Religion),
+            "sleight of hand" => Some(SkillType::SleightOfHand),
+            "stealth" => Some(SkillType::Stealth),
+            "survival" => Some(SkillType::Survival),
+            _ => None,
+        }
+    }
 }

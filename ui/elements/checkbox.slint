@@ -1,0 +1,48 @@
+import { Palette } from "palette.slint";
+
+export component Checkbox inherits Rectangle {
+    callback checked(bool);
+
+    in property <length> area-width;
+    in property <length> area-height;
+    in property <length> checkbox-width;
+    in property <length> checkbox-height;
+
+    in-out property <bool> status;
+
+    horizontal-stretch: 0;
+    vertical-stretch: 0;
+
+    width: area-width;
+    height: area-height;
+
+    base := Rectangle {
+        width: checkbox-width;
+        height: checkbox-height;
+        background: Palette.normal_button_idle_color;
+        border-color: Palette.dark;
+        border-width: 2px;
+        border-radius: 5px;
+
+        if status : VerticalLayout {
+            width: base.width;
+            alignment: center;
+            Rectangle {
+                x: base.width * 0.3;
+                width: base.width * 0.4;
+                height: base.height * 0.4;
+                background: Palette.text_color;
+                border-radius: base.width * 0.2;
+            }
+        }
+    }
+
+    touch-area := TouchArea {
+        width: area-width * 2.3;
+        height: area-height;
+        clicked => {
+            root.status = !root.status;
+            root.checked(status);
+        }
+    }
+}

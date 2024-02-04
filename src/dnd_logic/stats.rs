@@ -105,10 +105,6 @@ impl Stat {
             modifier_with_proficiency: format!("({}{})", sign, mod_with_prof).into(),
         }
     }
-
-    // pub fn get_stat_color(&self) -> egui::Color32 {
-    //     self.stat.get_stat_color()
-    // }
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]

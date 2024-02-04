@@ -27,6 +27,8 @@ impl Skill {
             proficiency: self.proficiency,
             expertise: self.expertise,
             modifier: format!("({}{})", sign, modifier).into(),
+            color: self.base_ability.get_stat_color(),
+            stat_short_name: self.base_ability.get_short_name().into(),
         }
     }
 }

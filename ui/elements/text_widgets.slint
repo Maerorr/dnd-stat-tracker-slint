@@ -1,9 +1,10 @@
 import { Palette } from "palette.slint";
-import { HorizontalBox, VerticalBox, LineEdit, TabWidget } from "std-widgets.slint";
+import { HorizontalBox, VerticalBox, LineEdit, TabWidget, CheckBox } from "std-widgets.slint";
 import { DiamondStroke, Line, DiamondFilled, Diamond } from "drawing.slint";
 import { TopBadButton, NormalButton } from "button.slint";
 import { SlintShortSpellEntry } from "../logic.slint";
 import { EditMode } from "globals.slint";
+import { Checkbox } from "checkbox.slint";
  
 export component Label inherits Text {
     font-size: 20px;
@@ -90,6 +91,8 @@ export component SingleStat {
 }
 
 export component SavingThrow {
+    callback set-save-proficiency(string, bool);
+
     in property <string> name;
     in property <string> modifier;
     in property <color> color;
@@ -103,11 +106,28 @@ export component SavingThrow {
         
         alignment: start;
         
-        if proficient : DiamondFilled {
-            radius: 7px;
-        } 
-        if !proficient : DiamondStroke {
-            radius: 7px;
+        if EditMode.active : Checkbox {
+            status: proficient;
+            area-height: 25px;
+            area-width: 14px;
+            checkbox-width: 14px;
+            checkbox-height: 14px;
+            checked(val) => {
+                set-save-proficiency(name, val);
+            }
+        }
+
+        if proficient && !EditMode.active : VerticalLayout {
+            alignment: center;
+            DiamondFilled {
+                radius: 7px;
+            } 
+        }
+        if !proficient && !EditMode.active : VerticalLayout {
+            alignment: center;
+            DiamondStroke {
+                radius: 7px;
+            } 
         }
     
         Text {
@@ -138,17 +158,36 @@ export component Skill {
     width: 200px;
     height: 25px;
 
+    callback set-skill-proficiency(string, bool);
+    callback set-skill-expertise(string, bool);
+
     HorizontalLayout {
         x: 9px;
         y: 0px;
         
         alignment: start;
-        
-        if proficient : DiamondFilled {
-            radius: 7px;
-        } 
-        if !proficient : DiamondStroke {
-            radius: 7px;
+        if EditMode.active : Checkbox {
+            status: proficient;
+            area-height: 25px;
+            area-width: 14px;
+            checkbox-width: 14px;
+            checkbox-height: 14px;
+            checked(val) => {
+                set-skill-proficiency(name, val);
+            }
+        }
+
+        if proficient && !EditMode.active : VerticalLayout {
+            alignment: center;
+            DiamondFilled {
+                radius: 7px;
+            } 
+        }
+        if !proficient && !EditMode.active : VerticalLayout {
+            alignment: center;
+            DiamondStroke {
+                radius: 7px;
+            } 
         }
     
         Text {
@@ -166,18 +205,31 @@ export component Skill {
             font-size: 18px;
         }
         Text {
-            width: 45px;
+            width: 35px;
             text: stat-short-name;
             color: color;
             horizontal-alignment: center;
-            font-size: 14px;
+            vertical-alignment: center;
+            font-size: 12px;
         }
 
-        if expertise : Text {
+        if EditMode.active : Checkbox {
+            status: expertise;
+            area-height: 25px;
+            area-width: 15px;
+            checkbox-width: 14px;
+            checkbox-height: 14px;
+            checked(val) => {
+                set-skill-expertise(name, val);
+            }
+        }
+
+        if expertise && !EditMode.active: Text {
             width: 15px;
             text: "e";
             color: Palette.text_color;
             horizontal-alignment: center;
+            vertical-alignment: center;
             font-size: 14px;
         }
     }

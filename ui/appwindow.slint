@@ -44,6 +44,10 @@ export component AppWindow inherits Window {
     callback save();
     callback save-character-select();
 
+    callback set-skill-proficiency(string, bool);
+    callback set-skill-expertise(string, bool);
+    callback set-save-proficiency(string, bool);
+
     background: Palette.background_color;
     TopBar {
         in-character: character;
@@ -72,7 +76,18 @@ export component AppWindow inherits Window {
             stroke: Palette.text_color;
         }
 
-        SavesProficiencies {in-character: character;}
+        SavesProficiencies {
+            in-character: character;
+            set-skill-proficiency(string, bool) => {
+                set-skill-proficiency(string, bool);
+            }
+            set-skill-expertise(string, bool) => {
+                set-skill-expertise(string, bool);
+            }
+            set-save-proficiency(string, bool) => {
+                set-save-proficiency(string, bool);
+            }
+        }
         
         Line {
             from: {x: 0, y: 0};

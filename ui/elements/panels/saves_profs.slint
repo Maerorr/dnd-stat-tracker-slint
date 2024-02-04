@@ -7,276 +7,73 @@ import { SlintCharacter } from "../../logic.slint";
 export component SavesProficiencies {
     in-out property <SlintCharacter> in-character;
     property <length> grid-width: 275px;
-    GridLayout {
-        min-width: grid-width;
-        min-height: 5px;
-        Row {
-            Heading {
-                height: 40px;
-                width: grid-width;
-                text: "Saving Throws";
+
+    callback set-skill-proficiency(string, bool);
+    callback set-skill-expertise(string, bool);
+    callback set-save-proficiency(string, bool);
+
+    VerticalLayout {
+        Heading {
+            height: 40px;
+            width: grid-width;
+            text: "Saving Throws";
+            color: Palette.text_color;
+            vertical-alignment: center;
+            horizontal-alignment: center;
+        }
+        for save[i] in in-character.stats : SavingThrow {
+            name: save.name;
+            modifier: save.modifier_with_proficiency;
+            color: save.color;
+            proficient: save.saving-throw-proficiency;
+            set-save-proficiency(name, val) => {
+                set-save-proficiency(name, val);
+            }
+        }
+
+        Heading {
+            height: 40px;
+            width: grid-width;
+            text: "Proficiencies";
+            color: Palette.text_color;
+            vertical-alignment: center;
+            horizontal-alignment: center;
+        }
+
+        for skill[i] in in-character.skills : Skill {
+            name: skill.name;
+            modifier: skill.modifier;
+            color: skill.color;
+            stat-short-name: "(" + skill.stat-short-name + ")";
+            proficient: skill.proficiency; 
+            expertise: skill.expertise;
+            set-skill-proficiency(name, val) => {
+                set-skill-proficiency(name, val);
+            }
+            set-skill-expertise(name, val) => {
+                set-skill-expertise(name, val);
+            }
+        }
+
+        Line {
+            height: 12px;
+            from: {x: 0, y: 0};
+            to: {x: grid-width/1px, y: 0};
+        }
+
+        HorizontalLayout {
+            Rectangle {
+                width: grid-width * 0.03;
+                height: 0px;
+                border-radius: 0px;
+            }
+            Text {
+                width: grid-width * 0.93;
+                height: 200px;
+                text: "Proficiencies & Languages\nLanguages: Common, Elven, Sylvan, Gnommish\n\nWeapons: daggers, darts, slings, quarterstaff, light crossbow\n\nArmor: -";
                 color: Palette.text_color;
-                vertical-alignment: center;
-                horizontal-alignment: center;
+                font-size: 16px;
             }
-        }
-
-        Row {
-            SavingThrow {
-                name: "Strength";
-                modifier: in-character.stats[0].modifier_with_proficiency;
-                color: Palette.strength_color;
-                proficient: in-character.stats[0].saving-throw-proficiency;
-            }
-        }
-        Row {
-            SavingThrow {
-                name: "Dexterity";
-                modifier: in-character.stats[1].modifier_with_proficiency;
-                color: Palette.dexterity_color;
-                proficient: in-character.stats[1].saving-throw-proficiency;
-            }
-        }
-        Row {
-            SavingThrow {
-                name: "Constitution";
-                modifier: in-character.stats[2].modifier_with_proficiency;
-                color: Palette.constitution_color;
-                proficient: in-character.stats[2].saving-throw-proficiency;
-            }
-        }
-        Row {
-            SavingThrow {
-                name: "Intelligence";
-                modifier: in-character.stats[3].modifier_with_proficiency;
-                color: Palette.intelligence_color;
-                proficient: in-character.stats[3].saving-throw-proficiency;
-            }
-        }
-        Row {
-            SavingThrow {
-                name: "Wisdom";
-                modifier: in-character.stats[4].modifier_with_proficiency;
-                color: Palette.wisdom_color;
-                proficient: in-character.stats[4].saving-throw-proficiency;
-            }
-        }
-
-        // TODO SWAP FOR A FOR LOOP ITERATING OVER A LIST OF SKILLS
-
-        Row {
-            Heading {
-                height: 40px;
-                width: grid-width;
-                text: "Proficiencies";
-                color: Palette.text_color;
-                vertical-alignment: center;
-                horizontal-alignment: center;
-            }
-        }
-        Row {
-            Skill {
-                name: "Acrobatics";
-                modifier: in-character.skills[0].modifier;
-                color: Palette.dexterity_color;
-                stat-short-name: "(DEX)";
-                proficient: in-character.skills[0].proficiency;
-                expertise: in-character.skills[0].expertise;
-            }
-        }
-        Row {
-            Skill {
-                name: "Animal Handling";
-                modifier: in-character.skills[1].modifier;
-                color: Palette.wisdom_color;
-                stat-short-name: "(WIS)";
-                proficient: in-character.skills[1].proficiency;
-                expertise: in-character.skills[1].expertise;
-            }
-        }
-        Row {
-            Skill {
-                name: "Arcana";
-                modifier: in-character.skills[2].modifier;
-                color: Palette.intelligence_color;
-                stat-short-name: "(INT)";
-                proficient: in-character.skills[2].proficiency;
-                expertise: in-character.skills[2].expertise;
-            }
-        }
-        Row {
-            Skill {
-                name: "Athletics";
-                modifier: in-character.skills[3].modifier;
-                color: Palette.strength_color;
-                stat-short-name: "(STR)";
-                proficient: in-character.skills[3].proficiency;
-                expertise: in-character.skills[3].expertise;
-            }
-        }
-        Row {
-            Skill {
-                name: "Deception";
-                modifier: in-character.skills[4].modifier;
-                color: Palette.charisma_color;
-                stat-short-name: "(CHA)";
-                proficient: in-character.skills[4].proficiency;
-                expertise: in-character.skills[4].expertise;
-            }
-        }
-        Row {
-            Skill {
-                name: "History";
-                modifier: in-character.skills[5].modifier;
-                color: Palette.intelligence_color;
-                stat-short-name: "(INT)";
-                proficient: in-character.skills[5].proficiency;
-                expertise: in-character.skills[5].expertise;
-            }
-        }
-        Row {
-            Skill {
-                name: "Insight";
-                modifier: in-character.skills[6].modifier;
-                color: Palette.wisdom_color;
-                stat-short-name: "(WIS)";
-                proficient: in-character.skills[6].proficiency;
-                expertise: in-character.skills[6].expertise;
-            }
-        }
-        Row {
-            Skill {
-                name: "Intimidation";
-                modifier: in-character.skills[7].modifier;
-                color: Palette.charisma_color;
-                stat-short-name: "(CHA)";
-                proficient: in-character.skills[7].proficiency;
-                expertise: in-character.skills[7].expertise;
-            }
-        }
-        Row {
-            Skill {
-                name: "Investigation";
-                modifier: in-character.skills[8].modifier;
-                color: Palette.intelligence_color;
-                stat-short-name: "(INT)";
-                proficient: in-character.skills[8].proficiency;
-                expertise: in-character.skills[8].expertise;
-            }
-        }
-        Row {
-            Skill {
-                name: "Medicine";
-                modifier: in-character.skills[9].modifier;
-                color: Palette.wisdom_color;
-                stat-short-name: "(WIS)";
-                proficient: in-character.skills[9].proficiency;
-                expertise: in-character.skills[9].expertise;
-            }
-        }
-        Row {
-            Skill {
-                name: "Nature";
-                modifier: in-character.skills[10].modifier;
-                color: Palette.intelligence_color;
-                stat-short-name: "(INT)";
-                proficient: in-character.skills[10].proficiency;
-                expertise: in-character.skills[10].expertise;
-            }
-        }
-        Row {
-            Skill {
-                name: "Perception";
-                modifier: in-character.skills[11].modifier;
-                color: Palette.wisdom_color;
-                stat-short-name: "(WIS)";
-                proficient: in-character.skills[11].proficiency;
-                expertise: in-character.skills[11].expertise;
-            }
-        }
-        Row {
-            Skill {
-                name: "Performance";
-                modifier: in-character.skills[12].modifier;
-                color: Palette.charisma_color;
-                stat-short-name: "(CHA)";
-                proficient: in-character.skills[12].proficiency;
-                expertise: in-character.skills[12].expertise;
-            }
-        }
-        Row {
-            Skill {
-                name: "Persuasion";
-                modifier: in-character.skills[13].modifier;
-                color: Palette.charisma_color;
-                stat-short-name: "(CHA)";
-                proficient: in-character.skills[13].proficiency;
-                expertise: in-character.skills[13].expertise;
-            }
-        }
-        Row {
-            Skill {
-                name: "Religion";
-                modifier: in-character.skills[14].modifier;
-                color: Palette.intelligence_color;
-                stat-short-name: "(INT)";
-                proficient: in-character.skills[14].proficiency;
-                expertise: in-character.skills[14].expertise;
-            }
-        }
-        Row {
-            Skill {
-                name: "Sleight of Hand";
-                modifier: in-character.skills[15].modifier;
-                color: Palette.dexterity_color;
-                stat-short-name: "(DEX)";
-                proficient: in-character.skills[15].proficiency;
-                expertise: in-character.skills[15].expertise;
-            }
-        }
-        Row {
-            Skill {
-                name: "Stealth";
-                modifier: in-character.skills[16].modifier;
-                color: Palette.dexterity_color;
-                stat-short-name: "(DEX)";
-                proficient: in-character.skills[16].proficiency;
-                expertise: in-character.skills[16].expertise;
-            }
-        }
-        Row {
-            Skill {
-                name: "Survival";
-                modifier: in-character.skills[17].modifier;
-                color: Palette.wisdom_color;
-                stat-short-name: "(WIS)";
-                proficient: in-character.skills[17].proficiency;
-                expertise: in-character.skills[17].expertise;
-            }
-        }
-        Row {
-            Line {
-                height: 12px;
-                from: {x: 0, y: 0};
-                to: {x: grid-width/1px, y: 0};
-            }
-        }
-        Row {
-            HorizontalLayout {
-                Rectangle {
-                    width: grid-width * 0.03;
-                    height: 0px;
-                    border-radius: 0px;
-                }
-                Text {
-                    width: grid-width * 0.93;
-                    height: 200px;
-                    text: "Proficiencies & Languages\nLanguages: Common, Elven, Sylvan, Gnommish\n\nWeapons: daggers, darts, slings, quarterstaff, light crossbow\n\nArmor: -";
-                    color: Palette.text_color;
-                    font-size: 16px;
-                }
-            }
-            
         }
     }
 }

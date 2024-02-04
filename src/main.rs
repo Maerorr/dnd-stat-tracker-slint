@@ -357,5 +357,41 @@ fn main() -> Result<(), slint::PlatformError> {
         }
     });
 
+    let app_data_handle = app_data.clone();
+    ui.on_set_skill_proficiency({
+        let ui_handle = ui.as_weak();
+        move |skill, prof| {
+            let ui = ui_handle.unwrap();
+            let mut c = app_data_handle.borrow_mut();
+            let skill = SkillType::from_string(&skill).unwrap();
+            c.get_current_character().skills.set_skill_proficiency(skill, prof);
+            set_ui_character_data(&c.get_current_character(), &ui);
+        }
+    });
+
+    let app_data_handle = app_data.clone();
+    ui.on_set_skill_expertise({
+        let ui_handle = ui.as_weak();
+        move |skill, exp| {
+            let ui = ui_handle.unwrap();
+            let mut c = app_data_handle.borrow_mut();
+            let skill = SkillType::from_string(&skill).unwrap();
+            c.get_current_character().skills.set_skill_expertise(skill, exp);
+            set_ui_character_data(&c.get_current_character(), &ui);
+        }
+    });
+
+    let app_data_handle = app_data.clone();
+    ui.on_set_save_proficiency({
+        let ui_handle = ui.as_weak();
+        move |stat, prof| {
+            let ui = ui_handle.unwrap();
+            let mut c = app_data_handle.borrow_mut();
+            let stat = StatType::from_string(&stat).unwrap();
+            c.get_current_character().stats.set_save_proficiency(stat, prof);
+            set_ui_character_data(&c.get_current_character(), &ui);
+        }
+    });
+
     ui.run()
 }
