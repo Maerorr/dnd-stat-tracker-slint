@@ -145,25 +145,6 @@ export component HealButton inherits Rectangle {
     }
 }
 
-// export component TempHpButton inherits Rectangle {
-//     in-out property text <=> txt.text;
-//     callback clicked <=> touch.clicked;
-//     border-radius: root.height / 8;
-//     border-width: 1px;
-//     border-color: root.background.darker(25%);
-//     background: touch.pressed ? Palette.temphp_button_pressed_color : touch.has-hover ? Palette.temphp_button_hover_color :  Palette.temphp_button_idle_color;
-//     height: 22px;
-//     min-width: txt.preferred-width + 20px;
-//     txt := Text {
-//         y: (parent.height - self.height)/2;
-//         color: touch.pressed ? #b3b3b3 : #c9c9c9;
-//         font-size: 14px;
-//         vertical-alignment: center;
-//         horizontal-alignment: center;
-//     }
-//     touch := TouchArea { }
-// }
-
 export component TempHpButton inherits Rectangle {
     in property <length> area-width;
     in property <length> area-height;
@@ -184,7 +165,7 @@ export component TempHpButton inherits Rectangle {
         width: button-width;
         height: button-height;
 
-        border-radius: root.height / 8;
+        border-radius: button-height / 8;
         border-width: 1px;
         border-color: root.background.darker(25%);
         background: touch.pressed ? Palette.temphp_button_pressed_color : touch.has-hover ? Palette.temphp_button_hover_color :  Palette.temphp_button_idle_color;
@@ -242,7 +223,7 @@ export component SizedButton inherits Rectangle {
         width: button-width;
         height: button-height;
 
-        border-radius: root.height / 8;
+        border-radius: button-height / 8;
         border-width: 1px;
         border-color: root.background.darker(25%);
         background: touch.pressed ? Palette.normal_button_pressed_color : touch.has-hover ? Palette.normal_button_hover_color :  Palette.normal_button_idle_color;

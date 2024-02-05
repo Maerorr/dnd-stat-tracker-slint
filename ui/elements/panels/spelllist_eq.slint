@@ -19,6 +19,9 @@ export component SpellListEq {
     callback use-spell-slot(string);
     callback add-spell-slot(string);
 
+    callback add-max-slot(string);
+    callback sub-max-slot(string);
+
     // (name, level)
     callback add-spell(string);
     callback remove-spell(string);
@@ -154,6 +157,12 @@ export component SpellListEq {
                                 add-slot => {
                                     add-spell-slot("1");
                                 }
+                                add-max-slot => {
+                                    add-max-slot("1");
+                                }
+                                sub-max-slot => {
+                                    sub-max-slot("1");
+                                }
                             }
                             Line {
                                 height: 2px;
@@ -195,6 +204,12 @@ export component SpellListEq {
                                 }
                                 add-slot => {
                                     add-spell-slot("2");
+                                }
+                                add-max-slot => {
+                                    add-max-slot("2");
+                                }
+                                sub-max-slot => {
+                                    sub-max-slot("2");
                                 }
                             }
                             Line {
@@ -245,6 +260,12 @@ export component SpellListEq {
                                 add-slot => {
                                     add-spell-slot("3");
                                 }
+                                add-max-slot => {
+                                    add-max-slot("3");
+                                }
+                                sub-max-slot => {
+                                    sub-max-slot("3");
+                                }
                             }
                             for spell[i] in in-character.spells3 : SpellEntry {
                                 spell: spell;
@@ -287,6 +308,12 @@ export component SpellListEq {
                                 add-slot => {
                                     add-spell-slot("4");
                                 }
+                                add-max-slot => {
+                                    add-max-slot("4");
+                                }
+                                sub-max-slot => {
+                                    sub-max-slot("4");
+                                }
                             }
                             for spell[i] in in-character.spells4 : SpellEntry {
                                 spell: spell;
@@ -328,6 +355,12 @@ export component SpellListEq {
                                 }
                                 add-slot => {
                                     add-spell-slot("5");
+                                }
+                                add-max-slot => {
+                                    add-max-slot("5");
+                                }
+                                sub-max-slot => {
+                                    sub-max-slot("5");
                                 }
                             }
                             for spell[i] in in-character.spells5 : SpellEntry {
@@ -378,6 +411,12 @@ export component SpellListEq {
                                 add-slot => {
                                     add-spell-slot("6");
                                 }
+                                add-max-slot => {
+                                    add-max-slot("6");
+                                }
+                                sub-max-slot => {
+                                    sub-max-slot("6");
+                                }
                             }
                             for spell[i] in in-character.spells6 : SpellEntry {
                                 spell: spell;
@@ -419,6 +458,12 @@ export component SpellListEq {
                                 }
                                 add-slot => {
                                     add-spell-slot("7");
+                                }
+                                add-max-slot => {
+                                    add-max-slot("7");
+                                }
+                                sub-max-slot => {
+                                    sub-max-slot("7");
                                 }
                             }
                             for spell[i] in in-character.spells7 : SpellEntry {
@@ -462,6 +507,12 @@ export component SpellListEq {
                                 add-slot => {
                                     add-spell-slot("8");
                                 }
+                                add-max-slot => {
+                                    add-max-slot("8");
+                                }
+                                sub-max-slot => {
+                                    sub-max-slot("8");
+                                }
                             }
                             for spell[i] in in-character.spells8 : SpellEntry {
                                 spell: spell;
@@ -503,6 +554,12 @@ export component SpellListEq {
                                 }
                                 add-slot => {
                                     add-spell-slot("9");
+                                }
+                                add-max-slot => {
+                                    add-max-slot("9");
+                                }
+                                sub-max-slot => {
+                                    sub-max-slot("9");
                                 }
                             }
                             for spell[i] in in-character.spells9 : SpellEntry {

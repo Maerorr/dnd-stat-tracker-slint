@@ -1,5 +1,5 @@
 import { Palette } from "palette.slint";
-import { HorizontalBox, VerticalBox, LineEdit, TabWidget, CheckBox } from "std-widgets.slint";
+import { HorizontalBox, VerticalBox, LineEdit, TabWidget, CheckBox, ScrollView } from "std-widgets.slint";
 import { DiamondStroke, Line, DiamondFilled, Diamond } from "drawing.slint";
 import { TopBadButton, NormalButton, SizedButton, DamageButton } from "button.slint";
 import { SlintShortSpellEntry } from "../logic.slint";
@@ -588,6 +588,9 @@ export component LevelHeader {
     callback use-slot();
     callback add-slot();
 
+    callback add-max-slot();
+    callback sub-max-slot();
+
     HorizontalLayout {
         padding-top: 12px;
         min-height: 26px;
@@ -624,7 +627,12 @@ export component LevelHeader {
                         width: 18px;
                         height: 18px;
                         clicked => {
-                            add-slot();
+                            if EditMode.active {
+                                sub-max-slot();
+                            } else {
+                                add-slot();
+                            }
+                            
                         }
                     }
                 }
@@ -649,7 +657,11 @@ export component LevelHeader {
                         width: 18px;
                         height: 18px;
                         clicked => {
-                            use-slot();
+                            if EditMode.active {
+                                add-max-slot();
+                            } else {
+                                use-slot();
+                            }
                         }
                     }
                 }
@@ -664,99 +676,107 @@ export component SpellEntry {
     callback remove-spell(string);
 
     spell-popup := PopupWindow {
-        x: - parent.x;
-        y: - parent.y;
+        x: 0px;
+        y: 0px;
         width: 600px;
-        height: 200px + description.preferred-height * 1.2;
-        Rectangle {
-            width: 100%;
-            height: 100%;
-            background: Palette.dark;
-
-            content := VerticalLayout {
-                padding-left: 10px;
-                padding-right: 10px;
-                y: 0;
-                alignment: center;
-                Text {
-                    height: 30px;
-                    text: spell.name;
-                    font-size: 24px;
-                    width: 100%;
-                    color: Palette.text_color;
-                    horizontal-alignment: center;
-                    vertical-alignment: center;
-                }
-                Text {
-                    text: "Level: " + spell.level;
-                    font-size: 18px;
-                    width: 100%;
-                    color: Palette.text_color;
-                    horizontal-alignment: left;
-                    vertical-alignment: center;
-                }
-                Text {
-                    text: "School: " + spell.school;
-                    font-size: 18px;
-                    width: 100%;
-                    color: Palette.text_color;
-                    horizontal-alignment: left;
-                    vertical-alignment: center;
-                }
-                Text {
-                    text: "Casting time: " + spell.casting_time;
-                    font-size: 18px;
-                    width: 100%;
-                    color: Palette.text_color;
-                    horizontal-alignment: left;
-                    vertical-alignment: center;
-                }
-                Text {
-                    text: "Range: " + spell.range;
-                    font-size: 18px;
-                    width: 100%;
-                    color: Palette.text_color;
-                    horizontal-alignment: left;
-                    vertical-alignment: center;
-                }
-                Text {
-                    text: "Components: " + spell.components;
-                    font-size: 18px;
-                    width: 100%;
-                    color: Palette.text_color;
-                    horizontal-alignment: left;
-                    vertical-alignment: center;
-                }
-                Text {
-                    text: "Duration: " + spell.duration;
-                    font-size: 18px;
-                    width: 100%;
-                    color: Palette.text_color;
-                    horizontal-alignment: left;
-                    vertical-alignment: center;
-                }
-                Line {
-                    height: 12px;
-                    from: {x: 0, y: 0};
-                    to: {x: 1, y: 0};
-                }
-                description := Text {
-                    text: spell.description;
-                    font-size: 18px;
-                    width: 100%;
-                    color: Palette.text_color;
-                    horizontal-alignment: left;
-                    vertical-alignment: center;
-                    wrap: word-wrap;
-                }
-                if spell.ritual : Text {
-                    text: "At higher levels: " + spell.higher-levels;
-                    font-size: 18px;
-                    width: 100%;
-                    color: Palette.text_color;
-                    horizontal-alignment: left;
-                    vertical-alignment: center;
-                    wrap: word-wrap;
+        height: 800px;
+        ScrollView {
+            x:0;
+            y:0;
+            width: 600px;
+            height: 800px;
+            viewport-height: 200px + description.preferred-height;
+            viewport-width: 600px;
+            Rectangle {
+                width: 600px;
+                height: 200px + description.preferred-height * 1.2;
+                background: Palette.dark;
+    
+                content := VerticalLayout {
+                    padding-left: 10px;
+                    padding-right: 10px;
+                    y: 0;
+                    alignment: center;
+                    Text {
+                        height: 30px;
+                        text: spell.name;
+                        font-size: 24px;
+                        width: 100%;
+                        color: Palette.text_color;
+                        horizontal-alignment: center;
+                        vertical-alignment: center;
+                    }
+                    Text {
+                        text: "Level: " + spell.level;
+                        font-size: 18px;
+                        width: 100%;
+                        color: Palette.text_color;
+                        horizontal-alignment: left;
+                        vertical-alignment: center;
+                    }
+                    Text {
+                        text: "School: " + spell.school;
+                        font-size: 18px;
+                        width: 100%;
+                        color: Palette.text_color;
+                        horizontal-alignment: left;
+                        vertical-alignment: center;
+                    }
+                    Text {
+                        text: "Casting time: " + spell.casting_time;
+                        font-size: 18px;
+                        width: 100%;
+                        color: Palette.text_color;
+                        horizontal-alignment: left;
+                        vertical-alignment: center;
+                    }
+                    Text {
+                        text: "Range: " + spell.range;
+                        font-size: 18px;
+                        width: 100%;
+                        color: Palette.text_color;
+                        horizontal-alignment: left;
+                        vertical-alignment: center;
+                    }
+                    Text {
+                        text: "Components: " + spell.components;
+                        font-size: 18px;
+                        width: 100%;
+                        color: Palette.text_color;
+                        horizontal-alignment: left;
+                        vertical-alignment: center;
+                    }
+                    Text {
+                        text: "Duration: " + spell.duration;
+                        font-size: 18px;
+                        width: 100%;
+                        color: Palette.text_color;
+                        horizontal-alignment: left;
+                        vertical-alignment: center;
+                    }
+                    Line {
+                        height: 12px;
+                        from: {x: 0, y: 0};
+                        to: {x: 1, y: 0};
+                    }
+                    description := Text {
+                        text: spell.description;
+                        font-size: 18px;
+                        width: 100%;
+                        color: Palette.text_color;
+                        horizontal-alignment: left;
+                        vertical-alignment: center;
+                        wrap: word-wrap;
+                    }
+                    if spell.ritual : Text {
+                        text: "At higher levels: " + spell.higher-levels;
+                        font-size: 18px;
+                        width: 100%;
+                        color: Palette.text_color;
+                        horizontal-alignment: left;
+                        vertical-alignment: center;
+                        wrap: word-wrap;
+                    }
                 }
             }
         }

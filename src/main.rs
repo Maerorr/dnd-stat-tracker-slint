@@ -344,6 +344,32 @@ fn main() -> Result<(), slint::PlatformError> {
         }
     });
 
+    ui.on_add_max_spell_slot({
+            let app_data_handle = app_data.clone();
+            let ui_handle = ui.as_weak();
+            move |level| {
+                let ui = ui_handle.unwrap();
+                let mut c = app_data_handle.borrow_mut();
+                let level = level.trim().parse::<i32>().unwrap();
+                c.get_current_character().add_one_spell_slot_max(level);
+                set_ui_character_data(&c.get_current_character(), &ui);
+            }
+        }
+    );
+
+    ui.on_subtract_max_spell_slot({
+            let app_data_handle = app_data.clone();
+            let ui_handle = ui.as_weak();
+            move |level| {
+                let ui = ui_handle.unwrap();
+                let mut c = app_data_handle.borrow_mut();
+                let level = level.trim().parse::<i32>().unwrap();
+                c.get_current_character().subtract_one_spell_slot_max(level);
+                set_ui_character_data(&c.get_current_character(), &ui);
+            }
+        }
+    );
+
     let app_data_handle = app_data.clone();
     ui.on_edit_stat({
         let ui_handle = ui.as_weak();

@@ -48,6 +48,9 @@ export component AppWindow inherits Window {
     callback use-spell-slot(string);
     callback add-spell-slot(string);
 
+    callback add-max-spell-slot(string);
+    callback subtract-max-spell-slot(string);
+
     callback add-spell(string);
     callback remove-spell(string);
 
@@ -67,6 +70,7 @@ export component AppWindow inherits Window {
     callback subtract-initiative();
     callback add-speed();
     callback subtract-speed();
+
 
     background: Palette.background_color;
     TopBar {
@@ -219,6 +223,12 @@ export component AppWindow inherits Window {
             }
             remove-spell(name) => {
                 remove-spell(name);
+            }
+            add-max-slot(level) => {
+                add-max-spell-slot(level);
+            }
+            sub-max-slot(level) => {
+                subtract-max-spell-slot(level);
             }
         }
 
