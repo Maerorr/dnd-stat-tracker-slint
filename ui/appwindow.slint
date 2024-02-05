@@ -4,7 +4,7 @@ import { Palette } from "elements/palette.slint";
 import { StatsPanel } from "elements/panels/stats.slint";
 import { Line } from "elements/drawing.slint";
 import { SavesProficiencies } from "elements/panels/saves_profs.slint";
-import { SlintCharacter } from "logic.slint";
+import { SlintCharacter, SlintSpellDatabase } from "logic.slint";
 import { EditMode } from "elements/globals.slint";
 import { AcHpMoneyPanel } from "elements/panels/ac_hp_money.slint";
 
@@ -16,6 +16,7 @@ export component AppWindow inherits Window {
     width: 1920px;
     height: 1000px;
     in-out property <SlintCharacter> character;
+    in-out property <SlintSpellDatabase> spell-database;
 
     default-font-family: "Typey McTypeface";
 
@@ -46,6 +47,9 @@ export component AppWindow inherits Window {
 
     callback use-spell-slot(string);
     callback add-spell-slot(string);
+
+    callback add-spell(string);
+    callback remove-spell(string);
 
     callback edit-stat(string, string);
     callback save();
@@ -203,11 +207,18 @@ export component AppWindow inherits Window {
         SpellListEq {
             in-character: character;
             widget-width: 800px;
+            spell-database: spell-database;
             use-spell-slot(string) => {
                 use-spell-slot(string);
             }
             add-spell-slot(string) => {
                 add-spell-slot(string);
+            }
+            add-spell(name) => {
+                add-spell(name);
+            }
+            remove-spell(name) => {
+                remove-spell(name);
             }
         }
 

@@ -141,6 +141,23 @@ pub fn set_ui_character_data(c: &Character, ui: &AppWindow) {
     ui.set_character(current_character.into());
 }
 
+fn set_ui_spell_database_data(spell_database: &SpellList, ui: &AppWindow) {
+    // convert each spell into SlintSpellData containing name and level, then collect them into SlintSpellDatabase that has lists of spells for each level
+    let mut spell_database_ui: SlintSpellDatabase = SlintSpellDatabase::default();
+    spell_database_ui.cantrips = spell_database.get_spells_of_level(0).iter().map(|spell| spell.0.name.clone().into()).collect::<Vec<slint::SharedString>>().as_slice().into();
+    spell_database_ui.spells1 = spell_database.get_spells_of_level(1).iter().map(|spell| spell.0.name.clone().into()).collect::<Vec<slint::SharedString>>().as_slice().into();
+    spell_database_ui.spells2 = spell_database.get_spells_of_level(2).iter().map(|spell| spell.0.name.clone().into()).collect::<Vec<slint::SharedString>>().as_slice().into();
+    spell_database_ui.spells3 = spell_database.get_spells_of_level(3).iter().map(|spell| spell.0.name.clone().into()).collect::<Vec<slint::SharedString>>().as_slice().into();
+    spell_database_ui.spells4 = spell_database.get_spells_of_level(4).iter().map(|spell| spell.0.name.clone().into()).collect::<Vec<slint::SharedString>>().as_slice().into();
+    spell_database_ui.spells5 = spell_database.get_spells_of_level(5).iter().map(|spell| spell.0.name.clone().into()).collect::<Vec<slint::SharedString>>().as_slice().into();
+    spell_database_ui.spells6 = spell_database.get_spells_of_level(6).iter().map(|spell| spell.0.name.clone().into()).collect::<Vec<slint::SharedString>>().as_slice().into();
+    spell_database_ui.spells7 = spell_database.get_spells_of_level(7).iter().map(|spell| spell.0.name.clone().into()).collect::<Vec<slint::SharedString>>().as_slice().into();
+    spell_database_ui.spells8 = spell_database.get_spells_of_level(8).iter().map(|spell| spell.0.name.clone().into()).collect::<Vec<slint::SharedString>>().as_slice().into();
+    spell_database_ui.spells9 = spell_database.get_spells_of_level(9).iter().map(|spell| spell.0.name.clone().into()).collect::<Vec<slint::SharedString>>().as_slice().into();
+
+    ui.set_spell_database(spell_database_ui.into());
+}
+
 fn main() -> Result<(), slint::PlatformError> {
     let app_data = Rc::new(RefCell::new(StatTracker::new()));
     env::set_var("SLINT_BACKEND", "skia");
@@ -149,6 +166,7 @@ fn main() -> Result<(), slint::PlatformError> {
 
     let mut c = app_data.clone();
     set_ui_character_data(&c.borrow_mut().get_current_character(), &ui);
+    set_ui_spell_database_data(&c.borrow().spell_database, &ui);
 
     ui.on_add_money({
         let ui_handle = ui.as_weak();
@@ -525,6 +543,37 @@ fn main() -> Result<(), slint::PlatformError> {
             let ui = ui_handle.unwrap();
             let mut c = app_data_handle.borrow_mut();
             c.get_current_character().use_hit_dice();
+            set_ui_character_data(&c.get_current_character(), &ui);
+        }
+    });
+
+    let app_data_handle = app_data.clone();
+    ui.on_add_spell({
+        let ui_handle = ui.as_weak();
+        move |name| {
+            let ui = ui_handle.unwrap();
+            let mut c = app_data_handle.borrow_mut();
+            let spell = c.spell_database.get_spell_by_name(&name);
+            if spell.is_none() {
+                return;
+            }
+            c.get_current_character().spell_list.add_spell(&spell.unwrap(), false);
+            set_ui_character_data(&c.get_current_character(), &ui);
+        }
+    });
+
+    ui.on_remove_spell({
+        let app_data_handle = app_data.clone();
+        let ui_handle = ui.as_weak();
+        move |name| {
+            let ui = ui_handle.unwrap();
+            let mut c = app_data_handle.borrow_mut();
+            println!("removing spell: {}", name);
+            let spell = c.get_current_character().spell_list.get_spell_by_name(&name);
+            if spell.is_none() {
+                return;
+            }
+            c.get_current_character().spell_list.remove_spell_by_name(&name);
             set_ui_character_data(&c.get_current_character(), &ui);
         }
     });

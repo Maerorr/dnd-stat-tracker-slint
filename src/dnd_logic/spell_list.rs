@@ -6,6 +6,7 @@ use crate::SlintShortSpellEntry;
 
 use super::{class::{self, Class}, spell::Spell};
 
+
 #[derive(Debug, PartialEq, Eq, Clone, Serialize, Deserialize)]
 /// all spells are held in Vec<(Spell, bool)> where the bool is whether or not the spell is prepared
 pub struct SpellList {
@@ -44,10 +45,10 @@ impl SpellList {
         }
     }
 
-    pub fn get_spells_of_level(&mut self, level: i32) -> &mut Vec<(Spell, bool)> {
+    pub fn get_spells_of_level(&self, level: i32) -> &Vec<(Spell, bool)> {
         match level {
-            0 => &mut self.cantrips,
-            1..=9 => &mut self.spells[level as usize - 1],
+            0 => &self.cantrips,
+            1..=9 => &self.spells[level as usize - 1],
             _ => panic!("{}: {}", "Invalid spell level", level.to_string()),
         }
     }
@@ -89,6 +90,21 @@ impl SpellList {
         }
     }
 
+    pub fn remove_spell_by_name(&mut self, name: &str) {
+        let idx = self.cantrips.iter().position(|x| x.0.name == name);
+        if idx.is_some() {
+            self.cantrips.remove(idx.unwrap());
+            return;
+        }
+        for spell_level in &mut self.spells {
+            let idx = spell_level.iter().position(|x| x.0.name == name);
+            if idx.is_some() {
+                spell_level.remove(idx.unwrap());
+                return;
+            }
+        }
+    }
+
     pub fn get_spell_by_name(&self, name: &str) -> Option<Spell> {
         for spell in &self.cantrips {
             if spell.0.name == name {
@@ -106,19 +122,6 @@ impl SpellList {
     }
 
     pub fn get_ui_spell_entries(&self) -> Vec<Vec<SlintShortSpellEntry>> {
-        // name: string,
-        // level: int,
-        // school: string,
-        // casting-time: string,
-        // range: string,
-        // components: string,
-        // duration: string,
-        // description: string,
-        // higher-levels: string,
-        // ritual: bool,
-        // concentration: bool,
-        // classes: [string],
-        // prepared: bool,
         let mut entries: Vec<Vec<SlintShortSpellEntry>> = Vec::new();
         let mut cantrips: Vec<SlintShortSpellEntry> = Vec::new();
         for spell in &self.cantrips {

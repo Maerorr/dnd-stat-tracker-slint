@@ -1,7 +1,7 @@
 import { Palette } from "palette.slint";
 import { HorizontalBox, VerticalBox, LineEdit, TabWidget, CheckBox } from "std-widgets.slint";
 import { DiamondStroke, Line, DiamondFilled, Diamond } from "drawing.slint";
-import { TopBadButton, NormalButton, SizedButton } from "button.slint";
+import { TopBadButton, NormalButton, SizedButton, DamageButton } from "button.slint";
 import { SlintShortSpellEntry } from "../logic.slint";
 import { EditMode } from "globals.slint";
 import { Checkbox } from "checkbox.slint";
@@ -661,6 +661,8 @@ export component LevelHeader {
 export component SpellEntry {
     in property <SlintShortSpellEntry> spell;
 
+    callback remove-spell(string);
+
     spell-popup := PopupWindow {
         x: - parent.x;
         y: - parent.y;
@@ -805,20 +807,24 @@ export component SpellEntry {
                 vertical-alignment: center;
                 color: Palette.text_color;
             }
-            VerticalLayout {
-                alignment: center;
-                height: label.preferred-height;
-                HorizontalLayout {
-                    alignment: center;
-                    NormalButton {
-                        text: "Info";
-                        width: 40px;
-                        height: 20px;
-                        clicked => {
-                            spell-popup.show();
-                        }
-                    
-                    }
+            if EditMode.active : DamageButton {
+                area-height: label.preferred-height;
+                area-width: 40px;
+                button-width: 20px;
+                button-height: 20px;
+                text: "X";
+                clicked => {
+                    remove-spell(spell.name);
+                }
+            }
+            if !EditMode.active : SizedButton {
+                area-height: label.preferred-height;
+                area-width: 40px;
+                button-width: 40px;
+                button-height: 20px;
+                text: "Info";
+                clicked => {
+                    spell-popup.show();
                 }
             }
         }

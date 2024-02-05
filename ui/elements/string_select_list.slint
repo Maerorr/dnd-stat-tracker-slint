@@ -1,0 +1,56 @@
+
+
+import { ScrollView } from "std-widgets.slint";
+export component StringSelectList {
+    callback value-changed(string);
+    in property <[string]> values;
+    property <color> bg: #141414;
+    property <color> item-idle: #525252;
+    property <color> item-hover: #6e6e6e;
+    property <color> item-click: #7e7e7e;
+    property <color> line-hover: #6cb5df;
+    property <color> line-click: #c3e9ff;
+    in property <length> widget-width;
+
+    Rectangle {
+        width: widget-width;
+        height: 100%;
+        background: bg;
+        VerticalLayout {
+            for val[i] in values : Rectangle {
+                width: widget-width;
+                height: text.preferred-height * 1.15;
+                background: touch.pressed ? item-click : touch.has-hover ? item-hover :  item-idle;
+                text := Text {
+                    text: val;
+                    font-size: 14px;
+                    color: white;
+                }
+
+                touch := TouchArea {
+                    width: 100%;
+                    height: text.preferred-height * 1.15;
+                    clicked => {
+                        value-changed(text.text);
+                    }
+                }
+
+                hover-bar := Rectangle {
+                    x: touch.has-hover ? 5px : 0px;
+                    width: 3px;
+                    height: text.preferred-height;
+                    background: touch.pressed ? line-click : line-hover;
+                    border-radius: 1.5px;
+                    animate x {
+                        duration: 150ms;
+                        easing: ease-in-out;
+                    }
+                    animate background {
+                        duration: 75ms;
+                        easing: ease-in-out;
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,245 +1,541 @@
 import { Heading, Label, SingleStat, LevelHeader, SpellEntry } from "../text_widgets.slint";
-import { VerticalBox, ScrollView, TabWidget } from "std-widgets.slint";
+import { VerticalBox, ScrollView, TabWidget, StandardListView, HorizontalBox, StandardButton } from "std-widgets.slint";
 import { Palette } from "../palette.slint";
 import { SlintCharacter, SlintStat } from "../../logic.slint";
 import { Line } from "../drawing.slint";
+import { SizedButton } from "../button.slint";
+import { EditMode } from "../globals.slint";
+import { SlintSpellDatabase } from "../../logic.slint";
+import { StringSelectList } from "../string_select_list.slint";
 
 export component SpellListEq {
     in property <SlintCharacter> in-character;
+    in property <SlintSpellDatabase> spell-database;
     in property <length> widget-width;
+
+    property <[string]> current-spells;
+    property <string> spelllist-name;
 
     callback use-spell-slot(string);
     callback add-spell-slot(string);
+
+    // (name, level)
+    callback add-spell(string);
+    callback remove-spell(string);
+
+    spell-add-popup := PopupWindow {
+        property <string> selected-spell-name;
+        property <int> self-x;
+        property <int> self-y;
+        callback spell-selected(string);
+        x: 0px;
+        y: 0px;
+
+        init => {
+            self-x = parent.absolute-position.x / 1px;
+            self-y = parent.absolute-position.y / 1px;
+        }
+        close-on-click: false;
+        width: 275px;
+        height: table.preferred-height;
+        ScrollView {
+            x:0;
+            y:0;
+            width: 250px;
+            height: 700px;
+            viewport-height: table.preferred-height + 30px;
+            viewport-width: 250px;
+            Rectangle {
+                x:0;
+                y:0;
+                width: table.preferred-width;
+                height: 30px;
+                background: Palette.dark;
+                border-color: Palette.text_color;
+                border-width: 2px;
+                Text {
+                    x: parent.width / 2 - self.preferred-width / 2;
+                    text: "Select a spell to add";
+                    font-size: 18px;
+                    color: Palette.text_color;
+                    vertical-alignment: center;
+                    horizontal-alignment: center;
+                    height: 30px;
+                }
+                SizedButton {
+                    text: "X";
+                    x: parent.width * 0.85;
+                    area-width: 30px;
+                    area-height: 30px;
+                    button-height: 20px;
+                    button-width: 20px;
+                    clicked => {
+                        spell-add-popup.close();
+                    }
+                }
+            }
+
+            table := StringSelectList {
+                y: 30px;
+                widget-width: 250px;
+                values: current-spells;
+                value-changed(name) => {
+                    add-spell(name)
+                }
+            } 
+        }
+    }
+
     TabWidget {
+        x: 0px;
         width: widget-width;
         height: 100%;
         Tab {
             title: "Spells";
-            VerticalLayout {
-                width: widget-width;
-                spacing: 2px;
-                Text {
-                    text: "Spellcasting Ability: " + in-character.spellcasting_ability + " | Spell Save DC: " + in-character.spell-save-dc + " | Spell Attack Bonus: " + in-character.spell-attack-bonus;
-                    height: 26px;
+            ScrollView {
+                VerticalLayout {
                     width: widget-width;
-                    font-size: 20px;
-                    color: Palette.text_color;
-                    vertical-alignment: center;
-                    horizontal-alignment: center;
-                }
-        
-                HorizontalLayout {
-                    width: widget-width;
-                    VerticalLayout {
-                        LevelHeader {
-                            width: widget-width / 3;
-                            level: "0";
-                        }
-                        Line {
-                            height: 2px;
-                            from: {x: 0, y: 0};
-                            to: {x: 1, y: 0.0};
-                            stroke: Palette.text_color;
-                        }
-                        for spell[i] in in-character.cantrips : SpellEntry {
-                            spell: spell;
-                        }
-        
-                        LevelHeader {
-                            width: widget-width / 3;
-                            level: "1";
-                            spell-slots: in-character.spell_slots[0];
-                            use-slot => {
-                                use-spell-slot("1");
-                            }
-                            add-slot => {
-                                add-spell-slot("1");
-                            }
-                        }
-                        Line {
-                            height: 2px;
-                            from: {x: 0, y: 0};
-                            to: {x: 1, y: 0.0};
-                            stroke: Palette.text_color;
-                        }
-                        for spell[i] in in-character.spells1 : SpellEntry {
-                            spell: spell;
-                        }
-        
-                        LevelHeader {
-                            width: widget-width / 3;
-                            level: "2";
-                            spell-slots: in-character.spell_slots[1];
-                            use-slot => {
-                                use-spell-slot("2");
-                            }
-                            add-slot => {
-                                add-spell-slot("2");
-                            }
-                        }
-                        Line {
-                            height: 2px;
-                            from: {x: 0, y: 0};
-                            to: {x: 1, y: 0.0};
-                            stroke: Palette.text_color;
-                        }
-                        for spell[i] in in-character.spells2 : SpellEntry {
-                            spell: spell;
-                        }
-        
+                    spacing: 2px;
+                    Text {
+                        text: "Spellcasting Ability: " + in-character.spellcasting_ability + " | Spell Save DC: " + in-character.spell-save-dc + " | Spell Attack Bonus: " + in-character.spell-attack-bonus;
+                        height: 26px;
+                        width: widget-width;
+                        font-size: 20px;
+                        color: Palette.text_color;
+                        vertical-alignment: center;
+                        horizontal-alignment: center;
                     }
-                    Line {
-                        from: {x: 0, y: 0};
-                        to: {x: 0, y: 1.0};
-                        stroke: Palette.text_color;
-                    }
-                    VerticalLayout {
-                        LevelHeader {
-                            width: widget-width / 3;
-                            level: "3";
-                            spell-slots: in-character.spell_slots[2];
-                            use-slot => {
-                                use-spell-slot("3");
+            
+                    HorizontalLayout {
+                        width: widget-width;
+                        VerticalLayout {
+                            LevelHeader {
+                                width: widget-width / 3;
+                                level: "0";
                             }
-                            add-slot => {
-                                add-spell-slot("3");
+                            Line {
+                                height: 2px;
+                                from: {x: 0, y: 0};
+                                to: {x: 1, y: 0.0};
+                                stroke: Palette.text_color;
                             }
-                        }
-                        for spell[i] in in-character.spells3 : SpellEntry {
-                            spell: spell;
+                            for spell[i] in in-character.cantrips : SpellEntry {
+                                spell: spell;
+                                remove-spell(name) => {
+                                    remove-spell(name);
+                                }
+                            }
+
+                            if EditMode.active : HorizontalLayout {
+                                Rectangle {
+                                    width: widget-width / 3 * 0.8;
+                                    height: 20px;
+                                }
+                                SizedButton {
+                                    text: "Add";
+                                    area-height: 20px;
+                                    area-width: widget-width / 3 * 0.2;
+                                    button-height: 20px;
+                                    button-width: 40px;
+                                    clicked => {
+                                        current-spells = spell-database.cantrips;
+                                        spell-add-popup.show();
+                                    }
+                                }
+                            }
+            
+                            LevelHeader {
+                                width: widget-width / 3;
+                                level: "1";
+                                spell-slots: in-character.spell_slots[0];
+                                use-slot => {
+                                    use-spell-slot("1");
+                                }
+                                add-slot => {
+                                    add-spell-slot("1");
+                                }
+                            }
+                            Line {
+                                height: 2px;
+                                from: {x: 0, y: 0};
+                                to: {x: 1, y: 0.0};
+                                stroke: Palette.text_color;
+                            }
+                            for spell[i] in in-character.spells1 : SpellEntry {
+                                spell: spell;
+                                remove-spell(name) => {
+                                    remove-spell(name);
+                                }
+                            }
+
+                            if EditMode.active : HorizontalLayout {
+                                Rectangle {
+                                    width: widget-width / 3 * 0.8;
+                                    height: 20px;
+                                }
+                                SizedButton {
+                                    text: "Add";
+                                    area-height: 20px;
+                                    area-width: widget-width / 3 * 0.2;
+                                    button-height: 20px;
+                                    button-width: 40px;
+                                    clicked => {
+                                        current-spells = spell-database.spells1;
+                                        spell-add-popup.show();
+                                    }
+                                }
+                            }
+            
+                            LevelHeader {
+                                width: widget-width / 3;
+                                level: "2";
+                                spell-slots: in-character.spell_slots[1];
+                                use-slot => {
+                                    use-spell-slot("2");
+                                }
+                                add-slot => {
+                                    add-spell-slot("2");
+                                }
+                            }
+                            Line {
+                                height: 2px;
+                                from: {x: 0, y: 0};
+                                to: {x: 1, y: 0.0};
+                                stroke: Palette.text_color;
+                            }
+                            for spell[i] in in-character.spells2 : SpellEntry {
+                                spell: spell;
+                                remove-spell(name) => {
+                                    remove-spell(name);
+                                }
+                            }
+
+                            if EditMode.active : HorizontalLayout {
+                                Rectangle {
+                                    width: widget-width / 3 * 0.8;
+                                    height: 20px;
+                                }
+                                SizedButton {
+                                    text: "Add";
+                                    area-height: 20px;
+                                    area-width: widget-width / 3 * 0.2;
+                                    button-height: 20px;
+                                    button-width: 40px;
+                                    clicked => {
+                                        current-spells = spell-database.spells2;
+                                        spell-add-popup.show();
+                                    }
+                                }
+                            }
+            
                         }
                         Line {
-                            height: 2px;
                             from: {x: 0, y: 0};
-                            to: {x: 1, y: 0.0};
+                            to: {x: 0, y: 1.0};
                             stroke: Palette.text_color;
                         }
-                        LevelHeader {
-                            width: widget-width / 3;
-                            level: "4";
-                            spell-slots: in-character.spell_slots[3];
-                            use-slot => {
-                                use-spell-slot("4");
+                        VerticalLayout {
+                            LevelHeader {
+                                width: widget-width / 3;
+                                level: "3";
+                                spell-slots: in-character.spell_slots[2];
+                                use-slot => {
+                                    use-spell-slot("3");
+                                }
+                                add-slot => {
+                                    add-spell-slot("3");
+                                }
                             }
-                            add-slot => {
-                                add-spell-slot("4");
+                            for spell[i] in in-character.spells3 : SpellEntry {
+                                spell: spell;
+                                remove-spell(name) => {
+                                    remove-spell(name);
+                                }
                             }
-                        }
-                        for spell[i] in in-character.spells4 : SpellEntry {
-                            spell: spell;
+
+                            if EditMode.active : HorizontalLayout {
+                                Rectangle {
+                                    width: widget-width / 3 * 0.8;
+                                    height: 20px;
+                                }
+                                SizedButton {
+                                    text: "Add";
+                                    area-height: 20px;
+                                    area-width: widget-width / 3 * 0.2;
+                                    button-height: 20px;
+                                    button-width: 40px;
+                                    clicked => {
+                                        current-spells = spell-database.spells3;
+                                        spell-add-popup.show();
+                                    }
+                                }
+                            }
+
+                            Line {
+                                height: 2px;
+                                from: {x: 0, y: 0};
+                                to: {x: 1, y: 0.0};
+                                stroke: Palette.text_color;
+                            }
+                            LevelHeader {
+                                width: widget-width / 3;
+                                level: "4";
+                                spell-slots: in-character.spell_slots[3];
+                                use-slot => {
+                                    use-spell-slot("4");
+                                }
+                                add-slot => {
+                                    add-spell-slot("4");
+                                }
+                            }
+                            for spell[i] in in-character.spells4 : SpellEntry {
+                                spell: spell;
+                                remove-spell(name) => {
+                                    remove-spell(name);
+                                }
+                            }
+
+                            if EditMode.active : HorizontalLayout {
+                                Rectangle {
+                                    width: widget-width / 3 * 0.8;
+                                    height: 20px;
+                                }
+                                SizedButton {
+                                    text: "Add";
+                                    area-height: 20px;
+                                    area-width: widget-width / 3 * 0.2;
+                                    button-height: 20px;
+                                    button-width: 40px;
+                                    clicked => {
+                                        current-spells = spell-database.spells4;
+                                        spell-add-popup.show();
+                                    }
+                                }
+                            }
+
+                            Line {
+                                height: 2px;
+                                from: {x: 0, y: 0};
+                                to: {x: 1, y: 0.0};
+                                stroke: Palette.text_color;
+                            }
+                            LevelHeader {
+                                width: widget-width / 3;
+                                level: "5";
+                                spell-slots: in-character.spell_slots[4];
+                                use-slot => {
+                                    use-spell-slot("5");
+                                }
+                                add-slot => {
+                                    add-spell-slot("5");
+                                }
+                            }
+                            for spell[i] in in-character.spells5 : SpellEntry {
+                                spell: spell;
+                                remove-spell(name) => {
+                                    remove-spell(name);
+                                }
+                            }
+
+                            if EditMode.active : HorizontalLayout {
+                                Rectangle {
+                                    width: widget-width / 3 * 0.8;
+                                    height: 20px;
+                                }
+                                SizedButton {
+                                    text: "Add";
+                                    area-height: 20px;
+                                    area-width: widget-width / 3 * 0.2;
+                                    button-height: 20px;
+                                    button-width: 40px;
+                                    clicked => {
+                                        current-spells = spell-database.spells5;
+                                        spell-add-popup.show();
+                                    }
+                                }
+                            }
+
+                            Line {
+                                height: 2px;
+                                from: {x: 0, y: 0};
+                                to: {x: 1, y: 0.0};
+                                stroke: Palette.text_color;
+                            }
                         }
                         Line {
-                            height: 2px;
                             from: {x: 0, y: 0};
-                            to: {x: 1, y: 0.0};
+                            to: {x: 0, y: 1.0};
                             stroke: Palette.text_color;
                         }
-                        LevelHeader {
-                            width: widget-width / 3;
-                            level: "5";
-                            spell-slots: in-character.spell_slots[4];
-                            use-slot => {
-                                use-spell-slot("5");
+                        VerticalLayout {
+                            LevelHeader {
+                                width: widget-width / 3;
+                                level: "6";
+                                spell-slots: in-character.spell_slots[5];
+                                use-slot => {
+                                    use-spell-slot("6");
+                                }
+                                add-slot => {
+                                    add-spell-slot("6");
+                                }
                             }
-                            add-slot => {
-                                add-spell-slot("5");
+                            for spell[i] in in-character.spells6 : SpellEntry {
+                                spell: spell;
+                                remove-spell(name) => {
+                                    remove-spell(name);
+                                }
                             }
-                        }
-                        for spell[i] in in-character.spells5 : SpellEntry {
-                            spell: spell;
-                        }
-                        Line {
-                            height: 2px;
-                            from: {x: 0, y: 0};
-                            to: {x: 1, y: 0.0};
-                            stroke: Palette.text_color;
-                        }
-                    }
-                    Line {
-                        from: {x: 0, y: 0};
-                        to: {x: 0, y: 1.0};
-                        stroke: Palette.text_color;
-                    }
-                    VerticalLayout {
-                        LevelHeader {
-                            width: widget-width / 3;
-                            level: "6";
-                            spell-slots: in-character.spell_slots[5];
-                            use-slot => {
-                                use-spell-slot("6");
+
+                            if EditMode.active : HorizontalLayout {
+                                Rectangle {
+                                    width: widget-width / 3 * 0.8;
+                                    height: 20px;
+                                }
+                                SizedButton {
+                                    text: "Add";
+                                    area-height: 20px;
+                                    area-width: widget-width / 3 * 0.2;
+                                    button-height: 20px;
+                                    button-width: 40px;
+                                    clicked => {
+                                        current-spells = spell-database.spells6;
+                                        spell-add-popup.show();
+                                    }
+                                }
                             }
-                            add-slot => {
-                                add-spell-slot("6");
+
+                            Line {
+                                height: 2px;
+                                from: {x: 0, y: 0};
+                                to: {x: 1, y: 0.0};
+                                stroke: Palette.text_color;
                             }
-                        }
-                        for spell[i] in in-character.spells6 : SpellEntry {
-                            spell: spell;
-                        }
-                        Line {
-                            height: 2px;
-                            from: {x: 0, y: 0};
-                            to: {x: 1, y: 0.0};
-                            stroke: Palette.text_color;
-                        }
-                        LevelHeader {
-                            width: widget-width / 3;
-                            level: "7";
-                            spell-slots: in-character.spell_slots[6];
-                            use-slot => {
-                                use-spell-slot("7");
+                            LevelHeader {
+                                width: widget-width / 3;
+                                level: "7";
+                                spell-slots: in-character.spell_slots[6];
+                                use-slot => {
+                                    use-spell-slot("7");
+                                }
+                                add-slot => {
+                                    add-spell-slot("7");
+                                }
                             }
-                            add-slot => {
-                                add-spell-slot("7");
+                            for spell[i] in in-character.spells7 : SpellEntry {
+                                spell: spell;
+                                remove-spell(name) => {
+                                    remove-spell(name);
+                                }
                             }
-                        }
-                        for spell[i] in in-character.spells7 : SpellEntry {
-                            spell: spell;
-                        }
-                        Line {
-                            height: 2px;
-                            from: {x: 0, y: 0};
-                            to: {x: 1, y: 0.0};
-                            stroke: Palette.text_color;
-                        }
-                        LevelHeader {
-                            width: widget-width / 3;
-                            level: "8";
-                            spell-slots: in-character.spell_slots[7];
-                            use-slot => {
-                                use-spell-slot("8");
+
+                            if EditMode.active : HorizontalLayout {
+                                Rectangle {
+                                    width: widget-width / 3 * 0.8;
+                                    height: 20px;
+                                }
+                                SizedButton {
+                                    text: "Add";
+                                    area-height: 20px;
+                                    area-width: widget-width / 3 * 0.2;
+                                    button-height: 20px;
+                                    button-width: 40px;
+                                    clicked => {
+                                        current-spells = spell-database.spells7;
+                                        spell-add-popup.show();
+                                    }
+                                }
                             }
-                            add-slot => {
-                                add-spell-slot("8");
+
+                            Line {
+                                height: 2px;
+                                from: {x: 0, y: 0};
+                                to: {x: 1, y: 0.0};
+                                stroke: Palette.text_color;
                             }
-                        }
-                        for spell[i] in in-character.spells8 : SpellEntry {
-                            spell: spell;
-                        }
-                        Line {
-                            height: 2px;
-                            from: {x: 0, y: 0};
-                            to: {x: 1, y: 0.0};
-                            stroke: Palette.text_color;
-                        }
-                        LevelHeader {
-                            width: widget-width / 3;
-                            level: "9";
-                            spell-slots: in-character.spell_slots[8];
-                            use-slot => {
-                                use-spell-slot("9");
+                            LevelHeader {
+                                width: widget-width / 3;
+                                level: "8";
+                                spell-slots: in-character.spell_slots[7];
+                                use-slot => {
+                                    use-spell-slot("8");
+                                }
+                                add-slot => {
+                                    add-spell-slot("8");
+                                }
                             }
-                            add-slot => {
-                                add-spell-slot("9");
+                            for spell[i] in in-character.spells8 : SpellEntry {
+                                spell: spell;
+                                remove-spell(name) => {
+                                    remove-spell(name);
+                                }
                             }
-                        }
-                        for spell[i] in in-character.spells9 : SpellEntry {
-                            spell: spell;
-                        }
-                        Line {
-                            height: 2px;
-                            from: {x: 0, y: 0};
-                            to: {x: 1, y: 0.0};
-                            stroke: Palette.text_color;
+
+                            if EditMode.active : HorizontalLayout {
+                                Rectangle {
+                                    width: widget-width / 3 * 0.8;
+                                    height: 20px;
+                                }
+                                SizedButton {
+                                    text: "Add";
+                                    area-height: 20px;
+                                    area-width: widget-width / 3 * 0.2;
+                                    button-height: 20px;
+                                    button-width: 40px;
+                                    clicked => {
+                                        current-spells = spell-database.spells8;
+                                        spell-add-popup.show();
+                                    }
+                                }
+                            }
+
+                            Line {
+                                height: 2px;
+                                from: {x: 0, y: 0};
+                                to: {x: 1, y: 0.0};
+                                stroke: Palette.text_color;
+                            }
+                            LevelHeader {
+                                width: widget-width / 3;
+                                level: "9";
+                                spell-slots: in-character.spell_slots[8];
+                                use-slot => {
+                                    use-spell-slot("9");
+                                }
+                                add-slot => {
+                                    add-spell-slot("9");
+                                }
+                            }
+                            for spell[i] in in-character.spells9 : SpellEntry {
+                                spell: spell;
+                                remove-spell(name) => {
+                                    remove-spell(name);
+                                }
+                            }
+
+                            if EditMode.active : HorizontalLayout {
+                                Rectangle {
+                                    width: widget-width / 3 * 0.8;
+                                    height: 20px;
+                                }
+                                SizedButton {
+                                    text: "Add";
+                                    area-height: 20px;
+                                    area-width: widget-width / 3 * 0.2;
+                                    button-height: 20px;
+                                    button-width: 40px;
+                                    clicked => {
+                                        current-spells = spell-database.spells9;
+                                        spell-add-popup.show();
+                                    }
+                                }
+                            }
+
+                            Line {
+                                height: 2px;
+                                from: {x: 0, y: 0};
+                                to: {x: 1, y: 0.0};
+                                stroke: Palette.text_color;
+                            }
                         }
                     }
                 }
