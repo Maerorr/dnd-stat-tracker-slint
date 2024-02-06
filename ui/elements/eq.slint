@@ -110,6 +110,8 @@ export component Equipment {
     in property <[SlintItem]> items;
     property <SlintItem> selected-item;
 
+    callback open-add-item();
+
     x:0;
     y:0;
     width: widget-width;
@@ -201,7 +203,7 @@ export component Equipment {
                     for item[i] in items : HorizontalLayout {
                         width: widget-width / 2;
     
-                        if i > items.length / 2 : ItemEntry {
+                        if i >= items.length / 2 : ItemEntry {
                             widget-width: widget-width / 2;
                             item: item;
                             item-selected(item) => {
@@ -216,6 +218,9 @@ export component Equipment {
                 widget-width: widget-width;
                 rect-width: 120px;
                 rect-height: 50px;
+                add-item => {
+                    open-add-item();
+                }
             }
         }
     }

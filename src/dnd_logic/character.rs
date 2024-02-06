@@ -40,6 +40,8 @@ pub struct Character {
     pub spell_slots_used: Vec<i32>,
 
     spell_serialization_data: Vec<(String, bool)>,
+
+    pub equipment: Vec<Item>,
 }
 
 impl Default for Character {
@@ -73,6 +75,7 @@ impl Default for Character {
             spell_slots_max: Vec::with_capacity(9),
             spell_slots_used: Vec::with_capacity(9),
             spell_serialization_data: Vec::new(),
+            equipment: Vec::new(),
         }
     }
 }

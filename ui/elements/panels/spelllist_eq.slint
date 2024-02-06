@@ -1,4 +1,4 @@
-import { Heading, Label, SingleStat, LevelHeader, SpellEntry } from "../text_widgets.slint";
+import { Heading, Label, SingleStat, LevelHeader, SpellEntry, LineInput } from "../text_widgets.slint";
 import { VerticalBox, ScrollView, TabWidget, StandardListView, HorizontalBox, StandardButton } from "std-widgets.slint";
 import { Palette } from "../palette.slint";
 import { SlintCharacter, SlintStat } from "../../logic.slint";
@@ -27,18 +27,15 @@ export component SpellListEq {
     callback add-spell(string);
     callback remove-spell(string);
 
+    // (name, description, amount)
+    callback add-item(string, string, string);
+
     spell-add-popup := PopupWindow {
         property <string> selected-spell-name;
-        property <int> self-x;
-        property <int> self-y;
         callback spell-selected(string);
         x: 0px;
         y: 0px;
 
-        init => {
-            self-x = parent.absolute-position.x / 1px;
-            self-y = parent.absolute-position.y / 1px;
-        }
         close-on-click: false;
         width: 275px;
         height: table.preferred-height;
@@ -87,6 +84,131 @@ export component SpellListEq {
                     add-spell(name)
                 }
             } 
+        }
+    }
+
+    item-add-popup := PopupWindow {
+        property <string> name;
+        property <string> description;
+        property <string> amount;
+
+        callback spell-selected(string);
+        x: 0px;
+        y: 0px;
+
+        close-on-click: false;
+        width: 400px;
+        height: 500px;
+        Rectangle {
+            x:0;
+            y:0;
+            width: 400px;
+            height: 450px;
+            background: Palette.half_dark;
+            border-color: Palette.text_color;
+            border-width: 2px;
+
+            SizedButton {
+                x: 360px;
+                y: 20px;
+                text: "X";
+                area-width: 20px;
+                area-height: 20px;
+                button-height: 20px;
+                button-width: 20px;
+                clicked => {
+                    item-add-popup.close();
+                }
+            }
+
+            Text {
+                x: 0px;
+                y: 20px;
+                width: 400px;
+                text: "Add Item";
+                font-size: 20px;
+                color: Palette.text_color;
+                vertical-alignment: center;
+                horizontal-alignment: center;
+                height: 30px;
+            }
+
+            Text {
+                x: 10px;
+                y: 60px;
+                text: "Name:";
+                font-size: 20px;
+                color: Palette.text_color;
+                vertical-alignment: center;
+                horizontal-alignment: left;
+                height: 30px;
+            }
+
+            LineInput {
+                x: 140px;
+                y: 60px;
+                width: 200px;
+                height: 30px;
+                text-changed(txt) => {
+                    name = txt;
+                }
+            }
+
+            Text {
+                x: 10px;
+                y: 100px;
+                text: "Description:";
+                font-size: 20px;
+                color: Palette.text_color;
+                vertical-alignment: center;
+                horizontal-alignment: left;
+                height: 30px;
+            }
+
+            LineInput {
+                x: 140px;
+                y: 100px;
+                width: 200px;
+                height: 200px;
+                text-changed(txt) => {
+                    description = txt;
+                }
+            }
+
+            Text {
+                x: 10px;
+                y: 320px;
+                text: "Amount:";
+                font-size: 20px;
+                color: Palette.text_color;
+                vertical-alignment: center;
+                horizontal-alignment: left;
+                height: 30px;
+            }
+
+            LineInput {
+                x: 140px;
+                y: 320px;
+                width: 200px;
+                height: 30px;
+                text-changed(txt) => {
+                    amount = txt;
+                }
+            }
+
+            SizedButton {
+                x: 0px;
+                y: 380px;
+                text: "Add";
+                text-size: 20px;
+                area-width: 400px;
+                area-height: 30px;
+                button-height: 40px;
+                button-width: 80px;
+                clicked => {
+                    add-item(name, description, amount);
+                }
+            }
         }
     }
 
@@ -604,6 +726,9 @@ export component SpellListEq {
             Equipment {
                 widget-width: widget-width;
                 items: in-character.equipment;
+                open-add-item => {
+                    item-add-popup.show();
+                }
             }
         }
     }

@@ -301,5 +301,27 @@
     0,
     0,
     0
+  ],
+  "equipment": [
+    {
+      "name": "Apple",
+      "description": "Smakuwa jabuko",
+      "amount": 4
+    },
+    {
+      "name": "Carrot",
+      "description": "mmmmm marcheweczka",
+      "amount": 3
+    },
+    {
+      "name": "Magic Wand",
+      "description": "A wand that can cast magic",
+      "amount": 1
+    },
+    {
+      "name": "Spellbook",
+      "description": "A book with spells in it",
+      "amount": 1
+    }
   ]
 }

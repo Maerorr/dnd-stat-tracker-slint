@@ -10,3 +10,4 @@ pub use super::character::*;
 pub use super::money::*;
 pub use super::spell::*;
 pub use super::spell_list::*;
+pub use super::eq::*;

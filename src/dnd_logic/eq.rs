@@ -1,9 +1,12 @@
+use serde::{Deserialize, Serialize};
+
+use crate::SlintItem;
+
+#[derive(PartialEq, Eq, Clone, Serialize, Deserialize)]
 pub struct Item {
     pub name: String,
     pub description: String,
     pub amount: i32,
-    pub row: i32,
-    pub col: i32,
 }
 
 impl Item {
@@ -12,8 +15,14 @@ impl Item {
             name: name.to_string(),
             description: description.to_string(),
             amount,
-            row,
-            col,
+        }
+    }
+
+    pub fn to_slint_item(&self) -> SlintItem {
+        SlintItem {
+            name: self.name.clone().into(),
+            description: self.description.clone().into(),
+            amount: self.amount.into(),
         }
     }
 }

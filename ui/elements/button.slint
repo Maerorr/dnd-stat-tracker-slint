@@ -208,6 +208,7 @@ export component SizedButton inherits Rectangle {
     in property <length> area-height;
     in property <length> button-width;
     in property <length> button-height;
+    in property <length> text-size: 14px;
 
     in-out property text <=> txt.text;
 
@@ -232,7 +233,7 @@ export component SizedButton inherits Rectangle {
     txt := Text {
         y: (parent.height - self.height)/2;
         color: touch.pressed ? #b3b3b3 : #c9c9c9;
-        font-size: 14px;
+        font-size: text-size;
         vertical-alignment: center;
         horizontal-alignment: center;
     }
