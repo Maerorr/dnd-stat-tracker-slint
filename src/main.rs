@@ -138,6 +138,17 @@ pub fn set_ui_character_data(c: &Character, ui: &AppWindow) {
 
     current_character.languages_proficiencies = c.proficiencies_and_languages.clone().into();
 
+    let mut eq: Vec<SlintItem> = Vec::new();
+    for i in 0..5 {
+        let item = SlintItem {
+            name: String::from(format!("Item {}", i)).into(),
+            description: String::from(format!("Description of item {}", i)).into(),
+            amount: i.into(),
+        };
+        eq.push(item);
+    }
+    current_character.equipment = eq.as_slice().into();
+
     ui.set_character(current_character.into());
 }
 

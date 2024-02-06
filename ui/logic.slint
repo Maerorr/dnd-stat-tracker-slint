@@ -54,10 +54,10 @@ export struct SlintSpellDatabase {
     spells9: [string],
 }
 
-export struct Item {
+export struct SlintItem {
     name: string,
     description: string,
-    amount: string,
+    amount: int,
 }
 
 export struct SlintCharacter {
@@ -99,6 +99,8 @@ export struct SlintCharacter {
     spells9: [SlintShortSpellEntry],
 
     spell-slots: [string],
+
+    equipment: [SlintItem],
 
     is-spellcaster: bool,
     spellcasting-ability: string,

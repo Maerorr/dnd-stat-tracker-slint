@@ -1,0 +1,222 @@
+import { SlintItem } from "../logic.slint";
+import { ScrollView, HorizontalBox } from "std-widgets.slint";
+import { Palette } from "palette.slint";
+import { SizedButton } from "button.slint";
+import { Line } from "drawing.slint";
+
+
+export component ItemEntry {
+    in property <length> widget-width;
+    in property <SlintItem> item;
+
+    callback item-selected(SlintItem);
+
+    VerticalLayout {
+        Rectangle {
+            width: widget-width;
+            height: 50px;
+            border-color: Palette.text_color;
+            border-width: 1px;
+            HorizontalLayout {
+                Text {
+                    text: item.amount + "x";
+                    width: 50px;
+                    height: 50px;
+                    vertical-alignment: center;
+                    horizontal-alignment: center;
+                    color: Palette.text_color;
+                    font-size: 20px;
+                }
+                Text {
+                    text: item.name;
+                    width: widget-width - 120px;
+                    height: 50px;
+                    vertical-alignment: center;
+                    horizontal-alignment: left;
+                    color: Palette.text_color;
+                    font-size: 20px;
+                }
+                SizedButton {
+                    area-height: 50px;
+                    area-width: 80px;
+                    button-width: 50px;
+                    button-height: 30px;
+                    text: "Info";
+                    clicked => {
+                        item-selected(item)
+                    }
+                }
+            }
+        }
+    }
+}
+
+export component AddItem inherits Rectangle {
+    in property <length> widget-width;
+    in property <length> rect-width;
+    in property <length> rect-height;
+
+    callback add-item <=> touch.clicked;
+
+    width: widget-width;
+    height: 60px;
+    
+    Rectangle {
+        background: touch.pressed ? Palette.normal_button_pressed_color : touch.has-hover ? Palette.normal_button_hover_color :  Palette.normal_button_idle_color;
+        border-color: Palette.text_color;
+        border-radius: 4px;
+        border-width: 2px;
+        width: rect-width;
+        height: rect-height;
+
+        Path {
+            width: 20px;
+            height: 20px;
+            stroke: Palette.text_color;
+    
+            MoveTo {
+                x: 0.0;
+                y: 0.5;
+            }
+    
+            LineTo {
+                x: 1.0;
+                y: 0.5;
+            }
+    
+            MoveTo {
+                x: 0.5;
+                y: 0.0;
+            }
+    
+            LineTo {
+                x: 0.5;
+                y: 1.0;
+            }
+        }
+    
+        touch := TouchArea {
+            width: 100%;
+            height: 100%;
+        }
+    }
+   
+}
+
+export component Equipment {
+    in property <length> widget-width;
+    in property <int> rows;
+    in property <int> cols;
+    in property <[SlintItem]> items;
+    property <SlintItem> selected-item;
+
+    x:0;
+    y:0;
+    width: widget-width;
+    height: 950px;
+
+    item-popup := PopupWindow {
+        x:0px;
+        y:0px;
+        width: 600px;
+        height: 600px;
+        sv := ScrollView {
+            x:0;
+            y:0;
+            width: 600px;
+            height: 600px;
+            viewport-height: 200px + description.preferred-height * 1.2;
+            viewport-width: 600px;
+            rec := Rectangle {
+                x:0;
+                y:0;
+                width: 400px;
+                height: 100px + description.preferred-height;
+                background: Palette.dark;
+    
+                content := VerticalLayout {
+                    padding-left: 10px;
+                    padding-right: 10px;
+                    y: 0;
+                    alignment: start;
+                    Text {
+                        height: 30px;
+                        text: selected-item.name;
+                        font-size: 24px;
+                        width: 100%;
+                        color: Palette.text_color;
+                        horizontal-alignment: center;
+                        vertical-alignment: center;
+                    }
+                    description := Text {
+                        height: 30px;
+                        text: selected-item.description;
+                        font-size: 18px;
+                        width: 100%;
+                        color: Palette.text_color;
+                        horizontal-alignment: center;
+                        vertical-alignment: center;
+                    }
+                }
+            }
+        }
+    }
+
+    ScrollView {
+        x:0;
+        y:0;
+        VerticalLayout {
+            alignment: start;
+            width: widget-width;
+            height: 950px;
+            spacing: 2px;
+
+            Text {
+                text: "Equipment";
+                height: 26px;
+                width: widget-width;
+                font-size: 20px;
+                color: Palette.text_color;
+                vertical-alignment: center;
+                horizontal-alignment: center;
+            }
+
+            HorizontalLayout {
+                width: widget-width;
+                VerticalLayout {
+                    for item[i] in items : HorizontalLayout {
+                        width: widget-width / 2;
+    
+                        if i < items.length / 2 : ItemEntry {
+                            widget-width: widget-width / 2;
+                            item: item;
+                            item-selected(item) => {
+                                selected-item = item;
+                                item-popup.show();
+                            }
+                        }
+                    }
+                }
+                VerticalLayout {
+                    for item[i] in items : HorizontalLayout {
+                        width: widget-width / 2;
+    
+                        if i > items.length / 2 : ItemEntry {
+                            widget-width: widget-width / 2;
+                            item: item;
+                            item-selected(item) => {
+                                selected-item = item;
+                                item-popup.show();
+                            }
+                        }
+                    }
+                }
+            }
+            AddItem {
+                widget-width: widget-width;
+                rect-width: 120px;
+                rect-height: 50px;
+            }
+        }
+    }
+}
