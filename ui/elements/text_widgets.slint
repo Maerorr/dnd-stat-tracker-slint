@@ -676,18 +676,20 @@ export component SpellEntry {
     callback remove-spell(string);
 
     spell-popup := PopupWindow {
-        x: 0px;
-        y: 0px;
+        x: - parent.x;
+        y: - parent.y;
         width: 600px;
         height: 800px;
         ScrollView {
             x:0;
             y:0;
             width: 600px;
-            height: 800px;
-            viewport-height: 200px + description.preferred-height;
+            height: 600px;
+            viewport-height: 200px + description.preferred-height * 1.2;
             viewport-width: 600px;
             Rectangle {
+                x:0;
+                y:0;
                 width: 600px;
                 height: 200px + description.preferred-height * 1.2;
                 background: Palette.dark;
@@ -768,8 +770,8 @@ export component SpellEntry {
                         vertical-alignment: center;
                         wrap: word-wrap;
                     }
-                    if spell.ritual : Text {
-                        text: "At higher levels: " + spell.higher-levels;
+                    Text {
+                        text: "At higher levels:\n" + spell.higher-levels;
                         font-size: 18px;
                         width: 100%;
                         color: Palette.text_color;
