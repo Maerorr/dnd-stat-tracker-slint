@@ -32,7 +32,6 @@ export component SpellListEq {
 
     spell-add-popup := PopupWindow {
         property <string> selected-spell-name;
-        callback spell-selected(string);
         x: 0px;
         y: 0px;
 
@@ -88,11 +87,6 @@ export component SpellListEq {
     }
 
     item-add-popup := PopupWindow {
-        property <string> name;
-        property <string> description;
-        property <string> amount;
-
-        callback spell-selected(string);
         x: 0px;
         y: 0px;
 
@@ -144,14 +138,11 @@ export component SpellListEq {
                 height: 30px;
             }
 
-            LineInput {
+            name := LineInput {
                 x: 140px;
                 y: 60px;
                 width: 200px;
                 height: 30px;
-                text-changed(txt) => {
-                    name = txt;
-                }
             }
 
             Text {
@@ -165,14 +156,11 @@ export component SpellListEq {
                 height: 30px;
             }
 
-            LineInput {
+            desc := LineInput {
                 x: 140px;
                 y: 100px;
                 width: 200px;
                 height: 200px;
-                text-changed(txt) => {
-                    description = txt;
-                }
             }
 
             Text {
@@ -186,14 +174,11 @@ export component SpellListEq {
                 height: 30px;
             }
 
-            LineInput {
+            amount := LineInput {
                 x: 140px;
                 y: 320px;
                 width: 200px;
                 height: 30px;
-                text-changed(txt) => {
-                    amount = txt;
-                }
             }
 
             SizedButton {
@@ -206,7 +191,8 @@ export component SpellListEq {
                 button-height: 40px;
                 button-width: 80px;
                 clicked => {
-                    add-item(name, description, amount);
+                    add-item(name.input-value, desc.input-value, amount.input-value);
+                    item-add-popup.close();
                 }
             }
         }

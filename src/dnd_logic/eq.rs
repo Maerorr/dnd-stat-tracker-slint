@@ -10,7 +10,7 @@ pub struct Item {
 }
 
 impl Item {
-    pub fn new(name: &str, description: &str, amount: i32, row: i32, col: i32) -> Item {
+    pub fn new(name: &str, description: &str, amount: i32) -> Item {
         Item {
             name: name.to_string(),
             description: description.to_string(),

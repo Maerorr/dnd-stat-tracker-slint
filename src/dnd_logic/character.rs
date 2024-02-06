@@ -564,5 +564,10 @@ impl Character {
         self.hit_dice_total.count -= 1;
     }
 
+    pub fn add_item(&mut self, name: &str, description: &str, amount: i32) {
+        let item = Item::new(name, description, amount);
+        self.equipment.push(item);
+    }
+
     
 }

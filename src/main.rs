@@ -606,5 +606,21 @@ fn main() -> Result<(), slint::PlatformError> {
         }
     });
 
+    ui.on_add_item({
+        let app_data_handle = app_data.clone();
+        let ui_handle = ui.as_weak();
+        move |name, description, value| {
+            let ui = ui_handle.unwrap();
+            let mut c = app_data_handle.borrow_mut();
+            let value = value.trim().parse::<i32>();
+            if value.is_err() {
+                return;
+            }
+            let value = value.unwrap();
+            c.get_current_character().add_item(name.as_str(), description.as_str(), value);
+            set_ui_character_data(&c.get_current_character(), &ui);
+        }
+    });
+
     ui.run()
 }
