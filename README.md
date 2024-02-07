@@ -10,14 +10,13 @@ TODO:
 - [X] - saving throws and skill modifiers, proficiencies and expertise + editable
 - [X] - hitpoints, AC, temporary hitpoints, hit dice etc. + editable
 - [X] - money, including a converter
-- [ ] - equipement as text
+- [X] - equipement
 - [ ] - weapons and hit/dmg modifiers
 - [X] - spell list + spell slots
 - [X] - more spells as json files
-- [ ] - local character saves
-- [ ] - refactor how callbacks are handled into pure callbacks from weird chains on callbacks upstream
+- [X] - local character saves
 
-WIP screenshot: ![image](images/stattrackerslint.png)
+screenshot: ![image](images/stattrackerslint.png)
 
 All spells are from [here](https://github.com/jcquinlan/dnd-spells), reformatted for my own use.
 
@@ -26,7 +25,7 @@ All spells are from [here](https://github.com/jcquinlan/dnd-spells), reformatted
 
 MIT License
 
-Copyright (c) <2024> <Hubert Łabuda>
+Copyright (c) 2024 Hubert Łabuda
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
