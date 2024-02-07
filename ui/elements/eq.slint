@@ -1,9 +1,10 @@
 import { SlintItem } from "../logic.slint";
 import { ScrollView, HorizontalBox, VerticalBox, LineEdit } from "std-widgets.slint";
 import { Palette } from "palette.slint";
-import { SizedButton } from "button.slint";
+import { SizedButton, DamageButton } from "button.slint";
 import { Line, X } from "drawing.slint";
 import { LineInput } from "text_widgets.slint";
+import { EditMode } from "globals.slint";
 
 
 export component ItemEntry {
@@ -14,6 +15,7 @@ export component ItemEntry {
 
     callback item-selected(SlintItem);
     callback item-amount-changed(string, string);
+    callback remove-item(string);
 
     VerticalLayout {
         Rectangle {
@@ -21,7 +23,7 @@ export component ItemEntry {
             height: 40px;
             border-color: Palette.text_color;
             border-width: 1px;
-            HorizontalLayout {
+            if !EditMode.active : HorizontalLayout {
                 amount := Text {
                     text: item.amount;
                     width: self.preferred-width + 5px;
@@ -102,6 +104,49 @@ export component ItemEntry {
                     }
                 }
             }
+            if EditMode.active : HorizontalLayout {
+                edit-amount := Text {
+                    text: item.amount;
+                    width: self.preferred-width + 5px;
+                    height: 40px;
+                    vertical-alignment: center;
+                    horizontal-alignment: center;
+                    color: Palette.text_color;
+                    font-size: 18px;
+                }
+                VerticalLayout {
+                    padding-top: 16px;
+                    padding-bottom: 10px;
+                    padding-right: 4px;
+                    HorizontalLayout {
+                        X {
+                            width: 10px;
+                            height: 10px;
+                        }
+                    }
+                }
+                
+                Text {
+                    text: item.name;
+                    width: widget-width - edit-amount.width - 80px;
+                    height: 40px;
+                    vertical-alignment: center;
+                    horizontal-alignment: left;
+                    color: Palette.text_color;
+                    font-size: 18px;
+                }
+
+                DamageButton {
+                    area-height: 40px;
+                    area-width: 50px;
+                    button-width: 25px;
+                    button-height: 25px;
+                    text: "X";
+                    clicked => {
+                        remove-item(item.name)
+                    }
+                }
+            }
         }
     }
 }
@@ -167,6 +212,7 @@ export component Equipment {
 
     callback open-add-item();
     callback item-amount-changed(string, string);
+    callback remove-item(string);
 
     x:0;
     y:0;
@@ -254,6 +300,9 @@ export component Equipment {
                             }
                             item-amount-changed(name, amount) => {
                                 item-amount-changed(name, amount);
+                            }
+                            remove-item(name) => {
+                                remove-item(name);
                             }
                         }
                     }

@@ -74,6 +74,7 @@ export component AppWindow inherits Window {
 
     callback add-item(string, string, string);
     callback item-amount-changed(string, string);
+    callback remove-item(string);
 
     background: Palette.background_color;
     TopBar {
@@ -238,6 +239,9 @@ export component AppWindow inherits Window {
             }
             item-amount-changed(name, amount) => {
                 item-amount-changed(name, amount);
+            }
+            remove-item(name) => {
+                remove-item(name);
             }
         }
 

@@ -30,6 +30,7 @@ export component SpellListEq {
     // (name, description, amount)
     callback add-item(string, string, string);
     callback item-amount-changed(string, string);
+    callback remove-item(string);
 
     spell-add-popup := PopupWindow {
         property <string> selected-spell-name;
@@ -718,6 +719,9 @@ export component SpellListEq {
                 }
                 item-amount-changed(name, amount) => {
                     item-amount-changed(name, amount);
+                }
+                remove-item(name) => {
+                    remove-item(name);
                 }
             
             }
