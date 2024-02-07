@@ -622,5 +622,21 @@ fn main() -> Result<(), slint::PlatformError> {
         }
     });
 
+    ui.on_item_amount_changed({
+        let app_data_handle = app_data.clone();
+        let ui_handle = ui.as_weak();
+        move |name, amount| {
+            let ui = ui_handle.unwrap();
+            let mut c = app_data_handle.borrow_mut();
+            let amount = amount.trim().parse::<i32>();
+            if amount.is_err() {
+                return;
+            }
+            let amount = amount.unwrap();
+            c.get_current_character().change_item_amount(name.as_str(), amount);
+            set_ui_character_data(&c.get_current_character(), &ui);
+        }
+    });
+
     ui.run()
 }

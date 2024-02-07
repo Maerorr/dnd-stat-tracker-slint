@@ -484,6 +484,8 @@ export component DeathSaves {
 export component LineInput inherits Rectangle {
     background: Palette.dark;
 
+    in property <length> box-height: 18px;
+
     out property <string> input-value;
 
     //callback text-changed(string);
@@ -499,7 +501,7 @@ export component LineInput inherits Rectangle {
             alignment: center;
             text := TextInput {
                 width: 100%;
-                height: 100%;
+                height: box-height;
                 font-size: 16px;
                 color: Palette.text_color;
                 horizontal-alignment: center;

@@ -73,7 +73,7 @@ export component AppWindow inherits Window {
     callback subtract-speed();
 
     callback add-item(string, string, string);
-
+    callback item-amount-changed(string, string);
 
     background: Palette.background_color;
     TopBar {
@@ -235,6 +235,9 @@ export component AppWindow inherits Window {
             }
             add-item(name, desc, amount) => {
                 add-item(name, desc, amount);
+            }
+            item-amount-changed(name, amount) => {
+                item-amount-changed(name, amount);
             }
         }
 

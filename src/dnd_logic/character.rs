@@ -569,5 +569,20 @@ impl Character {
         self.equipment.push(item);
     }
 
+    pub fn remove_item(&mut self, name: &str) {
+        self.equipment.retain(|item| item.name != name);
+    }
+
+    pub fn change_item_amount(&mut self, name: &str, amount: i32) {
+        for item in &mut self.equipment {
+            if item.name == name {
+                item.amount += amount;
+                if item.amount <= 0 {
+                    self.remove_item(name);
+                }
+                return;
+            }
+        }
+    }
     
 }

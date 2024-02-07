@@ -1,46 +1,101 @@
 import { SlintItem } from "../logic.slint";
-import { ScrollView, HorizontalBox } from "std-widgets.slint";
+import { ScrollView, HorizontalBox, VerticalBox, LineEdit } from "std-widgets.slint";
 import { Palette } from "palette.slint";
 import { SizedButton } from "button.slint";
-import { Line } from "drawing.slint";
+import { Line, X } from "drawing.slint";
+import { LineInput } from "text_widgets.slint";
 
 
 export component ItemEntry {
     in property <length> widget-width;
     in property <SlintItem> item;
 
+    property <string> in-amount;
+
     callback item-selected(SlintItem);
+    callback item-amount-changed(string, string);
 
     VerticalLayout {
         Rectangle {
             width: widget-width;
-            height: 50px;
+            height: 40px;
             border-color: Palette.text_color;
             border-width: 1px;
             HorizontalLayout {
-                Text {
-                    text: item.amount + "x";
-                    width: 50px;
-                    height: 50px;
+                amount := Text {
+                    text: item.amount;
+                    width: self.preferred-width + 5px;
+                    height: 40px;
                     vertical-alignment: center;
                     horizontal-alignment: center;
                     color: Palette.text_color;
-                    font-size: 20px;
+                    font-size: 18px;
                 }
+                VerticalLayout {
+                    padding-top: 16px;
+                    padding-bottom: 10px;
+                    padding-right: 4px;
+                    HorizontalLayout {
+                        X {
+                            width: 10px;
+                            height: 10px;
+                        }
+                    }
+                }
+                
                 Text {
                     text: item.name;
-                    width: widget-width - 120px;
-                    height: 50px;
+                    width: widget-width - amount.width - item-amount.width - 100px - 50px;
+                    height: 40px;
                     vertical-alignment: center;
                     horizontal-alignment: left;
                     color: Palette.text_color;
-                    font-size: 20px;
+                    font-size: 18px;
                 }
+
                 SizedButton {
-                    area-height: 50px;
-                    area-width: 80px;
+                    area-height: 40px;
+                    area-width: 25px;
+                    button-width: 20px;
+                    button-height: 20px;
+                    text: "-";
+                    clicked => {
+                        item-amount-changed(item.name, "-" + in-amount);
+                    }
+                }
+
+                VerticalLayout {
+                    alignment: center;
+                    HorizontalLayout {
+                        alignment: center;
+                        item-amount := LineEdit {
+                            height: 18px;
+                            width: 40px;
+                            font-size: 16px;
+                            input-type: number;
+                            edited(num) => {
+                                in-amount = num;
+                            }
+                        }
+                    }
+                }
+
+                SizedButton {
+                    area-height: 40px;
+                    area-width: 25px;
+                    button-width: 20px;
+                    button-height: 20px;
+                    text: "+";
+                    clicked => {
+                        item-amount-changed(item.name, in-amount);
+                    }
+                }
+
+                SizedButton {
+                    area-height: 40px;
+                    area-width: 60px;
                     button-width: 50px;
-                    button-height: 30px;
+                    button-height: 25px;
                     text: "Info";
                     clicked => {
                         item-selected(item)
@@ -111,6 +166,7 @@ export component Equipment {
     property <SlintItem> selected-item;
 
     callback open-add-item();
+    callback item-amount-changed(string, string);
 
     x:0;
     y:0;
@@ -195,6 +251,9 @@ export component Equipment {
                             item-selected(item) => {
                                 selected-item = item;
                                 item-popup.show();
+                            }
+                            item-amount-changed(name, amount) => {
+                                item-amount-changed(name, amount);
                             }
                         }
                     }
