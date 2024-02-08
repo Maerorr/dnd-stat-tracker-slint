@@ -227,12 +227,7 @@ export component SpellListEq {
                                 width: widget-width / 3;
                                 level: "0";
                             }
-                            Line {
-                                height: 2px;
-                                from: {x: 0, y: 0};
-                                to: {x: 1, y: 0.0};
-                                stroke: Palette.text_color;
-                            }
+                            
                             for spell[i] in in-character.cantrips : SpellEntry {
                                 spell: spell;
                                 remove-spell(name) => {

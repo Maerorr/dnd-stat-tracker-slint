@@ -1,0 +1,80 @@
+import { SlintCharacterShortInfo } from "../../logic.slint";
+import { ScrollView } from "std-widgets.slint";
+import { CharacterGridEntry } from "../character_grid_entry.slint";
+
+export component CharacterSelectGrid {
+    in property <[SlintCharacterShortInfo]> all-characters;
+
+    callback character-selected(string);
+
+    ScrollView {
+        width: 100%;
+        height: 100%;
+
+        HorizontalLayout {
+            padding-left: 75px;
+            padding-right: 75px;
+            spacing: 150px;
+            VerticalLayout {
+                for char[i] in all-characters : HorizontalLayout  {
+                    if mod(i, 4) == 0 : VerticalLayout {
+                        CharacterGridEntry {
+                            character-info: char;
+                            character-selected(name) => {
+                                character-selected(name);
+                            }
+                        }
+                        Rectangle {
+                            height: 8px;
+                        }
+                    }
+                }
+            }
+            VerticalLayout {
+                for char[i] in all-characters : HorizontalLayout  {
+                    if mod(i, 4) == 1 : VerticalLayout {
+                        CharacterGridEntry {
+                            character-info: char;
+                            character-selected(name) => {
+                                character-selected(name);
+                            }
+                        }
+                        Rectangle {
+                            height: 8px;
+                        }
+                    }
+                }
+            }
+            VerticalLayout {
+                for char[i] in all-characters : HorizontalLayout  {
+                    if mod(i, 4) == 2 : VerticalLayout {
+                        CharacterGridEntry {
+                            character-info: char;
+                            character-selected(name) => {
+                                character-selected(name);
+                            }
+                        }
+                        Rectangle {
+                            height: 8px;
+                        }
+                    }
+                }
+            }
+            VerticalLayout {
+                for char[i] in all-characters : HorizontalLayout  {
+                    if mod(i, 4) == 3 : VerticalLayout {
+                        CharacterGridEntry {
+                            character-info: char;
+                            character-selected(name) => {
+                                character-selected(name);
+                            }
+                        }
+                        Rectangle {
+                            height: 8px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

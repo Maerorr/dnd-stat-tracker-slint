@@ -1,0 +1,63 @@
+import {Palette} from "palette.slint";
+import {SlintCharacterShortInfo} from "../logic.slint";
+
+export component CharacterGridEntry inherits Rectangle {
+
+    in property <SlintCharacterShortInfo> character-info;
+
+    callback character-selected(string); // name
+
+    width: 180px;
+    height: 280px;
+    background: touch.pressed ? Palette.normal_button_pressed_color : touch.has-hover ? Palette.normal_button_hover_color :  Palette.normal_button_idle_color;
+    border-color: Palette.text_color;
+    border-width: 2px;
+    border-radius: 8px;
+
+    VerticalLayout {
+        x: 15px;
+        y: 5px;
+        Image {
+            width: 150px;
+            height: 150px;
+        
+            source: character-info.image;
+        }
+
+        Text {
+            width: 150px;
+            text: character-info.name;
+            font-size: 18px;
+            color: Palette.text_color;
+        }
+
+        Text {
+            width: 150px;
+            text: character-info.class;
+            font-size: 14px;
+            color: Palette.text_color;
+        }
+
+        Text {
+            width: 150px;
+            text: "level: " + character-info.level;
+            font-size: 14px;
+            color: Palette.text_color;
+        }
+
+        Text {
+            width: 150px;
+            text: "exp: " + character-info.exp;
+            font-size: 14px;
+            color: Palette.text_color;
+        }
+    }
+
+    touch := TouchArea {
+        width: 180px;
+        height: 280px;
+        clicked => {
+            character-selected(character-info.name);
+        }
+    }
+}

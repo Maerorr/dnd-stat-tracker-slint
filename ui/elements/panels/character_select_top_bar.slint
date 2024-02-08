@@ -1,0 +1,32 @@
+import { Palette } from "../palette.slint";
+import { GridBox, HorizontalBox, Button } from "std-widgets.slint";
+import { Label, Heading } from "../text_widgets.slint";
+import { Line } from "../drawing.slint";
+import { TopButton } from "../button.slint";
+import { EditMode } from "../globals.slint";
+import { SlintCharacter } from "../../logic.slint";
+
+export component CharacterSelectTopBar inherits Rectangle {
+    in-out property <SlintCharacter> in-character;
+    width: 1920px;
+    height: 100px;
+    x : 0;
+    y : 0;
+    background: Palette.dark;
+    VerticalLayout {
+        Heading {
+            vertical-alignment: center;
+            horizontal-alignment: center;
+            color: Palette.text_color;
+            text: "D&D Stat Tracker (Slint Edition)";
+        }
+        Text {
+            font-size: 18px;
+            vertical-alignment: center;
+            horizontal-alignment: center;
+            color: Palette.text_color;
+            text: "Select a character to edit or create a new one";
+        }
+    }
+    
+}

@@ -1,6 +1,7 @@
 use std::{fs::File, io::Write};
 
 use serde::{ser::SerializeStruct, Deserialize, Serialize, Serializer};
+use slint::Image;
 
 use crate::{CHARACTERS_PATH, dnd_logic::prelude::*};
 

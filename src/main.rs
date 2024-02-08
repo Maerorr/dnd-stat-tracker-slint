@@ -1,12 +1,12 @@
 use std::{
-    cell::RefCell, env::{self, current_exe}, rc::Rc, thread::current
+    cell::RefCell, env::{self, current_exe}, path::Path, rc::Rc, thread::current
 };
 
 mod dnd_logic;
 mod utils;
 use crate::dnd_logic::prelude::*;
 use dnd_logic::{character, skill};
-use slint::{Color, Model, ModelRc};
+use slint::{Color, Image, Model, ModelRc};
 use utils::*;
 
 slint::include_modules!();
@@ -20,6 +20,8 @@ pub const CHARISMA_COLOR: Color = Color::from_rgb_u8(233, 219, 204);
 
 pub const SPELLS_PATH: &str = "res/spells";
 pub const CHARACTERS_PATH: &str = "res/characters";
+pub const DEFAULT_CHARACTER_IMAGE_PATH: &str = "res/images/characters/default-character-image.png";
+pub const CHARACTER_IMAGE_PATH: &str = "res/images/characters/";
 
 #[derive(PartialEq, Eq, Clone, Copy)]
 pub enum AppState {
@@ -33,6 +35,7 @@ pub struct StatTracker {
     pub state: AppState,
     pub previous_state: AppState,
     pub characters: Vec<Character>,
+    pub character_images: Vec<(String, Image)>,
     pub current_character: usize, // index of current character in characters
     pub first_frame: bool,
     pub spell_database: SpellList,
@@ -42,10 +45,12 @@ impl StatTracker {
     pub fn new() -> Self {
         let spell_database = load_spells_from_files();
         let characters = load_characters(&spell_database);
+        let images = load_character_images(characters.clone());
         Self {
             state: AppState::CharacterSelect,
             previous_state: AppState::CharacterSelect,
             characters,
+            character_images: images,
             current_character: 0,
             first_frame: true,
             spell_database,
@@ -70,8 +75,34 @@ pub fn set_skills_ui_data(c: &Character, skills: &mut Vec<SlintSkill>) {
     *skills = c.skills.get_slint_skills(c);
 }
 
+pub fn set_all_characters_data(characters: &Vec<Character>, images: &Vec<(String, Image)>, ui: &AppWindow) {
+    let mut all_characters: Vec<SlintCharacterShortInfo> = Vec::with_capacity(characters.len());
+    
+    for character in characters.iter() {
+        let mut current_character: SlintCharacterShortInfo = SlintCharacterShortInfo::default();
+        current_character.name = character.name.clone().into();
+        current_character.level = character.level;
+        current_character.class = character.class.get_name().into();
+        current_character.exp = character.experience;
+        current_character.image = {
+            let image = images.iter().find(|(name, _)| 
+                name == &character.name.replace(" ", "_").to_lowercase()
+            );
+            if image.is_none() {
+                Image::load_from_path(Path::new(DEFAULT_CHARACTER_IMAGE_PATH)).unwrap()
+            } else {
+                image.unwrap().1.clone()
+            }
+        };
+
+        all_characters.push(current_character);
+    }
+
+    ui.set_all_characters(all_characters.as_slice().into());
+}
+
 pub fn set_ui_character_data(c: &Character, ui: &AppWindow) {
-    let mut current_character: SlintCharacter = ui.get_character();
+    let mut current_character: SlintCharacter = ui.get_current_character();
     current_character.name = c.name.clone().into();
     current_character.level = c.level;
     current_character.class = c.class.get_name().into();
@@ -96,8 +127,6 @@ pub fn set_ui_character_data(c: &Character, ui: &AppWindow) {
     current_character.current_hp = c.get_hit_points_current();
     current_character.max_hp = c.get_hit_points_max();
     current_character.temp_hp = c.get_hit_points_temp();
-
-    //println!("max hp: {}", current_character.max_hp);
 
     current_character.hit_dice_total = c.get_ui_hit_dice_total().into();
     current_character.hit_dice_left = c.get_ui_hit_dice_left().into();
@@ -140,7 +169,7 @@ pub fn set_ui_character_data(c: &Character, ui: &AppWindow) {
 
     current_character.equipment = c.equipment.iter().map(|item| item.to_slint_item()).collect::<Vec<SlintItem>>().as_slice().into();
 
-    ui.set_character(current_character.into());
+    ui.set_current_character(current_character.into());
 }
 
 fn set_ui_spell_database_data(spell_database: &SpellList, ui: &AppWindow) {
@@ -167,6 +196,12 @@ fn main() -> Result<(), slint::PlatformError> {
     let ui = AppWindow::new()?;
 
     let mut c = app_data.clone();
+    
+    let mut state: SlintState = ui.get_state();
+    state = SlintState::CharacterSelect;
+    ui.set_state(state);
+
+    set_all_characters_data(&c.borrow().characters, &c.borrow().character_images, &ui);
     set_ui_character_data(&c.borrow_mut().get_current_character(), &ui);
     set_ui_spell_database_data(&c.borrow().spell_database, &ui);
 
@@ -402,7 +437,13 @@ fn main() -> Result<(), slint::PlatformError> {
     ui.on_save_character_select({
         let ui_handle = ui.as_weak();
         move || {
-            // TODO: character select 
+            let ui = ui_handle.unwrap();
+            let mut c = app_data_handle.borrow_mut();
+            let character = c.get_current_character();
+            character.save_to_file();
+            let mut state: SlintState = ui.get_state();
+            state = SlintState::CharacterSelect;
+            ui.set_state(state);
         }
     });
 
@@ -596,7 +637,6 @@ fn main() -> Result<(), slint::PlatformError> {
         move |name| {
             let ui = ui_handle.unwrap();
             let mut c = app_data_handle.borrow_mut();
-            println!("removing spell: {}", name);
             let spell = c.get_current_character().spell_list.get_spell_by_name(&name);
             if spell.is_none() {
                 return;
@@ -646,6 +686,25 @@ fn main() -> Result<(), slint::PlatformError> {
             let mut c = app_data_handle.borrow_mut();
             c.get_current_character().remove_item(name.as_str());
             set_ui_character_data(&c.get_current_character(), &ui);
+        }
+    });
+
+    ui.on_character_select({
+        let app_data_handle = app_data.clone();
+        let ui_handle = ui.as_weak();
+        move |name| {
+            let ui = ui_handle.unwrap();
+            let mut c = app_data_handle.borrow_mut();
+            let name = name.as_str();
+            let index = c.characters.iter().position(|character| character.name == name);
+            if index.is_none() {
+                return;
+            }
+            c.current_character = index.unwrap();
+            set_ui_character_data(&c.get_current_character(), &ui);
+            let mut state: SlintState = ui.get_state();
+            state = SlintState::StatTracker;
+            ui.set_state(state);
         }
     });
 

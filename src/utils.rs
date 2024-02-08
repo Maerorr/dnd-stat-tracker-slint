@@ -1,9 +1,10 @@
-use std::fs::File;
+use std::{fs::{self, File}, path::Path};
 
 use serde_json::from_reader;
+use slint::Image;
 use strum::IntoEnumIterator;
 
-use crate::{dnd_logic::prelude::*, CHARACTERS_PATH, SPELLS_PATH};
+use crate::{dnd_logic::prelude::*, CHARACTERS_PATH, CHARACTER_IMAGE_PATH, SPELLS_PATH};
 
 pub fn load_spells_from_files() -> SpellList {
     let path = std::path::Path::new(SPELLS_PATH);
@@ -43,4 +44,38 @@ pub fn load_characters(spell_database: &SpellList) -> Vec<Character> {
         characters.push(character);
     }
     characters
+}
+
+pub fn load_character_images(characters: Vec<Character>) -> Vec<(String, Image)> {
+    let mut images = Vec::new();
+
+    let mut file_names: Vec<String> = Vec::new();
+
+    let dir = fs::read_dir(CHARACTER_IMAGE_PATH).unwrap();
+
+    for entry in dir {
+        let entry = entry.unwrap();
+        let path = entry.path();
+        let file_name = path.file_name().unwrap().to_str().unwrap().to_string();
+        file_names.push(file_name);
+    }
+
+    for character in characters {
+        let name_no_spaces = character.name.replace(" ", "_").to_lowercase();
+
+        file_names.iter().for_each(|file_name| {
+            let name_jpg = format!("{}.jpg", name_no_spaces.clone());
+            let name_png = format!("{}.png", name_no_spaces.clone());
+            if file_name == &name_jpg {
+                let path = format!("{}/{}", CHARACTER_IMAGE_PATH, name_jpg);
+                let image = Image::load_from_path(Path::new(&path)).unwrap();
+                images.push((name_no_spaces.clone(), image));
+            } else if file_name == &name_png {
+                let path = format!("{}/{}", CHARACTER_IMAGE_PATH, name_png);
+                let image = Image::load_from_path(Path::new(&path)).unwrap();
+                images.push((name_no_spaces.clone(), image));
+            }
+        });
+    }
+    images
 }

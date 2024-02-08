@@ -1,10 +1,10 @@
-import { Button, VerticalBox, HorizontalBox } from "std-widgets.slint";
+import { Button, VerticalBox, HorizontalBox, StandardButton } from "std-widgets.slint";
 import { TopBar } from "elements/panels/top_bar.slint";
 import { Palette } from "elements/palette.slint";
 import { StatsPanel } from "elements/panels/stats.slint";
 import { Line } from "elements/drawing.slint";
 import { SavesProficiencies } from "elements/panels/saves_profs.slint";
-import { SlintCharacter, SlintSpellDatabase } from "logic.slint";
+import { SlintCharacter, SlintSpellDatabase, SlintCharacterShortInfo } from "logic.slint";
 import { EditMode } from "elements/globals.slint";
 import { AcHpMoneyPanel } from "elements/panels/ac_hp_money.slint";
 
@@ -12,16 +12,25 @@ import "fonts/typey.otf";
 import { FeaturesAndTraits } from "elements/panels/features_traits.slint";
 import { SpellListEq } from "elements/panels/spelllist_eq.slint";
 import { Equipment, AddItem } from "elements/eq.slint";
+import { StatTrackerState } from "elements/states/stat-tracker.slint";
+import { CharacterSelectState } from "elements/states/character-select.slint";
+
+export enum SlintState {CharacterSelect, StatTracker}
 
 export component AppWindow inherits Window {
     width: 1920px;
     height: 1000px;
-    in-out property <SlintCharacter> character;
+
+    in property <SlintState> state;
+    in property <SlintCharacter> current-character;
+
+    in property <[SlintCharacterShortInfo]> all-characters;
+
     in-out property <SlintSpellDatabase> spell-database;
+    background: Palette.background_color;
 
     default-font-family: "Typey McTypeface";
 
-    // callbacks
     callback add-money(string, string);
     callback subtract-money(string, string);
 
@@ -76,179 +85,139 @@ export component AppWindow inherits Window {
     callback item-amount-changed(string, string);
     callback remove-item(string);
 
-    background: Palette.background_color;
-    TopBar {
-        in-character: character;
-        save => {
-            save();
-        }
-        save-character-select => {
-            save-character-select();
-        }
-    }
-    HorizontalLayout {
-        x: 0;
-        y: 100px;
+    callback character-select(string);
+
+    VerticalLayout {
         alignment: start;
-
-        StatsPanel {
-            in-character: character;
-            edit-stat(val, sign) => {
-                edit-stat(val, sign);
-            }
-        }
-
-        Line {
-            from: {x: 0, y: 0};
-            to: {x: 0, y: 100.0};
-            stroke: Palette.text_color;
-        }
-
-        SavesProficiencies {
-            in-character: character;
-            set-skill-proficiency(string, bool) => {
-                set-skill-proficiency(string, bool);
-            }
-            set-skill-expertise(string, bool) => {
-                set-skill-expertise(string, bool);
-            }
-            set-save-proficiency(string, bool) => {
-                set-save-proficiency(string, bool);
-            }
-            set-languages-proficiencies(text) => {
-                set-languages-proficiencies(text);
-            }
-        }
+        HorizontalLayout {
+            alignment: start;
+            if state == SlintState.StatTracker : StatTrackerState {
+                character: current-character;
+                spell-database: spell-database;
         
-        Line {
-            from: {x: 0, y: 0};
-            to: {x: 0, y: 100.0};
-            stroke: Palette.text_color;
-        }
+                add-money(string, string) => {
+                    add-money(string, string);
+                }
+                subtract-money(string, string) => {
+                    subtract-money(string, string);
+                }
+                take-damage(string) => {
+                    take-damage(string);
+                }
+                heal(string) => {
+                    heal(string);
+                }
+                add-temp-hp(string) => {
+                    add-temp-hp(string);
+                }
+                subtract-temp-hp(string) => {
+                    subtract-temp-hp(string);
+                }
+                add-max-hp(string) => {
+                    add-max-hp(string);
+                }
+                use-hit-dice() => {
+                    use-hit-dice();
+                }
+                add-hit-dice() => {
+                    add-hit-dice();
+                }
+                subtract-hit-dice() => {
+                    subtract-hit-dice();
+                }
+                add-hit-dice-left() => {
+                    add-hit-dice-left();
+                }
+                subtract-hit-dice-left() => {
+                    subtract-hit-dice-left();
+                }
+                add-death-save-success() => {
+                    add-death-save-success();
+                }
+                add-death-save-failure() => {
+                    add-death-save-failure();
+                }
+                reset-death-saves() => {
+                    reset-death-saves();
+                }
+                convert-money(string, string, string) => {
+                    convert-money(string, string, string);
+                }
+                use-spell-slot(string) => {
+                    use-spell-slot(string);
+                }
+                add-spell-slot(string) => {
+                    add-spell-slot(string);
+                }
+                add-max-spell-slot(string) => {
+                    add-max-spell-slot(string);
+                }
+                subtract-max-spell-slot(string) => {
+                    subtract-max-spell-slot(string);
+                }
+                add-spell(string) => {
+                    add-spell(string);
+                }
+                remove-spell(string) => {
+                    remove-spell(string);
+                }
+                edit-stat(string, string) => {
+                    edit-stat(string, string);
+                }
+                save() => {
+                    save();
+                }
+                set-skill-proficiency(string, bool) => {
+                    set-skill-proficiency(string, bool);
+                }
+                set-skill-expertise(string, bool) => {
+                    set-skill-expertise(string, bool);
+                }
+                set-save-proficiency(string, bool) => {
+                    set-save-proficiency(string, bool);
+                }
+                set-languages-proficiencies(string) => {
+                    set-languages-proficiencies(string);
+                }
+                add-ac() => {
+                    add-ac();
+                }
+                subtract-ac() => {
+                    subtract-ac();
+                }
+                add-initiative() => {
+                    add-initiative();
+                }
+                subtract-initiative() => {
+                    subtract-initiative();
+                }
+                add-speed() => {
+                    add-speed();
+                }
+                subtract-speed() => {
+                    subtract-speed();
+                }
+                add-item(string, string, string) => {
+                    add-item(string, string, string);
+                }
+                item-amount-changed(string, string) => {
+                    item-amount-changed(string, string);
+                }
+                remove-item(string) => {
+                    remove-item(string);
+                }
+                save-character-select() => {
+                    save-character-select();
+                }
+            }
+            if state == SlintState.CharacterSelect : CharacterSelectState {
+                all-characters: all-characters;
+                character-selected(string) => {
+                    character-select(string);
+                }
 
-        AcHpMoneyPanel {
-            in-character: character;
-            add-money(string, int) => {
-                add-money(string, int);
             }
-            subtract-money(string, int) => {
-                subtract-money(string, int);
-            }
-            take-damage(string) => {
-                take-damage(string);
-            }
-            heal(string) => {
-                heal(string);
-            }
-            add-temp-hp(string) => {
-                add-temp-hp(string);
-            }
-            subtract-temp-hp(string) => {
-                subtract-temp-hp(string);
-            }
-            use-hit-dice => {
-                use-hit-dice();
-            }
-            add-failure => {
-                add-death-save-failure();
-            }
-            add-success => {
-                add-death-save-success();
-            }
-            reset-death-saves => {
-                reset-death-saves();
-            }
-            convert-money(from, to, amount) => {
-                convert-money(from, to, amount);
-            }
-            add-ac => {
-                add-ac();
-            }
-            sub-ac => {
-                subtract-ac();
-            }
-            add-initiative => {
-                add-initiative();
-            }
-            sub-initiative => {
-                subtract-initiative();
-            }
-            add-speed => {
-                add-speed();
-            }
-            sub-speed => {
-                subtract-speed();
-            }
-            add-max-hp(val) => {
-                add-max-hp(val);
-            }
-            add-hit-dice => {
-                add-hit-dice();
-            }
-            sub-hit-dice => {
-                subtract-hit-dice();
-            }
-            sub-hit-dice-left => {
-                subtract-hit-dice-left();
-            }
-            add-hit-dice-left => {
-                add-hit-dice-left();
-            }
-        }
-
-        Line {
-            from: {x: 0, y: 0};
-            to: {x: 0, y: 100.0};
-            stroke: Palette.text_color;
-        }
-
-        FeaturesAndTraits {
-            in-character: character;
-        }
-
-        Line {
-            from: {x: 0, y: 0};
-            to: {x: 0, y: 100.0};
-            stroke: Palette.text_color;
-        }
-
-        SpellListEq {
-            in-character: character;
-            widget-width: 800px;
-            spell-database: spell-database;
-            use-spell-slot(string) => {
-                use-spell-slot(string);
-            }
-            add-spell-slot(string) => {
-                add-spell-slot(string);
-            }
-            add-spell(name) => {
-                add-spell(name);
-            }
-            remove-spell(name) => {
-                remove-spell(name);
-            }
-            add-max-slot(level) => {
-                add-max-spell-slot(level);
-            }
-            sub-max-slot(level) => {
-                subtract-max-spell-slot(level);
-            }
-            add-item(name, desc, amount) => {
-                add-item(name, desc, amount);
-            }
-            item-amount-changed(name, amount) => {
-                item-amount-changed(name, amount);
-            }
-            remove-item(name) => {
-                remove-item(name);
-            }
-        }
-
-        Line {
-            from: {x: 0, y: 0};
-            to: {x: 0, y: 100.0};
-            stroke: Palette.text_color;
         }
     }
+    
 }
