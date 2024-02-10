@@ -12,3 +12,4 @@ pub mod spell;
 pub mod spell_list;
 pub mod eq;
 pub mod prelude;
+pub mod weapon;

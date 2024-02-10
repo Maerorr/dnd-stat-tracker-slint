@@ -68,6 +68,21 @@ export struct SlintCharacterShortInfo {
     image: image,
 }
 
+export enum SlintWeaponType {
+    Weapon,
+    Ammo,
+}
+
+export struct SlintWeaponInfo {
+    name: string,
+    damage: string,
+    weapon-type: SlintWeaponType,
+    ammo: string,
+    properties: string,
+    description: string,
+    equipped: bool,
+}
+
 export struct SlintCharacter {
     name: string,
     level: int,
@@ -117,5 +132,7 @@ export struct SlintCharacter {
 
     languages-proficiencies: string,
     features-traits: string,
+
+    weapons: [SlintWeaponInfo],
 }
 

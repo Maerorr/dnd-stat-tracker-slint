@@ -1,0 +1,265 @@
+import { SlintItem, SlintWeaponInfo, SlintWeaponType } from "../logic.slint";
+import { ScrollView, HorizontalBox, VerticalBox, LineEdit } from "std-widgets.slint";
+import { Palette } from "palette.slint";
+import { SizedButton, DamageButton } from "button.slint";
+import { Line, X } from "drawing.slint";
+import { LineInput } from "text_widgets.slint";
+import { EditMode } from "globals.slint";
+
+export component WeaponEntry inherits Rectangle {
+    in property <length> widget-width;
+    in property <SlintWeaponInfo> weapon;
+    in-out property <length> widget-height;
+
+    callback add-ammo();
+    callback sub-ammo();
+    callback open-weapon-info(SlintWeaponInfo);
+
+    init => {
+        widget-height = (name-text.preferred-height * 1.1) > widget-height ? (name-text.preferred-height * 1.1) : widget-height;
+    }
+    width: widget-width;
+    height: widget-height;
+    border-color: Palette.text_color;
+    border-width: 1px;
+    name-layout := HorizontalLayout {
+        x:0;
+        padding-left: 8px;
+        width: widget-width/2;
+        name-text := Text {
+            width: widget-width/2 - 8px;
+            text: weapon.name;
+            font-size: 16px;
+            vertical-alignment: center;
+            horizontal-alignment: left;
+            color: Palette.text_color;
+            wrap: word-wrap;
+        }
+    }
+    if !EditMode.active : HorizontalLayout {
+        x: name-layout.width;
+        Line {
+            width: 6px;
+            height: widget-height;
+            from: {x: 0, y:0};
+            to: {x:0 , y:1};
+        }
+        if weapon.weapon-type == SlintWeaponType.Weapon : HorizontalLayout {
+            width: widget-width/4;
+            padding-right: 8px;
+            Text {
+                width: widget-width/4;
+                text: weapon.damage;
+                min-height: widget-height;
+                font-size: 14px;
+                vertical-alignment: center;
+                horizontal-alignment: left;
+                color: Palette.text_color;
+                wrap: word-wrap;
+            }
+        }
+        if weapon.weapon-type == SlintWeaponType.Ammo : HorizontalLayout {
+            width: widget-width/2;
+            padding-right: 8px;
+            SizedButton {
+                area-height: widget-height;
+                area-width: widget-width/8;
+                button-height: 20px;
+                button-width: 20px;
+                text: "-";           
+            }
+            Text {
+                width: widget-width/8;
+                text: weapon.ammo;
+                min-height: widget-height;
+                font-size: 16px;
+                vertical-alignment: center;
+                horizontal-alignment: center;
+                color: Palette.text_color;
+            }
+            SizedButton {
+                area-height: widget-height;
+                area-width: widget-width/8;
+                button-height: 20px;
+                button-width: 20px;
+                text: "+";           
+            }
+        }
+        SizedButton {
+            area-height: widget-height;
+            area-width: widget-width/4;
+            button-width: 40px;
+            button-height: 20px;
+            text: "Info";
+            clicked => {
+                open-weapon-info(weapon);
+            }
+        
+        }
+    }
+}
+
+export component Weapons {
+    in property <length> widget-width;
+    in property <[SlintWeaponInfo]> weapons;
+    property <SlintWeaponInfo> selected-weapon;
+    
+    weapon-popup := PopupWindow {
+        x:0px;
+        y:0px;
+        width: 600px;
+        height: 600px;
+        if selected-weapon.weapon-type == SlintWeaponType.Weapon : ScrollView {
+            x:0;
+            y:0;
+            width: 600px;
+            height: 600px;
+            viewport-height: 50px + ammo-name.preferred-height + damage.preferred-height + ammo-ammo.preferred-height + properties.preferred-height + ammo-description.preferred-height;
+            viewport-width: 600px;
+            Rectangle {
+                x:0;
+                y:0;
+                width: 400px;
+                height: 50px + ammo-name.preferred-height + damage.preferred-height + ammo-ammo.preferred-height + properties.preferred-height + ammo-description.preferred-height;
+                background: Palette.dark;
+    
+                ammo-content := VerticalLayout {
+                    padding-left: 10px;
+                    padding-right: 10px;
+                    y: 0;
+                    alignment: start;
+                    ammo-name := Text {
+                        min-height: 30px;
+                        text: selected-weapon.name;
+                        font-size: 24px;
+                        width: 100%;
+                        color: Palette.text_color;
+                        horizontal-alignment: center;
+                        vertical-alignment: center;
+                        wrap: word-wrap;
+                    }
+                    Line {
+                        width: 400px;
+                        height: 4px;
+                        from: {x: 0, y: 0};
+                        to: {x: 1, y: 0};
+                    }
+                    damage := Text {
+                        min-height: 30px;
+                        text: "Damage: " + selected-weapon.damage;
+                        font-size: 18px;
+                        width: 100%;
+                        color: Palette.text_color;
+                        horizontal-alignment: center;
+                        vertical-alignment: center;
+                    }
+                    ammo-ammo := Text {
+                        min-height: 30px;
+                        text: "Ammo: " + selected-weapon.ammo;
+                        font-size: 18px;
+                        width: 100%;
+                        color: Palette.text_color;
+                        horizontal-alignment: center;
+                        vertical-alignment: center;
+                    }
+                    properties := Text {
+                        min-height: 30px;
+                        text: "Properties: " + selected-weapon.properties;
+                        font-size: 18px;
+                        width: 100%;
+                        color: Palette.text_color;
+                        horizontal-alignment: center;
+                        vertical-alignment: center;
+                    }
+                    ammo-description := Text {
+                        min-height: 30px;
+                        text: selected-weapon.description;
+                        font-size: 18px;
+                        width: 100%;
+                        color: Palette.text_color;
+                        horizontal-alignment: center;
+                        vertical-alignment: center;
+                    }
+                }
+            }
+        }
+        if selected-weapon.weapon-type == SlintWeaponType.Ammo : ScrollView {
+            x:0;
+            y:0;
+            width: 600px;
+            height: 600px;
+            viewport-height: 50px + name.preferred-height + ammo.preferred-height + description.preferred-height;
+            viewport-width: 600px;
+             Rectangle {
+                x:0;
+                y:0;
+                width: 400px;
+                height: 50px + name.preferred-height + ammo.preferred-height + description.preferred-height;
+                background: Palette.dark;
+    
+                content := VerticalLayout {
+                    padding-left: 10px;
+                    padding-right: 10px;
+                    y: 0;
+                    alignment: start;
+                    name := Text {
+                        min-height: 30px;
+                        text: selected-weapon.name;
+                        font-size: 24px;
+                        width: 100%;
+                        color: Palette.text_color;
+                        horizontal-alignment: center;
+                        vertical-alignment: center;
+                    }
+                    Line {
+                        width: 400px;
+                        height: 4px;
+                        from: {x: 0, y: 0};
+                        to: {x: 1, y: 0};
+                    }
+                    ammo := Text {
+                        min-height: 30px;
+                        text: "Ammo: " + selected-weapon.ammo;
+                        font-size: 18px;
+                        width: 100%;
+                        color: Palette.text_color;
+                        horizontal-alignment: center;
+                        vertical-alignment: center;
+                    }
+                    description := Text {
+                        min-height: 30px;
+                        text: selected-weapon.description;
+                        font-size: 18px;
+                        width: 100%;
+                        color: Palette.text_color;
+                        horizontal-alignment: center;
+                        vertical-alignment: center;
+                    }
+                }
+            }
+        }
+    }
+
+    ScrollView {
+        x:0;
+        y:0;
+        VerticalLayout {
+            width: widget-width;
+            height: 300px;
+            alignment: start;
+            for weapon[i] in weapons : VerticalLayout {
+                width: widget-width;
+                min-height: 0px;
+                if weapon.weapon-type == SlintWeaponType.Weapon : WeaponEntry {
+                    widget-width: widget-width;
+                    widget-height: 40px;
+                    weapon: weapon;
+                    open-weapon-info(weapon) => {
+                        selected-weapon = weapon;
+                        weapon-popup.show();
+                    }
+                }
+            }
+        }
+    }
+}

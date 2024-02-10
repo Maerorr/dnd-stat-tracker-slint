@@ -11,3 +11,4 @@ pub use super::money::*;
 pub use super::spell::*;
 pub use super::spell_list::*;
 pub use super::eq::*;
+pub use super::weapon::*;

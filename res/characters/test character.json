@@ -323,5 +323,29 @@
       "description": "A book with spells in it",
       "amount": 1
     }
+  ],
+  "weapons": [
+    [
+      {
+        "name": "Javelin",
+        "damage": "1d6 piercing",
+        "weapon_type": "Ammo",
+        "ammo": 5,
+        "properties": "Thrown (range 30/120)",
+        "description": ""
+      },
+      true
+    ],
+    [
+      {
+        "name": "Handaxe",
+        "damage": "1d6 slashing",
+        "weapon_type": "Weapon",
+        "ammo": 0,
+        "properties": "Light, thrown (range 20/60)",
+        "description": ""
+      },
+      false
+    ]
   ]
 }

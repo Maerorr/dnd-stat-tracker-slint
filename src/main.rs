@@ -169,6 +169,15 @@ pub fn set_ui_character_data(c: &Character, ui: &AppWindow) {
 
     current_character.equipment = c.equipment.iter().map(|item| item.to_slint_item()).collect::<Vec<SlintItem>>().as_slice().into();
 
+    let mut weapons: Vec<SlintWeaponInfo> = Vec::new();
+    for weapon in c.weapons.iter() {
+        let mut slint_weapon = weapon.0.to_slint_weapon();
+        slint_weapon.equipped = weapon.1;
+        weapons.push(slint_weapon);
+    }
+
+    current_character.weapons = weapons.as_slice().into();
+
     ui.set_current_character(current_character.into());
 }
 

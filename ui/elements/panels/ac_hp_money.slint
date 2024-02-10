@@ -5,6 +5,7 @@ import { Line, Arrow } from "../drawing.slint";
 import { SlintCharacter } from "../../logic.slint";
 import { DamageButton, HealButton, TempHpButton, NormalButton, SizedButton } from "../button.slint";
 import { EditMode } from "../globals.slint";
+import { Weapons } from "../weapon.slint";
 
 export component AcHpMoneyPanel {
     in-out property <SlintCharacter> in-character;
@@ -54,7 +55,7 @@ export component AcHpMoneyPanel {
 
     GridLayout {
         min-width: grid-width;
-        spacing: 10px;
+        spacing: 6px;
         padding-top: 10px;
         Row {
             // AC INITIATIVE SPEED
@@ -554,9 +555,28 @@ export component AcHpMoneyPanel {
         }
         Row {
             Line {
-                height: 6px;
+                height: 2px;
                 from: {x: 0, y: 0};
                 to: {x: 1, y: 0};
+            }
+        }
+        Row {
+            VerticalLayout {
+                width: grid-width;
+                Text {
+                    height: 32px;
+                    text: "Weapons";
+                    font-size: 20px;
+                    color: Palette.text_color;
+                    horizontal-alignment: center;
+                    vertical-alignment: top;
+                }
+                Weapons {
+                    width: grid-width;
+                    height: 300px;
+                    widget-width: grid-width;
+                    weapons: in-character.weapons;
+                }
             }
         }
     }

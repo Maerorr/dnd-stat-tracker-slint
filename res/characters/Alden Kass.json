@@ -307,5 +307,73 @@
       "description": "A book with spells in it",
       "amount": 1
     }
+  ],
+  "weapons": [
+    [
+      {
+        "name": "Quarterstaff",
+        "damage": "1d6 bludgeoning",
+        "weapon_type": "Weapon",
+        "ammo": 0,
+        "properties": "Versatile (1d8)",
+        "description": ""
+      },
+      true
+    ],
+    [
+      {
+        "name": "Handaxe",
+        "damage": "1d6 slashing",
+        "weapon_type": "Weapon",
+        "ammo": 0,
+        "properties": "Light, thrown (range 20/60)",
+        "description": ""
+      },
+      false
+    ],
+    [
+      {
+        "name": "ASDJKHsdf test of overly long namess super long amirite guys as as a as as as asa sas ",
+        "damage": "1d6 bludgeoning",
+        "weapon_type": "Weapon",
+        "ammo": 0,
+        "properties": "Versatile (1d8), thrown, vestige, amazing, superb, quality +3",
+        "description": ""
+      },
+      true
+    ],
+    [
+      {
+        "name": "Light Crossbow",
+        "damage": "1d8 piercing",
+        "weapon_type": "Weapon",
+        "ammo": 0,
+        "properties": "Versatile (1d8)",
+        "description": ""
+      },
+      true
+    ],
+    [
+      {
+        "name": "cube",
+        "damage": "1d6 slashing",
+        "weapon_type": "Weapon",
+        "ammo": 0,
+        "properties": "Light, thrown (range 20/60)",
+        "description": ""
+      },
+      false
+    ],
+    [
+      {
+        "name": "Crossbow Bolt",
+        "damage": "1d6 slashing",
+        "weapon_type": "Ammo",
+        "ammo": 0,
+        "properties": "Light, thrown (range 20/60)",
+        "description": ""
+      },
+      false
+    ]
   ]
 }
