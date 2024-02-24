@@ -2,7 +2,7 @@
   "name": "Alden Kass",
   "level": 4,
   "class": "Wizard",
-  "experience": 2968,
+  "experience": 3585,
   "base_armor_class": 10,
   "initiative_bonus": 5,
   "speed": 30,
@@ -288,24 +288,64 @@
   ],
   "equipment": [
     {
-      "name": "Apple",
-      "description": "Smakuwa jabuko",
-      "amount": 32
-    },
-    {
-      "name": "Carrot",
-      "description": "mmmmm marcheweczka",
-      "amount": 3
-    },
-    {
-      "name": "Magic Wand",
-      "description": "A wand that can cast magic",
+      "name": "ink",
+      "description": "vial of ink",
       "amount": 1
     },
     {
-      "name": "Spellbook",
-      "description": "A book with spells in it",
+      "name": "pen",
+      "description": "pen to write with using ink",
       "amount": 1
+    },
+    {
+      "name": "sheet of parchment",
+      "description": "empty parchment",
+      "amount": 10
+    },
+    {
+      "name": "knife",
+      "description": "sharp knife (not a weapon)",
+      "amount": 1
+    },
+    {
+      "name": "bedroll",
+      "description": "a bedroll to sleep in",
+      "amount": 1
+    },
+    {
+      "name": "small shard of obsidian",
+      "description": "",
+      "amount": 1
+    },
+    {
+      "name": "Fog Cloud spell scroll",
+      "description": "",
+      "amount": 1
+    },
+    {
+      "name": "Shield spell scroll",
+      "description": "",
+      "amount": 1
+    },
+    {
+      "name": "Magic Missile spell scroll",
+      "description": "",
+      "amount": 1
+    },
+    {
+      "name": "Knock spell scroll",
+      "description": "",
+      "amount": 1
+    },
+    {
+      "name": "Healing Potion",
+      "description": "2d4 + 2",
+      "amount": 1
+    },
+    {
+      "name": "beef jerky bag",
+      "description": "",
+      "amount": 2
     }
   ],
   "weapons": [
@@ -322,44 +362,22 @@
     ],
     [
       {
-        "name": "Handaxe",
-        "damage": "1d6 slashing",
+        "name": "Light Crossbow",
+        "damage": "1d8 piercing",
         "weapon_type": "Weapon",
         "ammo": 0,
-        "properties": "Light, thrown (range 20/60)",
+        "properties": "Ammunition, Loading, Two-Handed, Range (80/320)",
         "description": ""
       },
       false
     ],
     [
       {
-        "name": "ASDJKHsdf test of overly long namess super long amirite guys as as a as as as asa sas ",
-        "damage": "1d6 bludgeoning",
+        "name": "Sling",
+        "damage": "1d4 bludgeoning",
         "weapon_type": "Weapon",
         "ammo": 0,
-        "properties": "Versatile (1d8), thrown, vestige, amazing, superb, quality +3",
-        "description": ""
-      },
-      true
-    ],
-    [
-      {
-        "name": "Light Crossbow",
-        "damage": "1d8 piercing",
-        "weapon_type": "Weapon",
-        "ammo": 0,
-        "properties": "Versatile (1d8)",
-        "description": ""
-      },
-      true
-    ],
-    [
-      {
-        "name": "cube",
-        "damage": "1d6 slashing",
-        "weapon_type": "Weapon",
-        "ammo": 0,
-        "properties": "Light, thrown (range 20/60)",
+        "properties": "Range (30/120)",
         "description": ""
       },
       false
@@ -367,10 +385,21 @@
     [
       {
         "name": "Crossbow Bolt",
-        "damage": "1d6 slashing",
+        "damage": "",
         "weapon_type": "Ammo",
-        "ammo": 0,
-        "properties": "Light, thrown (range 20/60)",
+        "ammo": 60,
+        "properties": "",
+        "description": ""
+      },
+      false
+    ],
+    [
+      {
+        "name": "Sling bullets",
+        "damage": "",
+        "weapon_type": "Ammo",
+        "ammo": 60,
+        "properties": "",
         "description": ""
       },
       false

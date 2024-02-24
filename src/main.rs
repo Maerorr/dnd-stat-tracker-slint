@@ -662,9 +662,11 @@ fn main() -> Result<(), slint::PlatformError> {
             let ui = ui_handle.unwrap();
             let mut c = app_data_handle.borrow_mut();
             let value = value.trim().parse::<i32>();
+            
             if value.is_err() {
                 return;
             }
+            
             let value = value.unwrap();
             c.get_current_character().add_item(name.as_str(), description.as_str(), value);
             set_ui_character_data(&c.get_current_character(), &ui);
