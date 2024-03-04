@@ -69,6 +69,7 @@ export component StatTrackerState {
     callback subtract-initiative();
     callback add-speed();
     callback subtract-speed();
+    callback set-prepared-spell(string, bool);
 
     callback add-item(string, string, string);
     callback item-amount-changed(string, string);
@@ -239,6 +240,9 @@ export component StatTrackerState {
             }
             remove-item(name) => {
                 remove-item(name);
+            }
+            set-prepared(name, prepared) => {
+                set-prepared-spell(name, prepared);
             }
         }
 

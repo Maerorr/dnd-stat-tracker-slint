@@ -318,6 +318,12 @@ export component Equipment {
                                 selected-item = item;
                                 item-popup.show();
                             }
+                            item-amount-changed(name, amount) => {
+                                item-amount-changed(name, amount);
+                            }
+                            remove-item(name) => {
+                                remove-item(name);
+                            }
                         }
                     }
                 }

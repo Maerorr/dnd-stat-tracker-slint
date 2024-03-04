@@ -579,7 +579,7 @@ impl Character {
     }
 
     pub fn change_item_amount(&mut self, name: &str, amount: i32) {
-        for item in &mut self.equipment {
+        for item in self.equipment.iter_mut() {
             if item.name == name {
                 item.amount += amount;
                 if item.amount <= 0 {

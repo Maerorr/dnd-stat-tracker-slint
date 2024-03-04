@@ -1,3 +1,5 @@
+#[windows_subsystem = "windows"]
+
 use std::{
     cell::RefCell, env::{self, current_exe}, path::Path, rc::Rc, thread::current
 };
@@ -198,11 +200,11 @@ fn set_ui_spell_database_data(spell_database: &SpellList, ui: &AppWindow) {
     ui.set_spell_database(spell_database_ui.into());
 }
 
-fn main() -> Result<(), slint::PlatformError> {
+fn main() {
     let app_data = Rc::new(RefCell::new(StatTracker::new()));
     env::set_var("SLINT_BACKEND", "skia");
 
-    let ui = AppWindow::new()?;
+    let ui = AppWindow::new().unwrap();
 
     let mut c = app_data.clone();
     
@@ -719,5 +721,26 @@ fn main() -> Result<(), slint::PlatformError> {
         }
     });
 
-    ui.run()
+    ui.on_set_prepared_spell({
+        let app_data_handle = app_data.clone();
+        let ui_handle = ui.as_weak();
+        move |name, prepared| {
+            let ui = ui_handle.unwrap();
+            let mut c = app_data_handle.borrow_mut();
+            let spell = c.get_current_character().spell_list.get_spell_by_name(&name);
+            if spell.is_none() {
+                return;
+            }
+            c.get_current_character().spell_list.set_prepared(name.to_string(), prepared);
+            set_ui_character_data(&c.get_current_character(), &ui);
+        }
+    });
+
+    ui.run();
+
+    // dont close console after program
+    // let _ = std::process::Command::new("cmd")
+    //     .arg("/C")
+    //     .arg("pause")
+    //     .status();
 }

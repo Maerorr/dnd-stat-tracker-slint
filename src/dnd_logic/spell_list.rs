@@ -105,7 +105,7 @@ impl SpellList {
         }
     }
 
-    pub fn get_spell_by_name(&self, name: &str) -> Option<Spell> {
+    pub fn get_spell_by_name(&self, name: &str) -> Option<(Spell)> {
         for spell in &self.cantrips {
             if spell.0.name == name {
                 return Some(spell.0.clone());
@@ -181,5 +181,24 @@ impl SpellList {
         }
 
         entries
+    }
+
+    pub fn set_prepared(&mut self, name: String, prepared: bool) {
+        for spell in self.cantrips.iter_mut() {
+            if spell.0.name == name {
+                spell.1 = prepared;
+                return;
+            }
+            println!("not found");
+        }
+        for spell_level in self.spells.iter_mut() {
+            for spell in spell_level.iter_mut() {
+                if spell.0.name == name {
+                    spell.1 = prepared;
+                    return;
+                }
+            }
+            println!("not found");
+        }
     }
 }

@@ -190,10 +190,10 @@
     }
   },
   "money": {
-    "copper": 12,
-    "silver": 2,
-    "electrum": 5,
-    "gold": 14,
+    "copper": 80,
+    "silver": 25,
+    "electrum": 0,
+    "gold": 342,
     "platinum": 0
   },
   "features_and_traits": "Feats:\n1. Keen Mind\n- you know which way is north\n- you know exact time\n- you remember everything from past month\n\n# Arcane Recovery (short rest, once per day)\n- spell slots = level/2 rounded up\n- can't be 6th lvl or higher\n\n2-lvl\n# Chronal Shift (reaction, twice per long rest)\n- Any creature incl. yourself in 60ft. radius can be forced to rerol a d20. New outcome must be used.\n\n# Temporal Awareness\n- Add your INT to initiative.\n\n6-lvl\n# Momentary Stasis\n- Large or smaller creature within 60ft. needs to make a CON save. On fail it is in temporary stasis with speed of 0 and incapacitated status until the end of your next turn or until the creature takes any damage\n\n10-lvl\n# Arcane Abeyance (1action, once per long rest)\n- when casting a spell of 4th lvl or lower you can encase it in a gray bead for an hour (1HP, AC 15, immune to poison and psychic dmg). \n- It can be used to cast the encased spell without a spell slot, with stats of the caster\n\n14-lvl\n#convergent Future (1 exhaustion)\nYou can decide if an attack roll, ability check or a saving throw will fail or succeed.",
@@ -234,28 +234,32 @@
       true
     ],
     [
+      "Sapping Sting",
+      true
+    ],
+    [
       "Find Familiar",
       false
     ],
     [
       "Mage Armor",
-      false
+      true
     ],
     [
       "Burning Hands",
-      false
+      true
     ],
     [
       "Shield",
-      false
+      true
     ],
     [
       "Magic Missile",
-      false
+      true
     ],
     [
       "Charm Person",
-      false
+      true
     ],
     [
       "Silent Image",
@@ -263,19 +267,27 @@
     ],
     [
       "Disguise Self",
-      false
+      true
     ],
     [
       "Sleep",
-      false
+      true
     ],
     [
       "Detect Magic",
       false
     ],
     [
-      "Maximilian's Earthen Grasp",
+      "Hellish Rebuke",
       false
+    ],
+    [
+      "Catapult",
+      false
+    ],
+    [
+      "Maximilian's Earthen Grasp",
+      true
     ],
     [
       "Knock",
@@ -283,7 +295,7 @@
     ],
     [
       "Flaming Sphere",
-      false
+      true
     ]
   ],
   "equipment": [
@@ -313,31 +325,6 @@
       "amount": 1
     },
     {
-      "name": "small shard of obsidian",
-      "description": "",
-      "amount": 1
-    },
-    {
-      "name": "Fog Cloud spell scroll",
-      "description": "",
-      "amount": 1
-    },
-    {
-      "name": "Shield spell scroll",
-      "description": "",
-      "amount": 1
-    },
-    {
-      "name": "Magic Missile spell scroll",
-      "description": "",
-      "amount": 1
-    },
-    {
-      "name": "Knock spell scroll",
-      "description": "",
-      "amount": 1
-    },
-    {
       "name": "Healing Potion",
       "description": "2d4 + 2",
       "amount": 1
@@ -345,7 +332,22 @@
     {
       "name": "beef jerky bag",
       "description": "",
-      "amount": 2
+      "amount": 1
+    },
+    {
+      "name": "Alarm spell scroll",
+      "description": "",
+      "amount": 1
+    },
+    {
+      "name": "50g of transcribing stuff",
+      "description": "",
+      "amount": 1
+    },
+    {
+      "name": "Immovable Rod",
+      "description": "This flat iron rod has a button on one end. You can use an action to press the button, which causes the rod to become magically fixed in place. Until you or another creature uses an action to push the button again, the rod doesn't move, even if it is defying gravity. The rod can hold up to 8,000 pounds of weight. More weight causes the rod to deactivate and fall. A creature can use an action to make a DC 30 Strength check, moving the fixed rod up to 10 feet on a success.",
+      "amount": 1
     }
   ],
   "weapons": [

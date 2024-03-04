@@ -71,6 +71,7 @@ export component AppWindow inherits Window {
     callback set-skill-proficiency(string, bool);
     callback set-skill-expertise(string, bool);
     callback set-save-proficiency(string, bool);
+    callback set-prepared-spell(string, bool);
 
     callback set-languages-proficiencies(string);
 
@@ -208,6 +209,9 @@ export component AppWindow inherits Window {
                 }
                 save-character-select() => {
                     save-character-select();
+                }
+                set-prepared-spell(string, val) => {
+                    set-prepared-spell(string, val);
                 }
             }
             if state == SlintState.CharacterSelect : CharacterSelectState {

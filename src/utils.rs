@@ -1,4 +1,4 @@
-use std::{fs::{self, File}, path::Path};
+use std::{fs::{self, File}, path::{Path, PathBuf}};
 
 use serde_json::from_reader;
 use slint::Image;
@@ -8,7 +8,6 @@ use crate::{dnd_logic::prelude::*, CHARACTERS_PATH, CHARACTER_IMAGE_PATH, SPELLS
 
 pub fn load_spells_from_files() -> SpellList {
     let path = std::path::Path::new(SPELLS_PATH);
-    //let cantrips_json = File::open(path.join("cantrips.json")).unwrap();
     let cantrips_json = File::open(path.join("spell_level_0.json")).unwrap();
     
     let mut spell_database = SpellList::default();

@@ -678,6 +678,9 @@ export component SpellEntry {
 
     callback remove-spell(string);
 
+    // (name, prepared)
+    callback set-prepared(string, bool);
+
     spell-popup := PopupWindow {
         x: - parent.x;
         y: - parent.y;
@@ -790,7 +793,7 @@ export component SpellEntry {
     VerticalLayout {
         HorizontalLayout {
             alignment: start;
-            VerticalLayout {
+            if !EditMode.active : VerticalLayout {
                 alignment: center;
                 HorizontalLayout {
                     height: 14px;
@@ -804,6 +807,17 @@ export component SpellEntry {
                         filled: 0;
                         radius: 5px;
                     }
+                }
+            }
+            
+            if EditMode.active : Checkbox {
+                status: spell.prepared;
+                area-height: 25px;
+                area-width: 14px;
+                checkbox-width: 14px;
+                checkbox-height: 14px;
+                checked(val) => {
+                    set-prepared(spell.name, val);
                 }
             }
             

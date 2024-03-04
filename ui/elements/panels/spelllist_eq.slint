@@ -26,6 +26,7 @@ export component SpellListEq {
     // (name, level)
     callback add-spell(string);
     callback remove-spell(string);
+    callback set-prepared(string, bool);
 
     // (name, description, amount)
     callback add-item(string, string, string);
@@ -281,6 +282,10 @@ export component SpellListEq {
                                 remove-spell(name) => {
                                     remove-spell(name);
                                 }
+                                set-prepared(name, val) => {
+                                    set-prepared(name, val);
+                                    spell.prepared = val;
+                                }
                             }
 
                             if EditMode.active : HorizontalLayout {
@@ -328,6 +333,10 @@ export component SpellListEq {
                                 spell: spell;
                                 remove-spell(name) => {
                                     remove-spell(name);
+                                }
+                                set-prepared(name, val) => {
+                                    set-prepared(name, val);
+                                    spell.prepared = val;
                                 }
                             }
 
@@ -378,6 +387,10 @@ export component SpellListEq {
                                 remove-spell(name) => {
                                     remove-spell(name);
                                 }
+                                set-prepared(name, val) => {
+                                    set-prepared(name, val);
+                                    spell.prepared = val;
+                                }
                             }
 
                             if EditMode.active : HorizontalLayout {
@@ -426,6 +439,10 @@ export component SpellListEq {
                                 remove-spell(name) => {
                                     remove-spell(name);
                                 }
+                                set-prepared(name, val) => {
+                                    set-prepared(name, val);
+                                    spell.prepared = val;
+                                }
                             }
 
                             if EditMode.active : HorizontalLayout {
@@ -473,6 +490,10 @@ export component SpellListEq {
                                 spell: spell;
                                 remove-spell(name) => {
                                     remove-spell(name);
+                                }
+                                set-prepared(name, val) => {
+                                    set-prepared(name, val);
+                                    spell.prepared = val;
                                 }
                             }
 
@@ -529,6 +550,10 @@ export component SpellListEq {
                                 remove-spell(name) => {
                                     remove-spell(name);
                                 }
+                                set-prepared(name, val) => {
+                                    set-prepared(name, val);
+                                    spell.prepared = val;
+                                }
                             }
 
                             if EditMode.active : HorizontalLayout {
@@ -576,6 +601,10 @@ export component SpellListEq {
                                 spell: spell;
                                 remove-spell(name) => {
                                     remove-spell(name);
+                                }
+                                set-prepared(name, val) => {
+                                    set-prepared(name, val);
+                                    spell.prepared = val;
                                 }
                             }
 
@@ -625,6 +654,10 @@ export component SpellListEq {
                                 remove-spell(name) => {
                                     remove-spell(name);
                                 }
+                                set-prepared(name, val) => {
+                                    set-prepared(name, val);
+                                    spell.prepared = val;
+                                }
                             }
 
                             if EditMode.active : HorizontalLayout {
@@ -672,6 +705,10 @@ export component SpellListEq {
                                 spell: spell;
                                 remove-spell(name) => {
                                     remove-spell(name);
+                                }
+                                set-prepared(name, val) => {
+                                    set-prepared(name, val);
+                                    spell.prepared = val;
                                 }
                             }
 
